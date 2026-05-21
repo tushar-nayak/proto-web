@@ -102,16 +102,6 @@ h1, h2, h3, h4, h5, h6 {
   z-index: 1;
 }
 
-.page-dimmer {
-  position: fixed;
-  inset: 0;
-  background: rgba(0, 2, 5, 0.38);
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 0.22s ease;
-  z-index: 2;
-}
-
 .page-container::before,
 .page-container::after {
   content: '';
@@ -144,10 +134,6 @@ h1, h2, h3, h4, h5, h6 {
   padding: 0 2rem;
   position: relative;
   z-index: 3;
-}
-
-.project-spotlight-active .page-dimmer {
-  opacity: 1;
 }
 
 /* Glowing Neon Background Gradients */
@@ -756,10 +742,6 @@ h1, h2, h3, h4, h5, h6 {
   
   .timeline {
     padding-left: 1.5rem;
-  }
-
-  .page-dimmer {
-    display: none;
   }
 
   .site-header {

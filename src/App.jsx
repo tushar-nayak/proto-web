@@ -816,7 +816,7 @@ function App() {
   };
 
   return (
-    <div className={`page-container ${hoveredProjectId ? 'project-spotlight-active' : ''}`}>
+    <div className="page-container">
       {/* Dynamic interactive Canvas Network */}
       <NeuralBackground />
       <CursorTrail />
@@ -824,7 +824,6 @@ function App() {
       {/* Decorative blurred backgrounds */}
       <div className="glow-blur-1"></div>
       <div className="glow-blur-2"></div>
-      <div className="page-dimmer"></div>
 
       {/* FLOATING GLASS NAVIGATION HEADER */}
       <header className="site-header" style={{
