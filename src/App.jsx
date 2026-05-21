@@ -20,6 +20,7 @@ import NeuralBackground from './components/NeuralBackground';
 import ProjectVisual from './components/ProjectVisual';
 import ProfileSplat from './components/ProfileSplat';
 import CursorTrail from './components/CursorTrail';
+import BackgroundAudio from './components/BackgroundAudio';
 
 // Custom inline SVG replacements for brand/common icons to prevent build resolution errors
 const Mail = ({ size = 18 }) => (
@@ -819,6 +820,7 @@ function App() {
       {/* Dynamic interactive Canvas Network */}
       <NeuralBackground />
       <CursorTrail />
+      <BackgroundAudio />
 
       {/* Decorative blurred backgrounds */}
       <div className="glow-blur-1"></div>
