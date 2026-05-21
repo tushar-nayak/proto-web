@@ -1,6 +1,33 @@
 import { useEffect, useRef } from 'react';
 
-const NeuralBackground = () => {
+const THEME_CONFIG = {
+  tron: {
+    particleFill: 'rgba(0, 242, 254, 0.4)',
+    particleShadow: '#00f2fe',
+    linkColor: (opacity) => `rgba(0, 242, 254, ${opacity})`,
+    mouseColor: (opacity) => `rgba(0, 245, 160, ${opacity})`
+  },
+  'liquid-glass': {
+    particleFill: 'rgba(244, 249, 255, 0.46)',
+    particleShadow: 'rgba(160, 208, 255, 0.92)',
+    linkColor: (opacity) => `rgba(182, 220, 255, ${opacity * 0.95})`,
+    mouseColor: (opacity) => `rgba(255, 255, 255, ${opacity * 0.82})`
+  },
+  'google-material': {
+    particleFill: 'rgba(124, 168, 255, 0.34)',
+    particleShadow: 'rgba(110, 157, 255, 0.7)',
+    linkColor: (opacity) => `rgba(124, 168, 255, ${opacity * 0.78})`,
+    mouseColor: (opacity) => `rgba(90, 193, 167, ${opacity * 0.74})`
+  },
+  'microsoft-fluent': {
+    particleFill: 'rgba(143, 198, 255, 0.34)',
+    particleShadow: 'rgba(136, 184, 255, 0.72)',
+    linkColor: (opacity) => `rgba(160, 204, 255, ${opacity * 0.82})`,
+    mouseColor: (opacity) => `rgba(118, 211, 255, ${opacity * 0.72})`
+  }
+};
+
+const NeuralBackground = ({ theme = 'tron' }) => {
   const canvasRef = useRef(null);
 
   useEffect(() => {
@@ -8,6 +35,7 @@ const NeuralBackground = () => {
     if (!canvas) return;
 
     const ctx = canvas.getContext('2d');
+    const palette = THEME_CONFIG[theme] ?? THEME_CONFIG.tron;
     let animationFrameId;
     let viewportWidth = window.innerWidth;
     let viewportHeight = window.innerHeight;
@@ -65,9 +93,9 @@ const NeuralBackground = () => {
       draw() {
         ctx.beginPath();
         ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-        ctx.fillStyle = 'rgba(0, 242, 254, 0.4)';
+        ctx.fillStyle = palette.particleFill;
         ctx.shadowBlur = 6;
-        ctx.shadowColor = '#00f2fe';
+        ctx.shadowColor = palette.particleShadow;
         ctx.fill();
         ctx.shadowBlur = 0; // Reset shadow for line drawing
       }
@@ -112,7 +140,7 @@ const NeuralBackground = () => {
             ctx.beginPath();
             ctx.moveTo(particles[i].x, particles[i].y);
             ctx.lineTo(particles[j].x, particles[j].y);
-            ctx.strokeStyle = `rgba(0, 242, 254, ${opacity})`;
+            ctx.strokeStyle = palette.linkColor(opacity);
             ctx.lineWidth = 0.9;
             ctx.stroke();
           }
@@ -128,7 +156,7 @@ const NeuralBackground = () => {
             ctx.beginPath();
             ctx.moveTo(particles[i].x, particles[i].y);
             ctx.lineTo(mouse.x, mouse.y);
-            ctx.strokeStyle = `rgba(0, 245, 160, ${opacity})`; // emerald connector
+            ctx.strokeStyle = palette.mouseColor(opacity);
             ctx.lineWidth = 1;
             ctx.stroke();
           }
@@ -147,7 +175,7 @@ const NeuralBackground = () => {
       document.removeEventListener('mouseleave', handleMouseLeave);
       cancelAnimationFrame(animationFrameId);
     };
-  }, []);
+  }, [theme]);
 
   return (
     <canvas

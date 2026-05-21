@@ -13,12 +13,16 @@ import {
   MapPin,
   Stethoscope,
   Presentation,
-  ChevronDown
+  ChevronDown,
+  Volume2,
+  VolumeX,
+  Sparkles
 } from 'lucide-react';
 import NeuralBackground from './components/NeuralBackground';
 import ProjectVisual from './components/ProjectVisual';
 import ProfileSplat from './components/ProfileSplat';
 import CursorTrail from './components/CursorTrail';
+import LiquidGlassPointer from './components/LiquidGlassPointer';
 import BackgroundAudio from './components/BackgroundAudio';
 import armoryTrack from './assets/Armory.mp3';
 
@@ -740,8 +744,40 @@ const TEACHING_COURSES = [
   }
 ];
 
+const THEME_OPTIONS = [
+  {
+    id: 'tron',
+    label: 'Tron Grid',
+    blurb: 'Neon cyan circuitry, sharper scanline depth, and the current robotics-heavy atmosphere.',
+    command: 'boot --profile tron-grid'
+  },
+  {
+    id: 'liquid-glass',
+    label: 'Liquid Glass',
+    blurb: 'Softer frosted panels, milky highlights, and a brighter Apple-style glass treatment.',
+    command: 'boot --profile liquid-glass'
+  },
+  {
+    id: 'google-material',
+    label: 'Google Material',
+    blurb: 'Clean layered surfaces, brighter tonal containers, and a Material-style blue-green system.',
+    command: 'boot --profile google-material'
+  },
+  {
+    id: 'microsoft-fluent',
+    label: 'Microsoft Fluent',
+    blurb: 'Soft depth, cool acrylic panels, and Fluent-inspired blue neutrals with restrained glow.',
+    command: 'boot --profile microsoft-fluent'
+  }
+];
+
 function App() {
   const projectAudioRef = useRef(null);
+  const [siteTheme, setSiteTheme] = useState(() => {
+    if (typeof window === 'undefined') return 'tron';
+    return window.localStorage.getItem('site-theme') || 'tron';
+  });
+  const [showThemeSelector, setShowThemeSelector] = useState(true);
   const [activeTab, setActiveTab] = useState('about');
   const [projectFilter, setProjectFilter] = useState('All');
   const [pubSearch, setPubSearch] = useState('');
@@ -765,6 +801,54 @@ function App() {
   const [scanStatus, setScanStatus] = useState("SYSTEM READY");
   const [widgetClicks, setWidgetClicks] = useState(0);
   const [widgetSpinRate, setWidgetSpinRate] = useState(15);
+  const resolvedTheme = siteTheme || 'tron';
+  const isLiquidGlass = resolvedTheme === 'liquid-glass';
+  const isGoogleMaterial = resolvedTheme === 'google-material';
+  const usesDedicatedThemeSoundtrack = isLiquidGlass || isGoogleMaterial;
+
+  useEffect(() => {
+    document.documentElement.dataset.theme = resolvedTheme;
+  }, [resolvedTheme]);
+
+  useEffect(() => {
+    const sections = ['about', 'projects', 'research', 'teaching', 'timeline']
+      .map((id) => document.getElementById(id))
+      .filter(Boolean);
+
+    if (sections.length === 0) return undefined;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const visible = entries
+          .filter((entry) => entry.isIntersecting)
+          .sort((a, b) => b.intersectionRatio - a.intersectionRatio);
+
+        if (visible[0]?.target?.id) {
+          setActiveTab(visible[0].target.id);
+        }
+      },
+      {
+        rootMargin: '-18% 0px -55% 0px',
+        threshold: [0.2, 0.35, 0.5, 0.7]
+      }
+    );
+
+    sections.forEach((section) => observer.observe(section));
+
+    return () => {
+      observer.disconnect();
+    };
+  }, []);
+
+  useEffect(() => {
+    setShowThemeSelector(true);
+  }, []);
+
+  const handleThemeSelect = (nextTheme) => {
+    setSiteTheme(nextTheme);
+    setShowThemeSelector(false);
+    window.localStorage.setItem('site-theme', nextTheme);
+  };
 
   useEffect(() => {
     const handleMuteChange = (event) => {
@@ -782,11 +866,22 @@ function App() {
     const audio = projectAudioRef.current;
     if (!audio) return;
 
+    if (usesDedicatedThemeSoundtrack) {
+      audio.pause();
+      audio.currentTime = 0;
+      window.dispatchEvent(new CustomEvent('project-audio:stop'));
+      return;
+    }
+
     audio.muted = isAudioMuted;
     audio.volume = 0.5;
-  }, [isAudioMuted]);
+  }, [isAudioMuted, usesDedicatedThemeSoundtrack]);
 
   useEffect(() => {
+    if (usesDedicatedThemeSoundtrack) {
+      return undefined;
+    }
+
     if (selectedProjectId === null) return undefined;
 
     const handlePointerDown = (event) => {
@@ -816,11 +911,18 @@ function App() {
       document.removeEventListener('pointerdown', handlePointerDown);
       window.removeEventListener('keydown', handleEscape);
     };
-  }, [selectedProjectId]);
+  }, [selectedProjectId, usesDedicatedThemeSoundtrack]);
 
   useEffect(() => {
     const audio = projectAudioRef.current;
     if (!audio) return;
+
+    if (usesDedicatedThemeSoundtrack) {
+      audio.pause();
+      audio.currentTime = 0;
+      window.dispatchEvent(new CustomEvent('project-audio:stop'));
+      return;
+    }
 
     if (selectedProjectId === null) {
       audio.pause();
@@ -843,7 +945,7 @@ function App() {
     };
 
     startProjectAudio();
-  }, [isAudioMuted, selectedProjectId]);
+  }, [isAudioMuted, selectedProjectId, usesDedicatedThemeSoundtrack]);
 
   const handleProjectClick = (projectId) => {
     setSelectedProjectId((current) => (current === projectId ? null : projectId));
@@ -904,6 +1006,33 @@ function App() {
     const isSelected = selectedProjectId === project.id;
     const isDimmed = selectedProjectId !== null && !isSelected;
     const detail = PROJECT_PAGE_DETAILS[project.id];
+    const cardBackground = isGoogleMaterial
+      ? (project.highlight
+        ? 'linear-gradient(180deg, rgba(231,236,255,0.98), rgba(245,247,255,0.98)), rgba(255,255,255,0.98)'
+        : 'linear-gradient(180deg, rgba(248,249,255,0.98), rgba(255,255,255,0.98))')
+      : isLiquidGlass
+      ? (project.highlight
+        ? 'linear-gradient(180deg, rgba(255,255,255,0.48), rgba(238,246,255,0.18)), linear-gradient(135deg, rgba(255,255,255,0.14), rgba(192,216,255,0.08) 52%, rgba(255,219,194,0.1) 100%)'
+        : 'linear-gradient(180deg, rgba(255,255,255,0.38), rgba(240,246,255,0.16)), rgba(255,255,255,0.16)')
+      : (project.highlight
+        ? 'radial-gradient(circle at 50% 0%, rgba(14, 165, 233, 0.02), rgba(14, 16, 21, 0.8) 75%)'
+        : 'var(--bg-surface-glass)');
+    const cardBorder = isSelected
+      ? (isGoogleMaterial ? 'rgba(91, 91, 214, 0.88)' : isLiquidGlass ? 'rgba(255, 255, 255, 0.92)' : 'rgba(94, 234, 212, 0.9)')
+      : isHovered
+      ? (isGoogleMaterial ? 'rgba(91, 91, 214, 0.46)' : 'var(--accent-emerald)')
+      : (project.highlight
+        ? (isGoogleMaterial ? 'rgba(181, 191, 240, 0.92)' : isLiquidGlass ? 'rgba(255,255,255,0.48)' : 'rgba(14, 165, 233, 0.12)')
+        : 'var(--border-glow)');
+    const cardShadow = isSelected
+      ? (isGoogleMaterial
+        ? '0 4px 12px rgba(60, 64, 89, 0.12), 0 20px 36px rgba(60, 64, 89, 0.18)'
+        : isLiquidGlass
+        ? 'inset 0 1px 0 rgba(255,255,255,0.94), inset 16px 0 24px rgba(190,220,255,0.12), inset -16px 0 24px rgba(255,223,196,0.12), 0 24px 48px rgba(113,145,184,0.16)'
+        : 'inset 0 0 0 1px rgba(94, 234, 212, 0.24), 0 0 28px rgba(94, 234, 212, 0.28), 0 20px 52px rgba(0, 0, 0, 0.54)')
+      : isHovered
+      ? (isGoogleMaterial ? '0 3px 8px rgba(60, 64, 89, 0.08), 0 14px 24px rgba(60, 64, 89, 0.12)' : isLiquidGlass ? '0 18px 34px rgba(120,150,190,0.12)' : '0 0 15px rgba(16, 185, 129, 0.05)')
+      : 'none';
     return (
       <div
         key={project.id}
@@ -913,17 +1042,9 @@ function App() {
         onMouseLeave={() => setHoveredProjectId((current) => (current === project.id ? null : current))}
         style={{
           cursor: 'pointer',
-          background: project.highlight ? 'radial-gradient(circle at 50% 0%, rgba(14, 165, 233, 0.02), rgba(14, 16, 21, 0.8) 75%)' : 'var(--bg-surface-glass)',
-          borderColor: isSelected
-            ? 'rgba(94, 234, 212, 0.9)'
-            : isHovered
-            ? 'var(--accent-emerald)'
-            : (project.highlight ? 'rgba(14, 165, 233, 0.12)' : 'var(--border-glow)'),
-          boxShadow: isSelected
-            ? 'inset 0 0 0 1px rgba(94, 234, 212, 0.24), 0 0 28px rgba(94, 234, 212, 0.28), 0 20px 52px rgba(0, 0, 0, 0.54)'
-            : isHovered
-            ? '0 0 15px rgba(16, 185, 129, 0.05)' 
-            : 'none'
+          background: cardBackground,
+          borderColor: cardBorder,
+          boxShadow: cardShadow
         }}
       >
         <ProjectVisual 
@@ -995,10 +1116,10 @@ function App() {
             <span key={idx} style={{
               fontSize: '0.75rem',
               color: 'var(--text-secondary)',
-              background: 'rgba(255, 255, 255, 0.02)',
+              background: isGoogleMaterial ? 'rgba(228, 233, 252, 0.96)' : isLiquidGlass ? 'rgba(255, 255, 255, 0.34)' : 'rgba(255, 255, 255, 0.02)',
               padding: '0.15rem 0.5rem',
               borderRadius: '4px',
-              border: '1px solid rgba(255, 255, 255, 0.05)'
+              border: isGoogleMaterial ? '1px solid rgba(201, 209, 245, 0.98)' : isLiquidGlass ? '1px solid rgba(255, 255, 255, 0.58)' : '1px solid rgba(255, 255, 255, 0.05)'
             }}>{tag}</span>
           ))}
         </div>
@@ -1006,8 +1127,12 @@ function App() {
         <div className="project-console" style={{
           marginTop: 'auto',
           marginBottom: '1rem',
-          background: 'rgba(0, 0, 0, 0.15)',
-          border: '1px solid rgba(255, 255, 255, 0.03)',
+          background: isGoogleMaterial
+            ? 'rgba(239, 242, 255, 0.98)'
+            : isLiquidGlass
+            ? 'linear-gradient(180deg, rgba(255,255,255,0.44), rgba(239,246,255,0.24))'
+            : 'rgba(0, 0, 0, 0.15)',
+          border: isGoogleMaterial ? '1px solid rgba(206, 214, 245, 0.96)' : isLiquidGlass ? '1px solid rgba(255, 255, 255, 0.62)' : '1px solid rgba(255, 255, 255, 0.03)',
           borderRadius: '8px',
           padding: '0.65rem 0.85rem'
         }}>
@@ -1062,13 +1187,56 @@ function App() {
     );
   };
 
+  if (showThemeSelector) {
+    return (
+      <div className={`page-container theme-${resolvedTheme}`}>
+        <NeuralBackground theme={resolvedTheme} />
+        <CursorTrail theme={resolvedTheme} />
+        <LiquidGlassPointer theme={resolvedTheme} />
+        <div className="glow-blur-1"></div>
+        <div className="glow-blur-2"></div>
+        <div className="theme-launcher-overlay">
+          <div className="theme-terminal">
+            <div className="theme-terminal-bar">
+              <div className="theme-terminal-lights" aria-hidden="true">
+                <span className="theme-terminal-light theme-terminal-light-close"></span>
+                <span className="theme-terminal-light theme-terminal-light-min"></span>
+                <span className="theme-terminal-light theme-terminal-light-max"></span>
+              </div>
+              <span className="theme-terminal-title">portfolio-launcher.sh</span>
+            </div>
+            <div className="theme-terminal-body">
+              <p className="theme-terminal-line">$ ./launch-portfolio --mode select</p>
+              <p className="theme-terminal-line theme-terminal-line-muted">Select an interface profile to continue.</p>
+              <div className="theme-mode-grid">
+                {THEME_OPTIONS.map((option) => (
+                  <button
+                    key={option.id}
+                    type="button"
+                    className="theme-mode-card"
+                    onClick={() => handleThemeSelect(option.id)}
+                  >
+                    <span className="theme-mode-command">{option.command}</span>
+                    <strong>{option.label}</strong>
+                    <span>{option.blurb}</span>
+                  </button>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   return (
-    <div className="page-container">
+    <div className={`page-container theme-${resolvedTheme}`}>
       <audio ref={projectAudioRef} src={armoryTrack} preload="auto" />
       {/* Dynamic interactive Canvas Network */}
-      <NeuralBackground />
-      <CursorTrail />
-      <BackgroundAudio />
+      <NeuralBackground theme={resolvedTheme} />
+      <CursorTrail theme={resolvedTheme} />
+      <LiquidGlassPointer theme={resolvedTheme} />
+      <BackgroundAudio theme={resolvedTheme} />
 
       {/* Decorative blurred backgrounds */}
       <div className="glow-blur-1"></div>
@@ -1084,16 +1252,27 @@ function App() {
         padding: '0 1rem',
       }}>
         <div className="site-header-shell" style={{
-          background: 'rgba(10, 11, 14, 0.75)',
-          backdropFilter: 'blur(16px)',
-          WebkitBackdropFilter: 'blur(16px)',
-          border: '1px solid rgba(0, 242, 254, 0.15)',
+          background: isGoogleMaterial
+            ? 'linear-gradient(180deg, rgba(247,248,255,0.98), rgba(238,242,255,0.98))'
+            : isLiquidGlass
+            ? 'linear-gradient(180deg, rgba(255, 255, 255, 0.62), rgba(234, 243, 255, 0.34))'
+            : 'rgba(10, 11, 14, 0.75)',
+          backdropFilter: isLiquidGlass ? 'blur(24px) saturate(1.2)' : (isGoogleMaterial ? 'none' : 'blur(16px)'),
+          WebkitBackdropFilter: isLiquidGlass ? 'blur(24px) saturate(1.2)' : (isGoogleMaterial ? 'none' : 'blur(16px)'),
+          border: isGoogleMaterial
+            ? '1px solid rgba(207, 214, 245, 0.96)'
+            : isLiquidGlass ? '1px solid rgba(255, 255, 255, 0.76)' : '1px solid rgba(0, 242, 254, 0.15)',
           borderRadius: '24px',
           padding: '0.65rem 1.25rem',
           display: 'flex',
           justifyContent: 'space-between',
-          alignItems: 'center',
-          boxShadow: '0 8px 32px 0 rgba(0, 0, 0, 0.4)'
+          alignItems: 'flex-start',
+          gap: '1rem',
+          boxShadow: isGoogleMaterial
+            ? '0 4px 12px rgba(60,64,89,0.08), 0 18px 28px rgba(60,64,89,0.14)'
+            : isLiquidGlass
+            ? 'inset 0 1px 0 rgba(255,255,255,0.86), 0 22px 48px rgba(119, 145, 182, 0.22)'
+            : '0 8px 32px 0 rgba(0, 0, 0, 0.4)'
         }}>
           {/* Logo / Initials */}
           <div className="site-header-brand" style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
@@ -1107,11 +1286,13 @@ function App() {
               justifyContent: 'center',
               fontWeight: '700',
               fontSize: '0.85rem',
-              color: '#000',
-              boxShadow: '0 0 10px rgba(0, 242, 254, 0.4)'
-            }}>
-              TN
-            </div>
+              color: isGoogleMaterial ? '#fff' : isLiquidGlass ? '#17304e' : '#000',
+              boxShadow: isGoogleMaterial
+                ? '0 8px 18px rgba(91,91,214,0.28)'
+                : isLiquidGlass
+                ? 'inset 0 1px 0 rgba(255,255,255,0.82), 0 10px 24px rgba(146, 174, 214, 0.28)'
+                : '0 0 10px rgba(0, 242, 254, 0.4)'
+            }} />
             <span className="site-header-wordmark" style={{
               fontFamily: 'var(--font-heading)',
               fontWeight: '600',
@@ -1124,33 +1305,85 @@ function App() {
           </div>
 
           {/* Navigation Items */}
-          <nav className="site-header-nav" style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap', justifyContent: 'flex-end' }}>
-            {['about', 'projects', 'research', 'teaching', 'timeline'].map((tab) => (
-              <button
-                key={tab}
-                onClick={() => {
+          <div className="site-header-controls" style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: '0.55rem', flex: 1 }}>
+            <nav className="site-header-nav" style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap', justifyContent: 'flex-end' }}>
+              {['about', 'projects', 'research', 'teaching', 'timeline'].map((tab) => (
+                <button
+                  key={tab}
+                  onClick={() => {
                   setActiveTab(tab);
                   document.getElementById(tab)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
                 }}
                 style={{
-                  background: activeTab === tab ? 'rgba(0, 242, 254, 0.08)' : 'transparent',
-                  border: activeTab === tab ? '1px solid rgba(0, 242, 254, 0.25)' : '1px solid transparent',
-                  color: activeTab === tab ? 'var(--primary-cyan)' : 'var(--text-secondary)',
+                  background: activeTab === tab
+                    ? (isGoogleMaterial ? 'linear-gradient(135deg, #5b5bd6 0%, #7c84f7 100%)' :
+                      isLiquidGlass ? 'rgba(255, 255, 255, 0.52)' : 'rgba(0, 242, 254, 0.08)')
+                    : (isGoogleMaterial ? '#eef2ff' :
+                      isLiquidGlass ? 'rgba(255, 255, 255, 0.16)' : 'transparent'),
+                  border: activeTab === tab
+                    ? (isGoogleMaterial ? '1px solid rgba(91, 91, 214, 0.92)' :
+                      isLiquidGlass ? '1px solid rgba(255, 255, 255, 0.8)' : '1px solid rgba(0, 242, 254, 0.25)')
+                    : (isGoogleMaterial ? '1px solid rgba(207, 214, 245, 0.96)' :
+                      isLiquidGlass ? '1px solid rgba(255, 255, 255, 0.24)' : '1px solid transparent'),
+                  color: activeTab === tab
+                    ? (isGoogleMaterial ? '#fff' : 'var(--primary-cyan)')
+                    : 'var(--text-secondary)',
                   padding: '0.4rem 0.9rem',
                   borderRadius: '12px',
                   fontSize: '0.85rem',
-                  fontWeight: '500',
-                  textTransform: 'capitalize',
-                  cursor: 'pointer',
-                  transition: 'var(--transition-fast)',
-                  fontFamily: 'var(--font-heading)'
+                    fontWeight: '500',
+                    textTransform: 'capitalize',
+                    cursor: 'pointer',
+                    transition: 'var(--transition-fast)',
+                    fontFamily: 'var(--font-heading)'
+                  }}
+                  className={`site-header-tab ${activeTab === tab ? 'pulse-glow' : ''}`}
+                >
+                  {tab}
+                </button>
+              ))}
+            </nav>
+            <div className="site-header-tools" style={{ display: 'flex', gap: '0.55rem', flexWrap: 'wrap', justifyContent: 'flex-end' }}>
+              <button
+                type="button"
+                onClick={() => window.dispatchEvent(new CustomEvent('audio:toggle-mute'))}
+                className="site-header-tab"
+                aria-label={isAudioMuted ? 'Unmute audio' : 'Mute audio'}
+                title={isAudioMuted ? 'Unmute audio' : 'Mute audio'}
+                style={{
+                  padding: '0.48rem 0.72rem',
+                  borderRadius: '999px',
+                  background: isGoogleMaterial ? '#eef2ff' : isLiquidGlass ? 'rgba(255, 255, 255, 0.34)' : 'rgba(255, 255, 255, 0.035)',
+                  border: isGoogleMaterial ? '1px solid rgba(207, 214, 245, 0.96)' : isLiquidGlass ? '1px solid rgba(255, 255, 255, 0.72)' : '1px solid rgba(255, 255, 255, 0.08)',
+                  color: 'var(--text-secondary)',
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  justifyContent: 'center'
                 }}
-                className={`site-header-tab ${activeTab === tab ? 'pulse-glow' : ''}`}
               >
-                {tab}
+                {isAudioMuted ? <VolumeX size={16} /> : <Volume2 size={16} />}
               </button>
-            ))}
-          </nav>
+              <button
+                type="button"
+                onClick={() => setShowThemeSelector(true)}
+                className="site-header-tab"
+                aria-label="Switch theme"
+                title="Switch theme"
+                style={{
+                  padding: '0.48rem 0.72rem',
+                  borderRadius: '999px',
+                  background: isGoogleMaterial ? '#eef2ff' : isLiquidGlass ? 'rgba(255, 255, 255, 0.34)' : 'rgba(255, 255, 255, 0.035)',
+                  border: isGoogleMaterial ? '1px solid rgba(207, 214, 245, 0.96)' : isLiquidGlass ? '1px solid rgba(255, 255, 255, 0.72)' : '1px solid rgba(255, 255, 255, 0.08)',
+                  color: 'var(--text-secondary)',
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  justifyContent: 'center'
+                }}
+              >
+                <Sparkles size={16} />
+              </button>
+            </div>
+          </div>
         </div>
       </header>
 

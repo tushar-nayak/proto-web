@@ -1,8 +1,10 @@
 import { useEffect, useRef, useState } from 'react';
 import { Volume2, VolumeX } from 'lucide-react';
-import soundtrack from '../assets/Sea of Simulation.mp3';
+import tronSoundtrack from '../assets/Sea of Simulation.mp3';
+import liquidGlassSoundtrack from '../assets/Lambent Rag.mp3';
+import googleMaterialSoundtrack from '../assets/googleio.mp3';
 
-export default function BackgroundAudio() {
+export default function BackgroundAudio({ theme = 'tron' }) {
   const audioRef = useRef(null);
   const [isMuted, setIsMuted] = useState(false);
   const [hasStarted, setHasStarted] = useState(false);
@@ -15,7 +17,9 @@ export default function BackgroundAudio() {
     const audio = audioRef.current;
     if (!audio) return undefined;
 
-    audio.volume = 0.05;
+    const isLiquidGlass = theme === 'liquid-glass';
+    const isGoogleMaterial = theme === 'google-material';
+    audio.volume = isLiquidGlass ? 0.18 : (isGoogleMaterial ? 0.14 : 0.05);
     audio.loop = true;
     audio.muted = isMuted;
 
@@ -39,11 +43,17 @@ export default function BackgroundAudio() {
     };
 
     const handleProjectAudioPlay = () => {
+      if (isLiquidGlass || isGoogleMaterial) return;
       audio.pause();
       syncStarted();
     };
 
     const handleProjectAudioStop = async () => {
+      if (isLiquidGlass || isGoogleMaterial) {
+        syncStarted();
+        return;
+      }
+
       if (isMuted) {
         syncStarted();
         return;
@@ -98,7 +108,7 @@ export default function BackgroundAudio() {
       window.removeEventListener('audio:toggle-mute', handleToggleMute);
       window.removeEventListener('keydown', handleMuteShortcut);
     };
-  }, [isMuted]);
+  }, [isMuted, theme]);
 
   const toggleMute = () => {
     window.dispatchEvent(new CustomEvent('audio:toggle-mute'));
@@ -106,7 +116,17 @@ export default function BackgroundAudio() {
 
   return (
     <>
-      <audio ref={audioRef} src={soundtrack} preload="auto" />
+      <audio
+        ref={audioRef}
+        src={
+          theme === 'liquid-glass'
+            ? liquidGlassSoundtrack
+            : theme === 'google-material'
+            ? googleMaterialSoundtrack
+            : tronSoundtrack
+        }
+        preload="auto"
+      />
       <button
         type="button"
         className="audio-toggle"
