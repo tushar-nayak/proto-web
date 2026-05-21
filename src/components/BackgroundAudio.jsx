@@ -15,12 +15,16 @@ export default function BackgroundAudio() {
     audio.loop = true;
     audio.muted = isMuted;
 
+    const syncStarted = () => {
+      setHasStarted(!audio.paused);
+    };
+
     const startPlayback = async () => {
       if (!audio.paused) return;
 
       try {
         await audio.play();
-        setHasStarted(true);
+        syncStarted();
       } catch {
         // Ignore autoplay failures until the next interaction.
       }
@@ -30,10 +34,14 @@ export default function BackgroundAudio() {
       startPlayback();
     };
 
+    audio.addEventListener('play', syncStarted);
+    audio.addEventListener('pause', syncStarted);
     window.addEventListener('pointerdown', handleFirstInteraction, { passive: true });
     window.addEventListener('keydown', handleFirstInteraction);
 
     return () => {
+      audio.removeEventListener('play', syncStarted);
+      audio.removeEventListener('pause', syncStarted);
       window.removeEventListener('pointerdown', handleFirstInteraction);
       window.removeEventListener('keydown', handleFirstInteraction);
     };
@@ -43,13 +51,15 @@ export default function BackgroundAudio() {
     const audio = audioRef.current;
     if (!audio) return;
 
-    if (audio.paused) {
+    if (!hasStarted || audio.paused) {
       try {
         await audio.play();
+        setIsMuted(false);
         setHasStarted(true);
       } catch {
         return;
       }
+      return;
     }
 
     setIsMuted((current) => !current);
@@ -62,11 +72,11 @@ export default function BackgroundAudio() {
         type="button"
         className="audio-toggle"
         onClick={toggleMute}
-        aria-label={isMuted ? 'Unmute background audio' : 'Mute background audio'}
-        title={isMuted ? 'Unmute' : 'Mute'}
+        aria-label={!hasStarted ? 'Enable background audio' : (isMuted ? 'Unmute background audio' : 'Mute background audio')}
+        title={!hasStarted ? 'Enable audio' : (isMuted ? 'Unmute' : 'Mute')}
       >
         {isMuted ? <VolumeX size={16} /> : <Volume2 size={16} />}
-        <span>{isMuted ? 'Muted' : (hasStarted ? 'Audio On' : 'Audio Ready')}</span>
+        <span>{!hasStarted ? 'Enable Audio' : (isMuted ? 'Muted' : 'Audio On')}</span>
       </button>
     </>
   );
