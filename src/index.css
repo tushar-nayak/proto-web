@@ -127,7 +127,7 @@ h1, h2, h3, h4, h5, h6 {
   background:
     linear-gradient(180deg, transparent 0 29%, rgba(107, 201, 255, 0.28) 29.04%, transparent 29.16%),
     linear-gradient(180deg, transparent 0 68%, rgba(255, 179, 71, 0.12) 68.04%, transparent 68.14%);
-  filter: blur(0.5px);
+  filter: blur(0.2px);
   animation: lanePulse 8s ease-in-out infinite;
 }
 
@@ -147,11 +147,14 @@ h1, h2, h3, h4, h5, h6 {
   width: 50%;
   height: 50%;
   background:
+    radial-gradient(circle at 32% 36%, rgba(0, 228, 255, 0.16), transparent 28%),
     repeating-linear-gradient(90deg, transparent 0 34px, rgba(0, 228, 255, 0.1) 35px 36px, transparent 37px 72px),
     linear-gradient(90deg, rgba(107, 201, 255, 0.18), transparent 72%);
-  filter: blur(88px);
+  filter: blur(72px);
   pointer-events: none;
   z-index: 0;
+  opacity: 0.9;
+  will-change: transform;
   animation: ambientFloatA 18s ease-in-out infinite;
 }
 
@@ -162,11 +165,14 @@ h1, h2, h3, h4, h5, h6 {
   width: 50%;
   height: 50%;
   background:
+    radial-gradient(circle at 68% 58%, rgba(255, 179, 71, 0.12), transparent 24%),
     repeating-linear-gradient(0deg, transparent 0 46px, rgba(0, 228, 255, 0.04) 47px 48px, transparent 49px 96px),
     linear-gradient(270deg, rgba(255, 179, 71, 0.08), transparent 72%);
-  filter: blur(88px);
+  filter: blur(72px);
   pointer-events: none;
   z-index: 0;
+  opacity: 0.88;
+  will-change: transform;
   animation: ambientFloatB 22s ease-in-out infinite;
 }
 
@@ -494,6 +500,105 @@ h1, h2, h3, h4, h5, h6 {
   margin-bottom: 1.25rem;
 }
 
+.project-detail-panel {
+  margin-bottom: 1.35rem;
+  padding: 1rem;
+  border: 1px solid rgba(94, 234, 212, 0.14);
+  border-radius: 12px;
+  background:
+    linear-gradient(180deg, rgba(6, 16, 26, 0.92), rgba(3, 10, 18, 0.88)),
+    radial-gradient(circle at top right, rgba(94, 234, 212, 0.08), transparent 35%);
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 255, 255, 0.025),
+    0 14px 36px rgba(0, 0, 0, 0.24);
+}
+
+.project-detail-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.project-detail-label,
+.project-detail-state {
+  display: inline-flex;
+  align-items: center;
+  min-height: 1.5rem;
+  padding: 0.15rem 0.45rem;
+  border-radius: 999px;
+  font: 600 0.68rem var(--font-heading);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.project-detail-label {
+  color: var(--accent-amber);
+  background: rgba(255, 179, 71, 0.08);
+}
+
+.project-detail-state {
+  color: var(--accent-emerald);
+  background: rgba(23, 255, 198, 0.08);
+}
+
+.project-detail-headline {
+  margin-top: 0.8rem;
+  color: var(--text-primary);
+  font: 600 1rem/1.45 var(--font-heading);
+}
+
+.project-detail-summary {
+  margin-top: 0.45rem;
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+}
+
+.project-detail-stats {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.75rem;
+  margin-top: 0.95rem;
+}
+
+.project-detail-stat {
+  padding: 0.75rem 0.8rem;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.025);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.project-detail-stat strong {
+  display: block;
+  color: var(--primary-cyan);
+  font: 600 1rem/1.2 var(--font-heading);
+}
+
+.project-detail-stat span {
+  display: block;
+  margin-top: 0.22rem;
+  color: var(--text-secondary);
+  font-size: 0.78rem;
+}
+
+.project-detail-notes {
+  margin-top: 0.95rem;
+}
+
+.project-detail-notes h4 {
+  margin-bottom: 0.45rem;
+  color: var(--text-primary);
+  font-size: 0.88rem;
+}
+
+.project-detail-notes ul {
+  padding-left: 1rem;
+  color: var(--text-secondary);
+  font-size: 0.86rem;
+  display: grid;
+  gap: 0.38rem;
+}
+
 .project-links {
   display: flex;
   gap: 1rem;
@@ -568,6 +673,10 @@ h1, h2, h3, h4, h5, h6 {
     padding: 1rem;
     margin-left: -1rem;
     margin-right: -1rem;
+  }
+
+  .project-detail-stats {
+    grid-template-columns: 1fr;
   }
 }
 

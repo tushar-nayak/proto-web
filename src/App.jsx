@@ -581,6 +581,121 @@ const PROJECTS = [
   }
 ];
 
+const PROJECT_PAGE_DETAILS = {
+  2: {
+    label: 'From Project Page',
+    headline: 'Reproducible Neural ODE forecasting on LUMIERE-style longitudinal MRI.',
+    summary: 'The published project page reframes this work around a reproducibility checkpoint, tracked cohort aggregates, and a frozen publication rerun protocol rather than a one-off script result.',
+    stats: [
+      { value: '81', label: 'tracked patient-level runs' },
+      { value: '+6.7%', label: 'mean relative improvement' },
+      { value: '0.00828', label: 'mean model MSE' },
+      { value: '65', label: 'positive-improvement patients' }
+    ],
+    bullets: [
+      'Tracks aggregate outputs in versioned CSV, JSON, and Markdown artifacts instead of hand-copied manuscript prose.',
+      'Exports per-run provenance including Python, Torch, NumPy, device resolution, and split-wise metric tables.',
+      'Keeps publication work focused on a frozen holdout-aware rerun and regenerated manuscript figures.'
+    ]
+  },
+  18: {
+    label: 'From Project Page',
+    headline: 'Stabilized Gaussian occupancy fields reconstruct a 3D cardiac label volume with direct mesh diagnostics.',
+    summary: 'The page focuses on subject-level reconstruction quality and inspection, comparing predicted and ground-truth marching-cubes surfaces from the same validation sample.',
+    stats: [
+      { value: '0.966', label: 'sampled accuracy' },
+      { value: '0.950', label: 'sampled IoU' },
+      { value: '1800', label: 'Gaussians' },
+      { value: '600', label: 'fit steps' }
+    ],
+    bullets: [
+      'Represents anatomy with optimized 3D Gaussian occupancy kernels instead of a dense voxel field.',
+      'Shows paired prediction and ground-truth interactive mesh viewers for the same validation case.',
+      'Frames the result as inspectable reconstruction quality, not a population-level generalization claim.'
+    ]
+  },
+  4: {
+    label: 'From Project Page',
+    headline: 'Few-shot 3D cardiac reconstruction from sparse 2D echo.',
+    summary: 'The project page emphasizes repo-local tracked outputs, interactive 2D and 3D viewers, and a strongest mixed-run overlap result on the MITEA data.',
+    stats: [
+      { value: '0.8643', label: 'best full-volume Dice' },
+      { value: '0.7658', label: 'best full-volume IoU' },
+      { value: '536', label: 'repo-local dataset pairs' },
+      { value: '6', label: 'featured scans' }
+    ],
+    bullets: [
+      'Uses tracked HTML exports so slice overlays and 3D meshes work directly on GitHub Pages.',
+      'Highlights subject-specific viewers for scans 020, 080, 093, 103, 107, and 115.',
+      'Presents the strongest overlap as the mixed run without stratifiers.'
+    ]
+  },
+  10: {
+    label: 'From Project Page',
+    headline: 'A learned Perona-Malik style MRI denoising project with tracked baselines, ablations, and robustness sweeps.',
+    summary: 'The page positions the method as a neural PDE denoiser with an interactive results explorer and quantitative comparisons against classical baselines.',
+    stats: [
+      { value: '24.85 dB', label: 'Neural PDE PSNR' },
+      { value: '0.719', label: 'Neural PDE SSIM' },
+      { value: '+4.46 dB', label: 'gain vs. NLM baseline' },
+      { value: '16', label: 'unrolled PDE steps' }
+    ],
+    bullets: [
+      'Separates abstract, methodology, qualitative analysis, and discussion into a report-like project page.',
+      'Uses unrolled anisotropic diffusion steps with learned conduction behavior rather than a fixed denoiser.',
+      'Surfaces quantitative gains alongside an interactive explorer instead of only static figures.'
+    ]
+  },
+  16: {
+    label: 'From Project Page',
+    headline: 'Open-vocabulary surgical tool detection, segmentation, and tracking on real endoscopic and laparoscopic data.',
+    summary: 'The public page describes an inference-first real-data pipeline with prompt grounding, SAM2 mask refinement, tracked overlays, and re-grounded video propagation.',
+    stats: [
+      { value: '0.2139', label: 'bbox mAP' },
+      { value: '0.3926', label: 'mean mask IoU' },
+      { value: '5.58', label: 'video FPS with re-grounding' },
+      { value: '120', label: 'tracked real frames' }
+    ],
+    bullets: [
+      'Grounds prompts like forceps, grasper, catheter, and guidewire into tool proposals before SAM2 refinement.',
+      'Reports real Endoscapes subset results rather than synthetic-only evaluation.',
+      'Includes playable tracked overlays both with and without periodic re-grounding.'
+    ]
+  },
+  12: {
+    label: 'From Project Page',
+    headline: 'Real-data full-volume lung CT segmentation pipeline using SimpleITK, MONAI, and VTK.',
+    summary: 'The page publishes tracked artifacts from a 25-epoch Zenodo full run and pairs segmentation outputs with airway-centerline tooling for navigation workflows.',
+    stats: [
+      { value: '25', label: 'training epochs' },
+      { value: '20', label: 'prepared cases' },
+      { value: '96×128×128', label: 'prepared volume shape' },
+      { value: 'CUDA', label: 'run device' }
+    ],
+    bullets: [
+      'Packages NIfTI predictions, STL and VTP meshes, metrics, and a model card as tracked outputs.',
+      'Calls out a bimodal performance pattern between cases 001-010 and 011-020.',
+      'Includes a separate airway-centerline and routing workflow on top of the lung surface meshes.'
+    ]
+  },
+  15: {
+    label: 'From Project Page',
+    headline: 'ISIC 2018 lesion segmentation with DeepLabV3 baselines and a custom boundary-aware BA-DeepLabV3.',
+    summary: 'The project page explains the segmentation stack as a serious reproducible medical workflow, not just a single model checkpoint.',
+    stats: [
+      { value: '0.8900', label: 'best validation Dice' },
+      { value: '0.8134', label: 'best validation IoU' },
+      { value: '0.7598', label: 'best validation threshold Jaccard' },
+      { value: '0.7320', label: 'final test threshold Jaccard' }
+    ],
+    bullets: [
+      'Extends plain DeepLabV3 with dynamic ASPP, boundary supervision, uncertainty modeling, and refinement decoding.',
+      'Positions ISIC 2018 as a benchmark for comparing U-Net variants, non-U-Net CNNs, and transformer models.',
+      'Uses threshold Jaccard to select validation checkpoints for the official lesion-boundary task.'
+    ]
+  }
+};
+
 const TEACHING_COURSES = [
   {
     id: 'ml-bme',
@@ -788,6 +903,7 @@ function App() {
     const isHovered = hoveredProjectId === project.id;
     const isSelected = selectedProjectId === project.id;
     const isDimmed = selectedProjectId !== null && !isSelected;
+    const detail = PROJECT_PAGE_DETAILS[project.id];
     return (
       <div
         key={project.id}
@@ -836,6 +952,43 @@ function App() {
 
         <h3 className="project-card-title">{project.title}</h3>
         <p className="project-card-desc">{project.desc}</p>
+
+        {isSelected && (
+          <div className="project-detail-panel">
+            <div className="project-detail-header">
+              <span className="project-detail-label">{detail ? detail.label : 'Selected Project'}</span>
+              <span className="project-detail-state">OPEN</span>
+            </div>
+            <p className="project-detail-headline">
+              {detail ? detail.headline : 'This project is currently selected. Use the repository and project page links below to inspect artifacts, reports, and demos.'}
+            </p>
+            <p className="project-detail-summary">
+              {detail ? detail.summary : 'No dedicated GitHub Pages site is linked for this entry, so the card falls back to the in-app summary and repository links.'}
+            </p>
+
+            <div className="project-detail-stats">
+              {(detail ? detail.stats : project.tags.slice(0, 4).map((tag) => ({ value: tag, label: 'project focus' }))).map((item) => (
+                <div key={`${project.id}-${item.value}-${item.label}`} className="project-detail-stat">
+                  <strong>{item.value}</strong>
+                  <span>{item.label}</span>
+                </div>
+              ))}
+            </div>
+
+            <div className="project-detail-notes">
+              <h4>Highlights</h4>
+              <ul>
+                {(detail ? detail.bullets : [
+                  project.simLogs[0],
+                  project.simLogs[Math.min(1, project.simLogs.length - 1)],
+                  project.demo ? 'A project page or report is linked for deeper inspection.' : 'This entry currently points primarily to repository material.'
+                ]).map((item) => (
+                  <li key={`${project.id}-${item}`}>{item}</li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        )}
 
         <div className="project-tags">
           {project.tags.map((tag, idx) => (

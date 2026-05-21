@@ -9,27 +9,35 @@ const NeuralBackground = () => {
 
     const ctx = canvas.getContext('2d');
     let animationFrameId;
+    let viewportWidth = window.innerWidth;
+    let viewportHeight = window.innerHeight;
 
     // Resize handler
     const handleResize = () => {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
+      const dpr = window.devicePixelRatio || 1;
+      viewportWidth = window.innerWidth;
+      viewportHeight = window.innerHeight;
+      canvas.width = viewportWidth * dpr;
+      canvas.height = viewportHeight * dpr;
+      canvas.style.width = `${viewportWidth}px`;
+      canvas.style.height = `${viewportHeight}px`;
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
     };
     window.addEventListener('resize', handleResize);
     handleResize();
 
     // Node particle system configuration
-    const particleCount = Math.min(Math.floor((window.innerWidth * window.innerHeight) / 9000), 100);
+    const particleCount = Math.min(Math.floor((window.innerWidth * window.innerHeight) / 8500), 110);
     const particles = [];
     const mouse = { x: null, y: null, radius: 180 };
 
     class Particle {
       constructor() {
-        this.x = Math.random() * canvas.width;
-        this.y = Math.random() * canvas.height;
+        this.x = Math.random() * viewportWidth;
+        this.y = Math.random() * viewportHeight;
         this.vx = (Math.random() - 0.5) * 0.4;
         this.vy = (Math.random() - 0.5) * 0.4;
-        this.size = Math.random() * 2 + 1;
+        this.size = Math.random() * 1.8 + 0.9;
       }
 
       update() {
@@ -37,8 +45,8 @@ const NeuralBackground = () => {
         this.y += this.vy;
 
         // Bounce on boundaries
-        if (this.x < 0 || this.x > canvas.width) this.vx = -this.vx;
-        if (this.y < 0 || this.y > canvas.height) this.vy = -this.vy;
+        if (this.x < 0 || this.x > viewportWidth) this.vx = -this.vx;
+        if (this.y < 0 || this.y > viewportHeight) this.vy = -this.vy;
 
         // Mouse hover interaction (gentle attraction/repulsion)
         if (mouse.x !== null && mouse.y !== null) {
@@ -58,7 +66,7 @@ const NeuralBackground = () => {
         ctx.beginPath();
         ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
         ctx.fillStyle = 'rgba(0, 242, 254, 0.4)';
-        ctx.shadowBlur = 4;
+        ctx.shadowBlur = 6;
         ctx.shadowColor = '#00f2fe';
         ctx.fill();
         ctx.shadowBlur = 0; // Reset shadow for line drawing
@@ -86,7 +94,7 @@ const NeuralBackground = () => {
 
     // Main animation loop
     const animate = () => {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      ctx.clearRect(0, 0, viewportWidth, viewportHeight);
 
       // Draw lines between close particles
       for (let i = 0; i < particles.length; i++) {
@@ -105,7 +113,7 @@ const NeuralBackground = () => {
             ctx.moveTo(particles[i].x, particles[i].y);
             ctx.lineTo(particles[j].x, particles[j].y);
             ctx.strokeStyle = `rgba(0, 242, 254, ${opacity})`;
-            ctx.lineWidth = 0.8;
+            ctx.lineWidth = 0.9;
             ctx.stroke();
           }
         }
