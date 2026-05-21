@@ -19,11 +19,11 @@ const THEME_CONFIG = {
     linkColor: (opacity) => `rgba(124, 168, 255, ${opacity * 0.78})`,
     mouseColor: (opacity) => `rgba(90, 193, 167, ${opacity * 0.74})`
   },
-  'microsoft-fluent': {
-    particleFill: 'rgba(143, 198, 255, 0.34)',
-    particleShadow: 'rgba(136, 184, 255, 0.72)',
-    linkColor: (opacity) => `rgba(160, 204, 255, ${opacity * 0.82})`,
-    mouseColor: (opacity) => `rgba(118, 211, 255, ${opacity * 0.72})`
+  'linux-terminal': {
+    particleFill: 'rgba(120, 255, 158, 0.18)',
+    particleShadow: 'rgba(120, 255, 158, 0.72)',
+    linkColor: (opacity) => `rgba(98, 255, 146, ${opacity * 0.68})`,
+    mouseColor: (opacity) => `rgba(214, 255, 169, ${opacity * 0.52})`
   }
 };
 

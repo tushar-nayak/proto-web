@@ -748,26 +748,22 @@ const THEME_OPTIONS = [
   {
     id: 'tron',
     label: 'Tron Grid',
-    blurb: 'Neon cyan circuitry, sharper scanline depth, and the current robotics-heavy atmosphere.',
-    command: 'boot --profile tron-grid'
+    icon: Cpu
   },
   {
     id: 'liquid-glass',
     label: 'Liquid Glass',
-    blurb: 'Softer frosted panels, milky highlights, and a brighter Apple-style glass treatment.',
-    command: 'boot --profile liquid-glass'
+    icon: Sparkles
   },
   {
     id: 'google-material',
     label: 'Google Material',
-    blurb: 'Clean layered surfaces, brighter tonal containers, and a Material-style blue-green system.',
-    command: 'boot --profile google-material'
+    icon: ScanEye
   },
   {
-    id: 'microsoft-fluent',
-    label: 'Microsoft Fluent',
-    blurb: 'Soft depth, cool acrylic panels, and Fluent-inspired blue neutrals with restrained glow.',
-    command: 'boot --profile microsoft-fluent'
+    id: 'linux-terminal',
+    label: 'Linux Terminal',
+    icon: FolderGit2
   }
 ];
 
@@ -804,6 +800,7 @@ function App() {
   const resolvedTheme = siteTheme || 'tron';
   const isLiquidGlass = resolvedTheme === 'liquid-glass';
   const isGoogleMaterial = resolvedTheme === 'google-material';
+  const isLinuxTerminal = resolvedTheme === 'linux-terminal';
   const usesDedicatedThemeSoundtrack = isLiquidGlass || isGoogleMaterial;
 
   useEffect(() => {
@@ -1008,8 +1005,12 @@ function App() {
     const detail = PROJECT_PAGE_DETAILS[project.id];
     const cardBackground = isGoogleMaterial
       ? (project.highlight
-        ? 'linear-gradient(180deg, rgba(231,236,255,0.98), rgba(245,247,255,0.98)), rgba(255,255,255,0.98)'
-        : 'linear-gradient(180deg, rgba(248,249,255,0.98), rgba(255,255,255,0.98))')
+        ? 'linear-gradient(180deg, rgba(236,244,255,0.98), rgba(247,250,255,0.98)), rgba(255,255,255,0.98)'
+        : 'linear-gradient(180deg, rgba(248,251,255,0.98), rgba(255,255,255,0.98))')
+      : isLinuxTerminal
+      ? (project.highlight
+        ? 'linear-gradient(180deg, rgba(14,14,14,0.99), rgba(7,7,7,0.99)), repeating-linear-gradient(180deg, rgba(255,255,255,0.02) 0 1px, transparent 1px 4px)'
+        : 'linear-gradient(180deg, rgba(12,12,12,0.99), rgba(6,6,6,0.99))')
       : isLiquidGlass
       ? (project.highlight
         ? 'linear-gradient(180deg, rgba(255,255,255,0.48), rgba(238,246,255,0.18)), linear-gradient(135deg, rgba(255,255,255,0.14), rgba(192,216,255,0.08) 52%, rgba(255,219,194,0.1) 100%)'
@@ -1018,20 +1019,22 @@ function App() {
         ? 'radial-gradient(circle at 50% 0%, rgba(14, 165, 233, 0.02), rgba(14, 16, 21, 0.8) 75%)'
         : 'var(--bg-surface-glass)');
     const cardBorder = isSelected
-      ? (isGoogleMaterial ? 'rgba(91, 91, 214, 0.88)' : isLiquidGlass ? 'rgba(255, 255, 255, 0.92)' : 'rgba(94, 234, 212, 0.9)')
+      ? (isGoogleMaterial ? 'rgba(57, 107, 189, 0.88)' : isLinuxTerminal ? 'rgba(255, 255, 255, 0.28)' : isLiquidGlass ? 'rgba(255, 255, 255, 0.92)' : 'rgba(94, 234, 212, 0.9)')
       : isHovered
-      ? (isGoogleMaterial ? 'rgba(91, 91, 214, 0.46)' : 'var(--accent-emerald)')
+      ? (isGoogleMaterial ? 'rgba(57, 107, 189, 0.46)' : isLinuxTerminal ? 'rgba(255, 255, 255, 0.18)' : 'var(--accent-emerald)')
       : (project.highlight
-        ? (isGoogleMaterial ? 'rgba(181, 191, 240, 0.92)' : isLiquidGlass ? 'rgba(255,255,255,0.48)' : 'rgba(14, 165, 233, 0.12)')
+        ? (isGoogleMaterial ? 'rgba(188, 214, 242, 0.92)' : isLinuxTerminal ? 'rgba(255, 255, 255, 0.14)' : isLiquidGlass ? 'rgba(255,255,255,0.48)' : 'rgba(14, 165, 233, 0.12)')
         : 'var(--border-glow)');
     const cardShadow = isSelected
       ? (isGoogleMaterial
         ? '0 4px 12px rgba(60, 64, 89, 0.12), 0 20px 36px rgba(60, 64, 89, 0.18)'
+        : isLinuxTerminal
+        ? 'inset 0 0 0 1px rgba(255,255,255,0.06), 0 0 18px rgba(255,255,255,0.05), 0 20px 42px rgba(0,0,0,0.56)'
         : isLiquidGlass
         ? 'inset 0 1px 0 rgba(255,255,255,0.94), inset 16px 0 24px rgba(190,220,255,0.12), inset -16px 0 24px rgba(255,223,196,0.12), 0 24px 48px rgba(113,145,184,0.16)'
         : 'inset 0 0 0 1px rgba(94, 234, 212, 0.24), 0 0 28px rgba(94, 234, 212, 0.28), 0 20px 52px rgba(0, 0, 0, 0.54)')
       : isHovered
-      ? (isGoogleMaterial ? '0 3px 8px rgba(60, 64, 89, 0.08), 0 14px 24px rgba(60, 64, 89, 0.12)' : isLiquidGlass ? '0 18px 34px rgba(120,150,190,0.12)' : '0 0 15px rgba(16, 185, 129, 0.05)')
+      ? (isGoogleMaterial ? '0 3px 8px rgba(60, 64, 89, 0.08), 0 14px 24px rgba(60, 64, 89, 0.12)' : isLinuxTerminal ? '0 0 12px rgba(255,255,255,0.04), 0 14px 28px rgba(0,0,0,0.42)' : isLiquidGlass ? '0 18px 34px rgba(120,150,190,0.12)' : '0 0 15px rgba(16, 185, 129, 0.05)')
       : 'none';
     return (
       <div
@@ -1116,10 +1119,10 @@ function App() {
             <span key={idx} style={{
               fontSize: '0.75rem',
               color: 'var(--text-secondary)',
-              background: isGoogleMaterial ? 'rgba(228, 233, 252, 0.96)' : isLiquidGlass ? 'rgba(255, 255, 255, 0.34)' : 'rgba(255, 255, 255, 0.02)',
+              background: isGoogleMaterial ? 'rgba(234, 243, 255, 0.96)' : isLinuxTerminal ? 'rgba(18, 18, 18, 0.96)' : isLiquidGlass ? 'rgba(255, 255, 255, 0.34)' : 'rgba(255, 255, 255, 0.02)',
               padding: '0.15rem 0.5rem',
               borderRadius: '4px',
-              border: isGoogleMaterial ? '1px solid rgba(201, 209, 245, 0.98)' : isLiquidGlass ? '1px solid rgba(255, 255, 255, 0.58)' : '1px solid rgba(255, 255, 255, 0.05)'
+              border: isGoogleMaterial ? '1px solid rgba(201, 219, 240, 0.98)' : isLinuxTerminal ? '1px solid rgba(255, 255, 255, 0.1)' : isLiquidGlass ? '1px solid rgba(255, 255, 255, 0.58)' : '1px solid rgba(255, 255, 255, 0.05)'
             }}>{tag}</span>
           ))}
         </div>
@@ -1128,11 +1131,13 @@ function App() {
           marginTop: 'auto',
           marginBottom: '1rem',
           background: isGoogleMaterial
-            ? 'rgba(239, 242, 255, 0.98)'
+            ? 'rgba(240, 246, 255, 0.98)'
+            : isLinuxTerminal
+            ? 'linear-gradient(180deg, rgba(5,5,5,0.98), rgba(14,14,14,0.98))'
             : isLiquidGlass
             ? 'linear-gradient(180deg, rgba(255,255,255,0.44), rgba(239,246,255,0.24))'
             : 'rgba(0, 0, 0, 0.15)',
-          border: isGoogleMaterial ? '1px solid rgba(206, 214, 245, 0.96)' : isLiquidGlass ? '1px solid rgba(255, 255, 255, 0.62)' : '1px solid rgba(255, 255, 255, 0.03)',
+          border: isGoogleMaterial ? '1px solid rgba(205, 220, 238, 0.96)' : isLinuxTerminal ? '1px solid rgba(255, 255, 255, 0.12)' : isLiquidGlass ? '1px solid rgba(255, 255, 255, 0.62)' : '1px solid rgba(255, 255, 255, 0.03)',
           borderRadius: '8px',
           padding: '0.65rem 0.85rem'
         }}>
@@ -1215,10 +1220,12 @@ function App() {
                     type="button"
                     className="theme-mode-card"
                     onClick={() => handleThemeSelect(option.id)}
+                    aria-label={option.label}
                   >
-                    <span className="theme-mode-command">{option.command}</span>
+                    <span className="theme-mode-icon" aria-hidden="true">
+                      <option.icon size={24} />
+                    </span>
                     <strong>{option.label}</strong>
-                    <span>{option.blurb}</span>
                   </button>
                 ))}
               </div>
@@ -1253,16 +1260,19 @@ function App() {
       }}>
         <div className="site-header-shell" style={{
           background: isGoogleMaterial
-            ? 'linear-gradient(180deg, rgba(247,248,255,0.98), rgba(238,242,255,0.98))'
+            ? 'linear-gradient(180deg, rgba(246,250,255,0.98), rgba(236,244,255,0.98))'
+            : isLinuxTerminal
+            ? 'linear-gradient(180deg, rgba(12,12,12,0.99), rgba(6,6,6,0.99))'
             : isLiquidGlass
             ? 'linear-gradient(180deg, rgba(255, 255, 255, 0.62), rgba(234, 243, 255, 0.34))'
             : 'rgba(10, 11, 14, 0.75)',
-          backdropFilter: isLiquidGlass ? 'blur(24px) saturate(1.2)' : (isGoogleMaterial ? 'none' : 'blur(16px)'),
-          WebkitBackdropFilter: isLiquidGlass ? 'blur(24px) saturate(1.2)' : (isGoogleMaterial ? 'none' : 'blur(16px)'),
+          backdropFilter: isLiquidGlass ? 'blur(24px) saturate(1.2)' : ((isGoogleMaterial || isLinuxTerminal) ? 'none' : 'blur(16px)'),
+          WebkitBackdropFilter: isLiquidGlass ? 'blur(24px) saturate(1.2)' : ((isGoogleMaterial || isLinuxTerminal) ? 'none' : 'blur(16px)'),
           border: isGoogleMaterial
-            ? '1px solid rgba(207, 214, 245, 0.96)'
+            ? '1px solid rgba(204, 220, 238, 0.96)'
+            : isLinuxTerminal ? '1px solid rgba(255, 255, 255, 0.12)'
             : isLiquidGlass ? '1px solid rgba(255, 255, 255, 0.76)' : '1px solid rgba(0, 242, 254, 0.15)',
-          borderRadius: '24px',
+          borderRadius: isLinuxTerminal ? '10px' : '24px',
           padding: '0.65rem 1.25rem',
           display: 'flex',
           justifyContent: 'space-between',
@@ -1270,6 +1280,7 @@ function App() {
           gap: '1rem',
           boxShadow: isGoogleMaterial
             ? '0 4px 12px rgba(60,64,89,0.08), 0 18px 28px rgba(60,64,89,0.14)'
+            : isLinuxTerminal ? 'inset 0 0 0 1px rgba(255,255,255,0.03), 0 18px 34px rgba(0,0,0,0.46)'
             : isLiquidGlass
             ? 'inset 0 1px 0 rgba(255,255,255,0.86), 0 22px 48px rgba(119, 145, 182, 0.22)'
             : '0 8px 32px 0 rgba(0, 0, 0, 0.4)'
@@ -1286,9 +1297,10 @@ function App() {
               justifyContent: 'center',
               fontWeight: '700',
               fontSize: '0.85rem',
-              color: isGoogleMaterial ? '#fff' : isLiquidGlass ? '#17304e' : '#000',
+              color: isGoogleMaterial ? '#fff' : isLinuxTerminal ? '#051006' : isLiquidGlass ? '#17304e' : '#000',
               boxShadow: isGoogleMaterial
-                ? '0 8px 18px rgba(91,91,214,0.28)'
+                ? '0 8px 18px rgba(57,107,189,0.28)'
+                : isLinuxTerminal ? '0 0 10px rgba(255,255,255,0.08)'
                 : isLiquidGlass
                 ? 'inset 0 1px 0 rgba(255,255,255,0.82), 0 10px 24px rgba(146, 174, 214, 0.28)'
                 : '0 0 10px rgba(0, 242, 254, 0.4)'
@@ -1316,17 +1328,21 @@ function App() {
                 }}
                 style={{
                   background: activeTab === tab
-                    ? (isGoogleMaterial ? 'linear-gradient(135deg, #5b5bd6 0%, #7c84f7 100%)' :
+                    ? (isGoogleMaterial ? 'linear-gradient(135deg, #5a9be6 0%, #79b8ff 100%)' :
+                      isLinuxTerminal ? 'rgba(255, 255, 255, 0.08)' :
                       isLiquidGlass ? 'rgba(255, 255, 255, 0.52)' : 'rgba(0, 242, 254, 0.08)')
                     : (isGoogleMaterial ? '#eef2ff' :
+                      isLinuxTerminal ? 'rgba(10, 10, 10, 0.96)' :
                       isLiquidGlass ? 'rgba(255, 255, 255, 0.16)' : 'transparent'),
                   border: activeTab === tab
-                    ? (isGoogleMaterial ? '1px solid rgba(91, 91, 214, 0.92)' :
+                    ? (isGoogleMaterial ? '1px solid rgba(90, 155, 230, 0.92)' :
+                      isLinuxTerminal ? '1px solid rgba(255, 255, 255, 0.2)' :
                       isLiquidGlass ? '1px solid rgba(255, 255, 255, 0.8)' : '1px solid rgba(0, 242, 254, 0.25)')
-                    : (isGoogleMaterial ? '1px solid rgba(207, 214, 245, 0.96)' :
+                    : (isGoogleMaterial ? '1px solid rgba(204, 220, 238, 0.96)' :
+                      isLinuxTerminal ? '1px solid rgba(255, 255, 255, 0.08)' :
                       isLiquidGlass ? '1px solid rgba(255, 255, 255, 0.24)' : '1px solid transparent'),
                   color: activeTab === tab
-                    ? (isGoogleMaterial ? '#fff' : 'var(--primary-cyan)')
+                    ? (isGoogleMaterial ? '#fff' : isLinuxTerminal ? 'var(--primary-cyan)' : 'var(--primary-cyan)')
                     : 'var(--text-secondary)',
                   padding: '0.4rem 0.9rem',
                   borderRadius: '12px',
@@ -1353,8 +1369,8 @@ function App() {
                 style={{
                   padding: '0.48rem 0.72rem',
                   borderRadius: '999px',
-                  background: isGoogleMaterial ? '#eef2ff' : isLiquidGlass ? 'rgba(255, 255, 255, 0.34)' : 'rgba(255, 255, 255, 0.035)',
-                  border: isGoogleMaterial ? '1px solid rgba(207, 214, 245, 0.96)' : isLiquidGlass ? '1px solid rgba(255, 255, 255, 0.72)' : '1px solid rgba(255, 255, 255, 0.08)',
+                  background: isGoogleMaterial ? '#edf6ff' : isLinuxTerminal ? 'rgba(10, 10, 10, 0.96)' : isLiquidGlass ? 'rgba(255, 255, 255, 0.34)' : 'rgba(255, 255, 255, 0.035)',
+                  border: isGoogleMaterial ? '1px solid rgba(204, 220, 238, 0.96)' : isLinuxTerminal ? '1px solid rgba(255, 255, 255, 0.08)' : isLiquidGlass ? '1px solid rgba(255, 255, 255, 0.72)' : '1px solid rgba(255, 255, 255, 0.08)',
                   color: 'var(--text-secondary)',
                   display: 'inline-flex',
                   alignItems: 'center',
@@ -1372,8 +1388,8 @@ function App() {
                 style={{
                   padding: '0.48rem 0.72rem',
                   borderRadius: '999px',
-                  background: isGoogleMaterial ? '#eef2ff' : isLiquidGlass ? 'rgba(255, 255, 255, 0.34)' : 'rgba(255, 255, 255, 0.035)',
-                  border: isGoogleMaterial ? '1px solid rgba(207, 214, 245, 0.96)' : isLiquidGlass ? '1px solid rgba(255, 255, 255, 0.72)' : '1px solid rgba(255, 255, 255, 0.08)',
+                  background: isGoogleMaterial ? '#edf6ff' : isLinuxTerminal ? 'rgba(10, 10, 10, 0.96)' : isLiquidGlass ? 'rgba(255, 255, 255, 0.34)' : 'rgba(255, 255, 255, 0.035)',
+                  border: isGoogleMaterial ? '1px solid rgba(204, 220, 238, 0.96)' : isLinuxTerminal ? '1px solid rgba(255, 255, 255, 0.08)' : isLiquidGlass ? '1px solid rgba(255, 255, 255, 0.72)' : '1px solid rgba(255, 255, 255, 0.08)',
                   color: 'var(--text-secondary)',
                   display: 'inline-flex',
                   alignItems: 'center',

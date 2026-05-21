@@ -22,11 +22,11 @@ const THEME_TRAIL = {
     secondary: (alpha) => `rgba(88, 201, 175, ${alpha * 0.34})`,
     secondaryShadow: 'rgba(88, 201, 175, 0.62)'
   },
-  'microsoft-fluent': {
-    primary: (alpha) => `rgba(157, 208, 255, ${alpha * 0.82})`,
-    primaryShadow: 'rgba(136, 184, 255, 0.78)',
-    secondary: (alpha) => `rgba(146, 226, 255, ${alpha * 0.28})`,
-    secondaryShadow: 'rgba(146, 226, 255, 0.56)'
+  'linux-terminal': {
+    primary: (alpha) => `rgba(114, 255, 159, ${alpha * 0.74})`,
+    primaryShadow: 'rgba(114, 255, 159, 0.82)',
+    secondary: (alpha) => `rgba(214, 255, 169, ${alpha * 0.24})`,
+    secondaryShadow: 'rgba(214, 255, 169, 0.5)'
   }
 };
 

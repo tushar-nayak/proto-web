@@ -3,6 +3,7 @@ import { Volume2, VolumeX } from 'lucide-react';
 import tronSoundtrack from '../assets/Sea of Simulation.mp3';
 import liquidGlassSoundtrack from '../assets/Lambent Rag.mp3';
 import googleMaterialSoundtrack from '../assets/googleio.mp3';
+import linuxTerminalSoundtrack from '../assets/linux.mp3';
 
 export default function BackgroundAudio({ theme = 'tron' }) {
   const audioRef = useRef(null);
@@ -19,7 +20,8 @@ export default function BackgroundAudio({ theme = 'tron' }) {
 
     const isLiquidGlass = theme === 'liquid-glass';
     const isGoogleMaterial = theme === 'google-material';
-    audio.volume = isLiquidGlass ? 0.18 : (isGoogleMaterial ? 0.14 : 0.05);
+    const isLinuxTerminal = theme === 'linux-terminal';
+    audio.volume = isLiquidGlass ? 0.18 : (isGoogleMaterial ? 0.14 : (isLinuxTerminal ? 0.12 : 0.05));
     audio.loop = true;
     audio.muted = isMuted;
 
@@ -43,13 +45,13 @@ export default function BackgroundAudio({ theme = 'tron' }) {
     };
 
     const handleProjectAudioPlay = () => {
-      if (isLiquidGlass || isGoogleMaterial) return;
+      if (isLiquidGlass || isGoogleMaterial || isLinuxTerminal) return;
       audio.pause();
       syncStarted();
     };
 
     const handleProjectAudioStop = async () => {
-      if (isLiquidGlass || isGoogleMaterial) {
+      if (isLiquidGlass || isGoogleMaterial || isLinuxTerminal) {
         syncStarted();
         return;
       }
@@ -123,6 +125,8 @@ export default function BackgroundAudio({ theme = 'tron' }) {
             ? liquidGlassSoundtrack
             : theme === 'google-material'
             ? googleMaterialSoundtrack
+            : theme === 'linux-terminal'
+            ? linuxTerminalSoundtrack
             : tronSoundtrack
         }
         preload="auto"
