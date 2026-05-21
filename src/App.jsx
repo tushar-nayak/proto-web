@@ -267,7 +267,7 @@ const PROJECTS = [
     desc: "Advised by Dr. Kenji Shimada and Rishi Basdeo (CERLAB) in collaboration with UPMC neurosurgeons. Fuses 2D X-ray angiography features and pre-operative 3D centerlines using MorphPINN with a strain-preserving deformation graph system. Deploys custom CUDA-accelerated solvers.",
     category: "3D & Robotics",
     tags: ["Physics-Informed ML", "MorphPINN", "Vascular Registration", "Surgical Robotics"],
-    github: "https://github.com/katahar/telesurgery_cerlab/tree/deformation-graph/cv/deformable_registration",
+    github: "https://github.com/tushar-nayak/vascular-reconstruction",
     demo: null,
     highlight: true,
     simLogs: [
@@ -516,8 +516,58 @@ const PROJECTS = [
       "[DEEPLAB] Performing ASPP dense feature projection...",
       "[SUCCESS] Segmentation boundary mask generated. Dice score = 0.931."
     ]
+  },
+  {
+    id: 16,
+    title: "SurgiPrompt: Open-Vocabulary Surgical Tool Detection & Tracking",
+    desc: "Personal project. Deploys open-vocabulary detection, segmentation, and tracking of surgical tools in clinical endoscopic and laparoscopic video feeds. Integrates Grounding DINO with Segment Anything 2 (SAM2) for zero-shot text-prompted instrument localized masking.",
+    category: "3D & Robotics",
+    tags: ["Grounding DINO", "SAM2", "Surgical Vision", "Open-Vocabulary tracking"],
+    github: "https://github.com/tushar-nayak/surgi-prompt",
+    demo: null,
+    highlight: true,
+    simLogs: [
+      "[SURGI-PROMPT] Loading laparoscopic video frame sequence...",
+      "[DETECTION] Feeding text prompts: 'forceps', 'grasper', 'needle driver' to Grounding DINO...",
+      "[SAM2] Translating detected bounding boxes to spatial prompts for SAM2...",
+      "[TRACKING] Propagating tool mask state forward through neural memory grids...",
+      "[SUCCESS] Real-time surgical tool tracking locked! Mean IoU = 0.892 | FPS = 42.5."
+    ]
+  },
+  {
+    id: 17,
+    title: "LobeRanger: Gigapixel Multi-Scale Pathology Foundation Network",
+    desc: "Personal project. A prototype Multi-Scale Ordinal Pathology Foundation Network (MOPFN) that pairs 20x and 40x whole-slide pathology images. Preserves both global architectural and local cytologic context using bidirectional cross-attention fusion layers for high-resolution biopsy analysis.",
+    category: "Cancer & Pathology",
+    tags: ["Foundation Models", "Gigapixel WSI", "Pathology Staging", "Cross-Attention"],
+    github: "https://github.com/tushar-nayak/lobe-ranger",
+    demo: null,
+    highlight: true,
+    simLogs: [
+      "[LOBE-RANGER] Loading paired gigapixel whole-slide scans (20x macro & 40x micro)...",
+      "[ATTENTION] Aligning architectural tissue patches and high-power cytologic tokens...",
+      "[CLASSIFIER] Projecting attention-weighted feature maps onto ordinal staging categories...",
+      "[SUCCESS] Pathology staging complete. Grade II (Adenocarcinoma) locked | F1-Score = 0.941."
+    ]
+  },
+  {
+    id: 18,
+    title: "CardiacReconstruction-Evolved: Gaussian Occupancy Cardiac Recovery",
+    desc: "Personal project. Implements sparse 3D cardiac volume recovery from sparse echocardiographic views. Employs stabilized 3D Gaussian occupancy fields, differentiable slice projection supervision, and high-fidelity mesh evaluation for clinical anatomical reconstruction.",
+    category: "3D & Robotics",
+    tags: ["3D Gaussian Occupancy", "Differentiable Projection", "Sparse Cardiac 3D", "Mesh Evaluation"],
+    github: "https://github.com/tushar-nayak/cardiac-reconstruction-evolved",
+    demo: null,
+    highlight: false,
+    simLogs: [
+      "[CARDIAC-EVOLVED] Spawning 150,000 stabilized spatial Gaussian occupancy points...",
+      "[DIFFERENTIABLE] Projecting 3D occupancy volume onto 2D echocardiographic slice planes...",
+      "[OPTIMIZER] Running Adam step to minimize projection boundaries matching echo scans...",
+      "[MESH] Applying Marching Cubes to recover watertight 3D ventricular boundary...",
+      "[SUCCESS] Ventricular volume recovery completed! Chamfer Distance = 0.92mm."
+    ]
   }
-];;
+];
 
 function App() {
   const [activeTab, setActiveTab] = useState('about');
