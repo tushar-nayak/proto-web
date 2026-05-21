@@ -22,6 +22,8 @@ import {
   Sparkles
 } from 'lucide-react';
 import NeuralBackground from './components/NeuralBackground';
+import ProjectVisual from './components/ProjectVisual';
+import ProfileSplat from './components/ProfileSplat';
 
 // Custom inline SVG replacements for brand/common icons to prevent build resolution errors
 const Mail = ({ size = 18 }) => (
@@ -298,21 +300,20 @@ const PROJECTS = [
     ]
   },
   {
-    id: 3,
-    title: "Neural Correlates Associated to Images for Emotional Response",
-    desc: "Course project for Fundamentals of MRI and Neuroimaging Analysis. Maps affective processing of emotional valence (positive/negative/neutral) using a multimodal fMRI workflow on a 3T Siemens Prisma, combining BOLD task-based fMRI, resting-state connectivity, and ASL perfusion.",
-    category: "Medical Imaging",
-    tags: ["BOLD fMRI", "ASL Perfusion", "3T Siemens Prisma", "SPM12"],
-    github: "https://github.com/tushar-nayak",
-    demo: "https://tushar-nayak.github.io/assets/pdf/42668.pdf",
-    highlight: false,
+    id: 18,
+    title: "CardiacReconstruction-Evolved: Gaussian Occupancy Cardiac Recovery",
+    desc: "Implements sparse 3D cardiac volume recovery from sparse echocardiographic views. Employs stabilized 3D Gaussian occupancy fields, differentiable slice projection supervision, and high-fidelity mesh evaluation for clinical anatomical reconstruction.",
+    category: "3D & Robotics",
+    tags: ["3D Gaussian Occupancy", "Differentiable Projection", "Sparse Cardiac 3D", "Mesh Evaluation"],
+    github: "https://github.com/tushar-nayak/cardiac-reconstruction-evolved",
+    demo: "https://tushar-nayak.github.io/cardiac-reconstruction-evolved/",
+    highlight: true,
     simLogs: [
-      "[BOLD] Preprocessing 3T Siemens Prisma fMRI: slice timing, motion correction...",
-      "[SPM12] Co-registering T1 structural anatomy to standard MNI152 space...",
-      "[GLM] Fitting General Linear Model with emotional valence stimulus onset...",
-      "[PERFUSION] Estimating cerebral blood flow (CBF) from arterial spin labeling (ASL)...",
-      "[CORRELATE] Extracting amygdala & ventral striatum contrast activation...",
-      "[SUCCESS] Activation contrast mapped. Emotional valence activation verified."
+      "[CARDIAC-EVOLVED] Spawning 150,000 stabilized spatial Gaussian occupancy points...",
+      "[DIFFERENTIABLE] Projecting 3D occupancy volume onto 2D echocardiographic slice planes...",
+      "[OPTIMIZER] Running Adam step to minimize projection boundaries matching echo scans...",
+      "[MESH] Applying Marching Cubes to recover watertight 3D ventricular boundary...",
+      "[SUCCESS] Ventricular volume recovery completed! Chamfer Distance = 0.92mm."
     ]
   },
   {
@@ -331,6 +332,157 @@ const PROJECTS = [
       "[SOLVER] Iteration 150/500: Reconstructing cardiac boundary. SDF Loss = 0.0014...",
       "[MARCHING CUBES] Extracting 3D surface mesh from ventricular zero-isosurface...",
       "[SUCCESS] Ventricular volume reconstructed. Volume deviation vs CT ground truth = 2.1%."
+    ]
+  },
+  {
+    id: 10,
+    title: "Neural Anisotropic Diffusion for Medical Image Relaxation",
+    desc: "Course project for Medical Image Analysis. Unrolls the classical Perona-Malik Partial Differential Equation (PDE) into a differentiable network layer. Employs a context-aware MiniUNet to dynamically predict spatially adaptive diffusion conduction coefficients.",
+    category: "Medical Imaging",
+    tags: ["PDE Unrolling", "Anisotropic Diffusion", "MiniUNet", "Image Denoising"],
+    github: "https://github.com/tushar-nayak/neural-anisotropic-diffusion",
+    demo: "https://tushar-nayak.github.io/neural-anisotropic-diffusion/",
+    highlight: true,
+    simLogs: [
+      "[PDE] Initializing anisotropic diffusion coefficients...",
+      "[UNROLLING] Unrolling solver step 1 of 5. Edge-preserving mode...",
+      "[UNET] Predicting spatial adaptivity scale parameters...",
+      "[FILTER] Denoising. PSNR improved from 24.2dB to 38.5dB...",
+      "[SUCCESS] MRI noise filtered. Boundary edges preserved."
+    ]
+  },
+  {
+    id: 16,
+    title: "SurgiPrompt: Open-Vocabulary Surgical Tool Detection & Tracking",
+    desc: "Deploys open-vocabulary detection, segmentation, and tracking of surgical tools in clinical endoscopic and laparoscopic video feeds. Integrates Grounding DINO with Segment Anything 2 (SAM2) for zero-shot text-prompted instrument localized masking.",
+    category: "3D & Robotics",
+    tags: ["Grounding DINO", "SAM2", "Surgical Vision", "Open-Vocabulary tracking"],
+    github: "https://github.com/tushar-nayak/surgi-prompt",
+    demo: "https://tushar-nayak.github.io/surgi-prompt/",
+    highlight: true,
+    simLogs: [
+      "[SURGI-PROMPT] Loading laparoscopic video frame sequence...",
+      "[DETECTION] Feeding text prompts: 'forceps', 'grasper', 'needle driver' to Grounding DINO...",
+      "[SAM2] Translating detected bounding boxes to spatial prompts for SAM2...",
+      "[TRACKING] Propagating tool mask state forward through neural memory grids...",
+      "[SUCCESS] Real-time surgical tool tracking locked! Mean IoU = 0.892 | FPS = 42.5."
+    ]
+  },
+  {
+    id: 13,
+    title: "EndoSemantic-Splat",
+    desc: "Real-time deformable 3D scene reconstruction pipeline tailored for endoscopic and laparoscopic environments. Fuses sparse point-cloud initialization from depth maps, fast 3D Gaussian Splatting, and CLIP/LSeg-guided open-vocabulary semantic querying.",
+    category: "3D & Robotics",
+    tags: ["Deformable 3DGS", "Open-Vocabulary VLM", "Surgical Vision", "Real-Time Rendering"],
+    github: "https://github.com/tushar-nayak/endo-splat/",
+    demo: "https://tushar-nayak.github.io/endo-splat/",
+    highlight: false,
+    simLogs: [
+      "[GAUSSIAN] Spawning 120,000 spatial Gaussians from sparse depth cloud...",
+      "[SPLATTING] Performing differentiable rasterization at 100+ fps...",
+      "[VLM] Injecting CLIP/LSeg language embeddings into Gaussian feature space...",
+      "[SEMANTIC] Querying open-vocabulary tags: 'forceps', 'tissue boundary'...",
+      "[SUCCESS] Deformable semantic splatting completed. Specularity resolved in 4.2ms."
+    ]
+  },
+  {
+    id: 19,
+    title: "VascularReconstruction: Sparse 3D Coronary Vessel Angiographic Recovery",
+    desc: "Research prototype for sparse-view 3D coronary vessel reconstruction from sparse angiographic projections. Fuses explicit 3D Gaussian geometry, differentiable vascular raymarching, and PINN-based hemodynamic regularization to estimate arterial volumes.",
+    category: "3D & Robotics",
+    tags: ["Gaussian Geometry", "Differentiable Rendering", "Hemodynamics PINN", "Angiography"],
+    github: "https://github.com/tushar-nayak/vascular-reconstruction",
+    demo: "https://tushar-nayak.github.io/vascular-reconstruction/",
+    highlight: false,
+    simLogs: [
+      "[VASCULAR-RECON] Loading sparse-view X-ray angiographic projections...",
+      "[GAUSSIAN] Initializing 3D Gaussian points along vessel centerline priors...",
+      "[RENDERER] Simulating differentiable raymarching over projection grids...",
+      "[PINN] Solving Navier-Stokes boundary equations for flow-regularized optimization...",
+      "[SUCCESS] 3D coronary artery reconstruction complete! Mean surface voxel deviation = 0.52mm."
+    ]
+  },
+  {
+    id: 17,
+    title: "LobeRanger: Gigapixel Multi-Scale Pathology Foundation Network",
+    desc: "A prototype Multi-Scale Ordinal Pathology Foundation Network (MOPFN) that pairs 20x and 40x whole-slide pathology images. Preserves both global architectural and local cytologic context using bidirectional cross-attention fusion layers for high-resolution biopsy analysis.",
+    category: "Cancer & Pathology",
+    tags: ["Foundation Models", "Gigapixel WSI", "Pathology Staging", "Cross-Attention"],
+    github: "https://github.com/tushar-nayak/lobe-ranger",
+    demo: "https://tushar-nayak.github.io/lobe-ranger/",
+    highlight: false,
+    simLogs: [
+      "[LOBE-RANGER] Loading paired gigapixel whole-slide scans (20x macro & 40x micro)...",
+      "[ATTENTION] Aligning architectural tissue patches and high-power cytologic tokens...",
+      "[CLASSIFIER] Projecting attention-weighted feature maps onto ordinal staging categories...",
+      "[SUCCESS] Pathology staging complete. Grade II (Adenocarcinoma) locked | F1-Score = 0.941."
+    ]
+  },
+  {
+    id: 8,
+    title: "CTA to Mesh & Point-Cloud Coronary Artery Segmentation",
+    desc: "Course project for Image Based Computational Modelling & Analysis. End-to-end 3D deep learning pipeline for automatic coronary artery tree extraction from CT angiography (CTA). Leverages a Residual 3D U-Net backbone, hybrid Dice-BCE loss, and Laplacian mesh smoothing.",
+    category: "Medical Imaging",
+    tags: ["Residual 3D U-Net", "Marching Cubes", "Laplacian Smoothing", "SimpleITK"],
+    github: "https://github.com/tushar-nayak",
+    demo: "https://tushar-nayak.github.io/assets/pdf/42640.pdf",
+    highlight: false,
+    simLogs: [
+      "[3D UNET] Loading 3D CTA coronary volumes. Standardizing spatial voxel spacing...",
+      "[RES-UNET] Segmenting coronary branches: Left Main (LM), Left Anterior Descending (LAD)...",
+      "[GEOMETRY] Running Marching Cubes to generate initial boundary surface triangulation...",
+      "[SMOOTHING] Applying Laplacian smoothing & VTK decimation filters...",
+      "[SUCCESS] Coronary tree mesh exported! Output contains 45,000 vertices."
+    ]
+  },
+  {
+    id: 9,
+    title: "Attention-augmented Dual-View Mammogram Alignment",
+    desc: "Course project for Projects in Biomedical AI. Deep learning pipeline for automatic alignment and BI-RADS classification of dual-view mammograms (Craniocaudal [CC] and Mediolateral Oblique [MLO]). Leverages Spatial Transformer Networks (STNs) for geometric co-registration.",
+    category: "Cancer & Pathology",
+    tags: ["Spatial Transformer Nets", "CC & MLO Views", "BI-RADS Classification", "Attention Fusion"],
+    github: "https://github.com/tushar-nayak/grading-cbisddsm/blob/main/42657A_G3Report",
+    demo: "https://github.com/tushar-nayak/grading-cbisddsm/blob/main/42657A_G3Report.pdf",
+    highlight: false,
+    simLogs: [
+      "[MAMMOGRAM] Loading paired breast scans: CC view and MLO view...",
+      "[STN] Estimating affine registration parameters to warp CC onto MLO space...",
+      "[FUSION] Appending cross-view attention layer over warped density maps...",
+      "[CLASSIFIER] Performing BI-RADS category scoring...",
+      "[SUCCESS] Pipeline complete. BI-RADS Category 4 predicted | Conf = 0.89."
+    ]
+  },
+  {
+    id: 12,
+    title: "LungVolSeg: 3D Lung CT Segmentation",
+    desc: "High-reproducibility 3D full-volume lung CT segmentation and watertight surface export pipeline utilizing a 3D UNet backbone from MONAI, evaluated on the Zenodo chest CT benchmark. Exports watertight STL and VTK surface meshes.",
+    category: "Medical Imaging",
+    tags: ["MONAI 3D UNet", "Zenodo Dataset", "STL Surface Export", "Volumetric Analysis"],
+    github: "https://github.com/tushar-nayak/lungvolseg",
+    demo: "https://tushar-nayak.github.io/lungvolseg/",
+    highlight: false,
+    simLogs: [
+      "[INPUT] Loading 3D chest CT volume from Zenodo cohort...",
+      "[MONAI] Running 3D UNet inference for lung field segmentation...",
+      "[VOXELS] Compiling volumetric metrics. Calculating watertight boundaries...",
+      "[SURFACE] Applying Marching Cubes to generate polygonal mesh...",
+      "[SUCCESS] Watertight STL surface mesh successfully exported for 3D printing."
+    ]
+  },
+  {
+    id: 15,
+    title: "DermaSeg: ISIC 2018 Skin Lesion Segmentation",
+    desc: "Medical image segmentation and comparative benchmarking framework evaluating classical CNN segmentation models, attention-based architectures (U-Net variants), and lightweight transformers on ISIC 2018 Task 1.",
+    category: "Cancer & Pathology",
+    tags: ["ISIC 2018", "Skin Lesion Segmentation", "Transformer Backbones", "U-Net Variants"],
+    github: "https://github.com/tushar-nayak/derma-seg",
+    demo: "https://tushar-nayak.github.io/derma-seg/",
+    highlight: false,
+    simLogs: [
+      "[ISIC] Preprocessing dermoscopy image patches...",
+      "[TRANSFORMER] Querying self-attention layers on skin pixels...",
+      "[DEEPLAB] Performing ASPP dense feature projection...",
+      "[SUCCESS] Segmentation boundary mask generated. Dice score = 0.931."
     ]
   },
   {
@@ -384,54 +536,20 @@ const PROJECTS = [
     ]
   },
   {
-    id: 8,
-    title: "CTA to Mesh & Point-Cloud Coronary Artery Segmentation",
-    desc: "Course project for Image Based Computational Modelling & Analysis. End-to-end 3D deep learning pipeline for automatic coronary artery tree extraction from CT angiography (CTA). Leverages a Residual 3D U-Net backbone, hybrid Dice-BCE loss, and Laplacian mesh smoothing.",
+    id: 14,
+    title: "Fungal-Neo: Fungal Morphological Analysis",
+    desc: "Deploys a patch-based learning pipeline leveraging ResNet18-based classifiers to perform robust classification of 9 different fungal species from high-resolution microscopic image patches (3600x5760).",
     category: "Medical Imaging",
-    tags: ["Residual 3D U-Net", "Marching Cubes", "Laplacian Smoothing", "SimpleITK"],
-    github: "https://github.com/tushar-nayak",
-    demo: "https://tushar-nayak.github.io/assets/pdf/42640.pdf",
+    tags: ["ResNet18", "Patch-Based Learning", "Fungal Classification", "Microscopy"],
+    github: "https://github.com/tushar-nayak/fungal-neo/",
+    demo: "https://tushar-nayak.github.io/fungal-neo/",
     highlight: false,
     simLogs: [
-      "[3D UNET] Loading 3D CTA coronary volumes. Standardizing spatial voxel spacing...",
-      "[RES-UNET] Segmenting coronary branches: Left Main (LM), Left Anterior Descending (LAD)...",
-      "[GEOMETRY] Running Marching Cubes to generate initial boundary surface triangulation...",
-      "[SMOOTHING] Applying Laplacian smoothing & VTK decimation filters...",
-      "[SUCCESS] Coronary tree mesh exported! Output contains 45,000 vertices."
-    ]
-  },
-  {
-    id: 9,
-    title: "Attention-augmented Dual-View Mammogram Alignment",
-    desc: "Course project for Projects in Biomedical AI. Deep learning pipeline for automatic alignment and BI-RADS classification of dual-view mammograms (Craniocaudal [CC] and Mediolateral Oblique [MLO]). Leverages Spatial Transformer Networks (STNs) for geometric co-registration.",
-    category: "Cancer & Pathology",
-    tags: ["Spatial Transformer Nets", "CC & MLO Views", "BI-RADS Classification", "Attention Fusion"],
-    github: "https://github.com/tushar-nayak/grading-cbisddsm/blob/main/42657A_G3Report",
-    demo: "https://github.com/tushar-nayak/grading-cbisddsm/blob/main/42657A_G3Report.pdf",
-    highlight: false,
-    simLogs: [
-      "[MAMMOGRAM] Loading paired breast scans: CC view and MLO view...",
-      "[STN] Estimating affine registration parameters to warp CC onto MLO space...",
-      "[FUSION] Appending cross-view attention layer over warped density maps...",
-      "[CLASSIFIER] Performing BI-RADS category scoring...",
-      "[SUCCESS] Pipeline complete. BI-RADS Category 4 predicted | Conf = 0.89."
-    ]
-  },
-  {
-    id: 10,
-    title: "Neural Anisotropic Diffusion for Medical Image Relaxation",
-    desc: "Course project for Medical Image Analysis. Unrolls the classical Perona-Malik Partial Differential Equation (PDE) into a differentiable network layer. Employs a context-aware MiniUNet to dynamically predict spatially adaptive diffusion conduction coefficients.",
-    category: "Medical Imaging",
-    tags: ["PDE Unrolling", "Anisotropic Diffusion", "MiniUNet", "Image Denoising"],
-    github: "https://github.com/tushar-nayak/neural-anisotropic-diffusion",
-    demo: "https://tushar-nayak.github.io/neural-anisotropic-diffusion/",
-    highlight: false,
-    simLogs: [
-      "[PDE] Initializing anisotropic diffusion coefficients...",
-      "[UNROLLING] Unrolling solver step 1 of 5. Edge-preserving mode...",
-      "[UNET] Predicting spatial adaptivity scale parameters...",
-      "[FILTER] Denoising. PSNR improved from 24.2dB to 38.5dB...",
-      "[SUCCESS] MRI noise filtered. Boundary edges preserved."
+      "[MICROSCOPY] Loading high-resolution microscopic image scan (3600x5760)...",
+      "[PATCHING] Splitting high-res field into 224x224 cellular patches...",
+      "[RESNET18] Performing patch classification across 9 fungal species...",
+      "[ENSEMBLE] Aggregating regional patches to generate slide-level score...",
+      "[SUCCESS] Microscopic diagnostic classification complete. Confidence = 94.8%."
     ]
   },
   {
@@ -451,137 +569,21 @@ const PROJECTS = [
     ]
   },
   {
-    id: 12,
-    title: "LungVolSeg: 3D Lung CT Segmentation",
-    desc: "High-reproducibility 3D full-volume lung CT segmentation and watertight surface export pipeline utilizing a 3D UNet backbone from MONAI, evaluated on the Zenodo chest CT benchmark. Exports watertight STL and VTK surface meshes.",
+    id: 3,
+    title: "Neural Correlates Associated to Images for Emotional Response",
+    desc: "Course project for Fundamentals of MRI and Neuroimaging Analysis. Maps affective processing of emotional valence (positive/negative/neutral) using a multimodal fMRI workflow on a 3T Siemens Prisma, combining BOLD task-based fMRI, resting-state connectivity, and ASL perfusion.",
     category: "Medical Imaging",
-    tags: ["MONAI 3D UNet", "Zenodo Dataset", "STL Surface Export", "Volumetric Analysis"],
-    github: "https://github.com/tushar-nayak/lungvolseg",
-    demo: "https://tushar-nayak.github.io/lungvolseg/",
+    tags: ["BOLD fMRI", "ASL Perfusion", "3T Siemens Prisma", "SPM12"],
+    github: "https://github.com/tushar-nayak",
+    demo: "https://tushar-nayak.github.io/assets/pdf/42668.pdf",
     highlight: false,
     simLogs: [
-      "[INPUT] Loading 3D chest CT volume from Zenodo cohort...",
-      "[MONAI] Running 3D UNet inference for lung field segmentation...",
-      "[VOXELS] Compiling volumetric metrics. Calculating watertight boundaries...",
-      "[SURFACE] Applying Marching Cubes to generate polygonal mesh...",
-      "[SUCCESS] Watertight STL surface mesh successfully exported for 3D printing."
-    ]
-  },
-  {
-    id: 13,
-    title: "EndoSemantic-Splat",
-    desc: "Real-time deformable 3D scene reconstruction pipeline tailored for endoscopic and laparoscopic environments. Fuses sparse point-cloud initialization from depth maps, fast 3D Gaussian Splatting, and CLIP/LSeg-guided open-vocabulary semantic querying.",
-    category: "3D & Robotics",
-    tags: ["Deformable 3DGS", "Open-Vocabulary VLM", "Surgical Vision", "Real-Time Rendering"],
-    github: "https://github.com/tushar-nayak/endo-splat/",
-    demo: "https://tushar-nayak.github.io/endo-splat/",
-    highlight: true,
-    simLogs: [
-      "[GAUSSIAN] Spawning 120,000 spatial Gaussians from sparse depth cloud...",
-      "[SPLATTING] Performing differentiable rasterization at 100+ fps...",
-      "[VLM] Injecting CLIP/LSeg language embeddings into Gaussian feature space...",
-      "[SEMANTIC] Querying open-vocabulary tags: 'forceps', 'tissue boundary'...",
-      "[SUCCESS] Deformable semantic splatting completed. Specularity resolved in 4.2ms."
-    ]
-  },
-  {
-    id: 14,
-    title: "Fungal-Neo: Fungal Morphological Analysis",
-    desc: "Deploys a patch-based learning pipeline leveraging ResNet18-based classifiers to perform robust classification of 9 different fungal species from high-resolution microscopic image patches (3600x5760).",
-    category: "Medical Imaging",
-    tags: ["ResNet18", "Patch-Based Learning", "Fungal Classification", "Microscopy"],
-    github: "https://github.com/tushar-nayak/fungal-neo/",
-    demo: "https://tushar-nayak.github.io/fungal-neo/",
-    highlight: false,
-    simLogs: [
-      "[MICROSCOPY] Loading high-resolution microscopic image scan (3600x5760)...",
-      "[PATCHING] Splitting high-res field into 224x224 cellular patches...",
-      "[RESNET18] Performing patch classification across 9 fungal species...",
-      "[ENSEMBLE] Aggregating regional patches to generate slide-level score...",
-      "[SUCCESS] Microscopic diagnostic classification complete. Confidence = 94.8%."
-    ]
-  },
-  {
-    id: 15,
-    title: "DermaSeg: ISIC 2018 Skin Lesion Segmentation",
-    desc: "Medical image segmentation and comparative benchmarking framework evaluating classical CNN segmentation models, attention-based architectures (U-Net variants), and lightweight transformers on ISIC 2018 Task 1.",
-    category: "Cancer & Pathology",
-    tags: ["ISIC 2018", "Skin Lesion Segmentation", "Transformer Backbones", "U-Net Variants"],
-    github: "https://github.com/tushar-nayak/derma-seg",
-    demo: "https://tushar-nayak.github.io/derma-seg/",
-    highlight: false,
-    simLogs: [
-      "[ISIC] Preprocessing dermoscopy image patches...",
-      "[TRANSFORMER] Querying self-attention layers on skin pixels...",
-      "[DEEPLAB] Performing ASPP dense feature projection...",
-      "[SUCCESS] Segmentation boundary mask generated. Dice score = 0.931."
-    ]
-  },
-  {
-    id: 16,
-    title: "SurgiPrompt: Open-Vocabulary Surgical Tool Detection & Tracking",
-    desc: "Deploys open-vocabulary detection, segmentation, and tracking of surgical tools in clinical endoscopic and laparoscopic video feeds. Integrates Grounding DINO with Segment Anything 2 (SAM2) for zero-shot text-prompted instrument localized masking.",
-    category: "3D & Robotics",
-    tags: ["Grounding DINO", "SAM2", "Surgical Vision", "Open-Vocabulary tracking"],
-    github: "https://github.com/tushar-nayak/surgi-prompt",
-    demo: "https://tushar-nayak.github.io/surgi-prompt/",
-    highlight: true,
-    simLogs: [
-      "[SURGI-PROMPT] Loading laparoscopic video frame sequence...",
-      "[DETECTION] Feeding text prompts: 'forceps', 'grasper', 'needle driver' to Grounding DINO...",
-      "[SAM2] Translating detected bounding boxes to spatial prompts for SAM2...",
-      "[TRACKING] Propagating tool mask state forward through neural memory grids...",
-      "[SUCCESS] Real-time surgical tool tracking locked! Mean IoU = 0.892 | FPS = 42.5."
-    ]
-  },
-  {
-    id: 17,
-    title: "LobeRanger: Gigapixel Multi-Scale Pathology Foundation Network",
-    desc: "A prototype Multi-Scale Ordinal Pathology Foundation Network (MOPFN) that pairs 20x and 40x whole-slide pathology images. Preserves both global architectural and local cytologic context using bidirectional cross-attention fusion layers for high-resolution biopsy analysis.",
-    category: "Cancer & Pathology",
-    tags: ["Foundation Models", "Gigapixel WSI", "Pathology Staging", "Cross-Attention"],
-    github: "https://github.com/tushar-nayak/lobe-ranger",
-    demo: "https://tushar-nayak.github.io/lobe-ranger/",
-    highlight: true,
-    simLogs: [
-      "[LOBE-RANGER] Loading paired gigapixel whole-slide scans (20x macro & 40x micro)...",
-      "[ATTENTION] Aligning architectural tissue patches and high-power cytologic tokens...",
-      "[CLASSIFIER] Projecting attention-weighted feature maps onto ordinal staging categories...",
-      "[SUCCESS] Pathology staging complete. Grade II (Adenocarcinoma) locked | F1-Score = 0.941."
-    ]
-  },
-  {
-    id: 18,
-    title: "CardiacReconstruction-Evolved: Gaussian Occupancy Cardiac Recovery",
-    desc: "Implements sparse 3D cardiac volume recovery from sparse echocardiographic views. Employs stabilized 3D Gaussian occupancy fields, differentiable slice projection supervision, and high-fidelity mesh evaluation for clinical anatomical reconstruction.",
-    category: "3D & Robotics",
-    tags: ["3D Gaussian Occupancy", "Differentiable Projection", "Sparse Cardiac 3D", "Mesh Evaluation"],
-    github: "https://github.com/tushar-nayak/cardiac-reconstruction-evolved",
-    demo: "https://tushar-nayak.github.io/cardiac-reconstruction-evolved/",
-    highlight: false,
-    simLogs: [
-      "[CARDIAC-EVOLVED] Spawning 150,000 stabilized spatial Gaussian occupancy points...",
-      "[DIFFERENTIABLE] Projecting 3D occupancy volume onto 2D echocardiographic slice planes...",
-      "[OPTIMIZER] Running Adam step to minimize projection boundaries matching echo scans...",
-      "[MESH] Applying Marching Cubes to recover watertight 3D ventricular boundary...",
-      "[SUCCESS] Ventricular volume recovery completed! Chamfer Distance = 0.92mm."
-    ]
-  },
-  {
-    id: 19,
-    title: "VascularReconstruction: Sparse 3D Coronary Vessel Angiographic Recovery",
-    desc: "Research prototype for sparse-view 3D coronary vessel reconstruction from sparse angiographic projections. Fuses explicit 3D Gaussian geometry, differentiable vascular raymarching, and PINN-based hemodynamic regularization to estimate arterial volumes.",
-    category: "3D & Robotics",
-    tags: ["Gaussian Geometry", "Differentiable Rendering", "Hemodynamics PINN", "Angiography"],
-    github: "https://github.com/tushar-nayak/vascular-reconstruction",
-    demo: "https://tushar-nayak.github.io/vascular-reconstruction/",
-    highlight: true,
-    simLogs: [
-      "[VASCULAR-RECON] Loading sparse-view X-ray angiographic projections...",
-      "[GAUSSIAN] Initializing 3D Gaussian points along vessel centerline priors...",
-      "[RENDERER] Simulating differentiable raymarching over projection grids...",
-      "[PINN] Solving Navier-Stokes boundary equations for flow-regularized optimization...",
-      "[SUCCESS] 3D coronary artery reconstruction complete! Mean surface voxel deviation = 0.52mm."
+      "[BOLD] Preprocessing 3T Siemens Prisma fMRI: slice timing, motion correction...",
+      "[SPM12] Co-registering T1 structural anatomy to standard MNI152 space...",
+      "[GLM] Fitting General Linear Model with emotional valence stimulus onset...",
+      "[PERFUSION] Estimating cerebral blood flow (CBF) from arterial spin labeling (ASL)...",
+      "[CORRELATE] Extracting amygdala & ventral striatum contrast activation...",
+      "[SUCCESS] Activation contrast mapped. Emotional valence activation verified."
     ]
   }
 ];
@@ -678,6 +680,15 @@ function App() {
     return PROJECTS.filter(p => p.category === projectFilter);
   }, [projectFilter]);
 
+  // Separate lab-affiliated research projects and technical/course projects
+  const labProjects = useMemo(() => {
+    return filteredProjects.filter(p => p.id === 1 || p.id === 2);
+  }, [filteredProjects]);
+
+  const courseProjects = useMemo(() => {
+    return filteredProjects.filter(p => p.id !== 1 && p.id !== 2);
+  }, [filteredProjects]);
+
   // Filter, sort, and process publications
   const filteredPublications = useMemo(() => {
     let result = PUBLICATIONS.filter(pub => {
@@ -706,6 +717,159 @@ function App() {
     navigator.clipboard.writeText(text);
     setCopiedBib(true);
     setTimeout(() => setCopiedBib(false), 2000);
+  };
+
+  // Reusable Project Card Renderer
+  const renderProjectCard = (project) => {
+    const currentSim = simulations[project.id];
+    return (
+      <div
+        key={project.id}
+        className="glass-panel project-card"
+        style={{
+          background: project.highlight ? 'radial-gradient(circle at 50% 0%, rgba(14, 165, 233, 0.02), rgba(14, 16, 21, 0.8) 75%)' : 'var(--bg-surface-glass)',
+          borderColor: currentSim?.active 
+            ? 'var(--accent-emerald)' 
+            : (project.highlight ? 'rgba(14, 165, 233, 0.12)' : 'var(--border-glow)'),
+          boxShadow: currentSim?.active 
+            ? '0 0 15px rgba(16, 185, 129, 0.05)' 
+            : 'none'
+        }}
+      >
+        <ProjectVisual 
+          category={project.category} 
+          active={currentSim?.active} 
+          id={project.id} 
+          style={{ 
+            margin: '-2rem -2rem 1.5rem -2rem', 
+            borderTopLeftRadius: '15px', 
+            borderTopRightRadius: '15px' 
+          }} 
+        />
+        <div className="project-card-header">
+          <span className="badge badge-teal" style={{ fontSize: '0.7rem' }}>
+            {project.category}
+          </span>
+          <div style={{ display: 'flex', gap: '0.35rem' }}>
+            {project.highlight && (
+              <span className="badge badge-emerald" style={{ fontSize: '0.7rem' }}>
+                Featured
+              </span>
+            )}
+          </div>
+        </div>
+
+        <h3 className="project-card-title">{project.title}</h3>
+        <p className="project-card-desc">{project.desc}</p>
+
+        <div className="project-tags">
+          {project.tags.map((tag, idx) => (
+            <span key={idx} style={{
+              fontSize: '0.75rem',
+              color: 'var(--text-secondary)',
+              background: 'rgba(255, 255, 255, 0.02)',
+              padding: '0.15rem 0.5rem',
+              borderRadius: '4px',
+              border: '1px solid rgba(255, 255, 255, 0.05)'
+            }}>{tag}</span>
+          ))}
+        </div>
+
+        {/* Sleek, Integrated Pipeline Simulator Telemetry */}
+        <div style={{
+          marginTop: 'auto',
+          marginBottom: '1rem',
+          background: 'rgba(0, 0, 0, 0.15)',
+          border: '1px solid rgba(255, 255, 255, 0.03)',
+          borderRadius: '8px',
+          padding: '0.65rem 0.85rem'
+        }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+            <span style={{ fontSize: '0.75rem', color: currentSim?.active ? 'var(--accent-emerald)' : 'var(--text-secondary)', display: 'inline-flex', alignItems: 'center', gap: '0.35rem', fontFamily: 'monospace' }}>
+              <span style={{
+                width: '6px',
+                height: '6px',
+                borderRadius: '50%',
+                background: currentSim?.active ? 'var(--accent-emerald)' : (currentSim?.logs?.length ? 'var(--primary-cyan)' : 'rgba(255, 255, 255, 0.15)'),
+                display: 'inline-block',
+                boxShadow: currentSim?.active ? '0 0 6px var(--accent-emerald)' : 'none'
+              }}></span>
+              {currentSim?.active ? 'SOLVING_ODE...' : (currentSim?.logs?.length ? 'SIMULATION_LOCKED' : 'SOLVER_IDLE')}
+            </span>
+            <button
+              onClick={() => triggerSimulation(project.id, project.simLogs)}
+              disabled={currentSim?.active}
+              style={{
+                background: currentSim?.active ? 'rgba(16, 185, 129, 0.06)' : 'rgba(14, 165, 233, 0.05)',
+                border: '1px solid rgba(14, 165, 233, 0.15)',
+                color: currentSim?.active ? 'var(--accent-emerald)' : 'var(--primary-cyan)',
+                padding: '0.25rem 0.6rem',
+                borderRadius: '5px',
+                cursor: currentSim?.active ? 'not-allowed' : 'pointer',
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '0.25rem',
+                fontWeight: '500',
+                fontSize: '0.65rem',
+                fontFamily: 'monospace',
+                transition: 'all 0.2s'
+              }}
+            >
+              {currentSim?.active ? (
+                <>
+                  <Sparkles size={8} />
+                  SOLVING
+                </>
+              ) : (
+                <>
+                  <Play size={8} />
+                  RUN_SOLVER
+                </>
+              )}
+            </button>
+          </div>
+
+          {/* Console Log Outputs - Collapsible Drawer that slides open ONLY when active or completed logs exist */}
+          {currentSim && currentSim.logs.length > 0 && (
+            <div style={{
+              marginTop: '0.65rem',
+              paddingTop: '0.5rem',
+              borderTop: '1px solid rgba(255, 255, 255, 0.03)',
+              fontFamily: 'monospace',
+              fontSize: '0.65rem',
+              display: 'flex',
+              flexDirection: 'column',
+              gap: '0.2rem',
+              maxHeight: '80px',
+              overflowY: 'auto'
+            }}>
+              {currentSim.logs.map((log, idx) => (
+                <div key={idx} style={{
+                  color: log.startsWith("[SUCCESS]") ? 'var(--accent-emerald)' : (log.startsWith("[ODE]") ? 'var(--primary-cyan)' : 'var(--text-secondary)'),
+                  whiteSpace: 'pre-wrap',
+                  lineHeight: '1.3'
+                }}>
+                  {log}
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+
+        <div className="project-links">
+          <a href={project.github} target="_blank" rel="noopener noreferrer" className="project-link">
+            <Github size={14} />
+            Repository
+          </a>
+          {project.demo && (
+            <a href={project.demo} target="_blank" rel="noopener noreferrer" className="project-link">
+              <ExternalLink size={14} />
+              Live Demo
+            </a>
+          )}
+        </div>
+      </div>
+    );
   };
 
   return (
@@ -759,9 +923,11 @@ function App() {
               fontFamily: 'var(--font-heading)',
               fontWeight: '600',
               fontSize: '0.95rem',
-              letterSpacing: '-0.02em',
+              letterSpacing: '-0.01em',
               color: 'var(--text-primary)'
-            }}>tushar.vision</span>
+            }}>
+              tushar-nayak <span style={{ color: 'var(--primary-cyan)', fontWeight: '500' }}>&&</span> technologyfoundhere
+            </span>
           </div>
 
           {/* Navigation Items */}
@@ -862,8 +1028,6 @@ function App() {
             <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
               <div 
                 className="glass-panel"
-                onMouseMove={handleScannerMouseMove}
-                onClick={handleScannerClick}
                 style={{
                   position: 'relative',
                   width: '280px',
@@ -876,104 +1040,20 @@ function App() {
                   cursor: 'crosshair',
                   boxShadow: 'none',
                   borderRadius: '20px',
-                  overflow: 'hidden'
+                  overflow: 'hidden',
+                  padding: '0'
                 }}
               >
-                {/* 5x5 Camera Sensor Grid Overlay */}
-                <div style={{ position: 'absolute', inset: 0, display: 'grid', gridTemplateColumns: 'repeat(5, 1fr)', gridTemplateRows: 'repeat(5, 1fr)', pointerEvents: 'none' }}>
-                  {Array.from({ length: 25 }).map((_, i) => (
-                    <div key={i} style={{ borderRight: '1px solid rgba(255, 255, 255, 0.02)', borderBottom: '1px solid rgba(255, 255, 255, 0.02)' }} />
-                  ))}
-                </div>
-
-                {/* Perspective 3D Frustum Bounding Box Lines */}
-                <div style={{
-                  position: 'absolute',
-                  width: '70%',
-                  height: '70%',
-                  border: '1px solid rgba(14, 165, 233, 0.1)',
-                  borderRadius: '12px',
-                  pointerEvents: 'none'
-                }} />
-                <div style={{
-                  position: 'absolute',
-                  width: '45%',
-                  height: '45%',
-                  border: '1px solid rgba(16, 185, 129, 0.06)',
-                  borderRadius: '6px',
-                  pointerEvents: 'none'
-                }} />
-
-                {/* Dynamic Camera Sensor Projection Line (Dashed) */}
-                <div style={{
-                  position: 'absolute',
-                  width: '100%',
-                  height: '1px',
-                  borderTop: '1px dashed rgba(255, 255, 255, 0.03)',
-                  top: '50%',
-                  pointerEvents: 'none'
-                }} />
-                <div style={{
-                  position: 'absolute',
-                  height: '100%',
-                  width: '1px',
-                  borderLeft: '1px dashed rgba(255, 255, 255, 0.03)',
-                  left: '50%',
-                  pointerEvents: 'none'
-                }} />
-
-                {/* Precise Dynamic Reticle Tracking Point Cloud */}
-                <div style={{
-                  position: 'absolute',
-                  left: `${scanCoords.x / 2}%`,
-                  top: `${scanCoords.y / 2}%`,
-                  transform: 'translate(-50%, -50%)',
-                  pointerEvents: 'none',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  transition: 'left 0.08s ease-out, top 0.08s ease-out'
-                }}>
-                  {/* Dynamic Pointer Dot */}
-                  <div style={{
-                    width: '6px',
-                    height: '6px',
-                    borderRadius: '50%',
-                    background: 'var(--primary-cyan)',
-                    boxShadow: '0 0 8px var(--primary-cyan)'
-                  }} />
-                  {/* Surrounding Dynamic Calibration Reticle Ring */}
-                  <div style={{
-                    position: 'absolute',
-                    width: '32px',
-                    height: '32px',
-                    borderRadius: '50%',
-                    border: '1px solid var(--primary-cyan)',
-                    opacity: 0.35,
-                    animation: `spin ${widgetSpinRate}s linear infinite`
-                  }} />
-                  {/* Fine Crosshair Ticks */}
-                  <div style={{ position: 'absolute', width: '1px', height: '12px', background: 'var(--primary-cyan)', opacity: 0.4 }} />
-                  <div style={{ position: 'absolute', height: '1px', width: '12px', background: 'var(--primary-cyan)', opacity: 0.4 }} />
-                </div>
-
-                {/* Minimal Calibration Pill Action */}
-                <div style={{
-                  position: 'absolute',
-                  bottom: '16px',
-                  fontSize: '0.65rem',
-                  fontFamily: 'monospace',
-                  color: 'var(--text-secondary)',
-                  letterSpacing: '0.08em',
-                  background: 'rgba(15, 17, 24, 0.8)',
-                  padding: '4px 10px',
-                  borderRadius: '6px',
-                  border: '1px solid rgba(255, 255, 255, 0.05)',
-                  cursor: 'pointer',
-                  userSelect: 'none'
-                }}>
-                  RE-CALIBRATE FOCAL PLANES
-                </div>
+                <ProfileSplat
+                  scanCoords={scanCoords}
+                  setScanCoords={setScanCoords}
+                  scanStatus={scanStatus}
+                  setScanStatus={setScanStatus}
+                  widgetSpinRate={widgetSpinRate}
+                  setWidgetSpinRate={setWidgetSpinRate}
+                  widgetClicks={widgetClicks}
+                  setWidgetClicks={setWidgetClicks}
+                />
               </div>
 
               {/* Real-time Tracking Info Dashboard Widget */}
@@ -1021,7 +1101,7 @@ function App() {
               Projects Portfolio & Diagnostics Lab
             </h2>
             <p style={{ color: 'var(--text-secondary)', fontSize: '1rem', marginTop: '0.25rem' }}>
-              Interact with the systems below! You can **run mock algorithm diagnostics** directly inside each project card.
+              Explore clinical research codebases, interactive deployment demos, and computational pipelines.
             </p>
           </div>
 
@@ -1057,150 +1137,94 @@ function App() {
             ))}
           </div>
 
-          {/* Project Grid */}
-          <div className="project-grid">
-            {filteredProjects.map((project) => {
-              const currentSim = simulations[project.id];
-              return (
-                <div
-                  key={project.id}
-                  className="glass-panel project-card"
-                  style={{
-                    background: project.highlight ? 'radial-gradient(circle at 50% 0%, rgba(14, 165, 233, 0.02), rgba(14, 16, 21, 0.8) 75%)' : 'var(--bg-surface-glass)',
-                    borderColor: currentSim?.active 
-                      ? 'var(--accent-emerald)' 
-                      : (project.highlight ? 'rgba(14, 165, 233, 0.12)' : 'var(--border-glow)'),
-                    boxShadow: currentSim?.active 
-                      ? '0 0 15px rgba(16, 185, 129, 0.05)' 
-                      : 'none'
-                  }}
-                >
-                  <div className="project-card-header">
-                    <span className="badge badge-teal" style={{ fontSize: '0.7rem' }}>
-                      {project.category}
-                    </span>
-                    <div style={{ display: 'flex', gap: '0.35rem' }}>
-                      {project.highlight && (
-                        <span className="badge badge-emerald" style={{ fontSize: '0.7rem' }}>
-                          Featured
-                        </span>
-                      )}
-                    </div>
-                  </div>
-
-                  <h3 className="project-card-title">{project.title}</h3>
-                  <p className="project-card-desc">{project.desc}</p>
-
-                  <div className="project-tags">
-                    {project.tags.map((tag, idx) => (
-                      <span key={idx} style={{
-                        fontSize: '0.75rem',
-                        color: 'var(--text-secondary)',
-                        background: 'rgba(255, 255, 255, 0.02)',
-                        padding: '0.15rem 0.5rem',
-                        borderRadius: '4px',
-                        border: '1px solid rgba(255, 255, 255, 0.05)'
-                      }}>{tag}</span>
-                    ))}
-                  </div>
-
-                  {/* Sleek, Integrated Pipeline Simulator Telemetry */}
-                  <div style={{
-                    marginTop: 'auto',
-                    marginBottom: '1rem',
-                    background: 'rgba(0, 0, 0, 0.15)',
-                    border: '1px solid rgba(255, 255, 255, 0.03)',
-                    borderRadius: '8px',
-                    padding: '0.65rem 0.85rem'
-                  }}>
-                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                      <span style={{ fontSize: '0.75rem', color: currentSim?.active ? 'var(--accent-emerald)' : 'var(--text-secondary)', display: 'inline-flex', alignItems: 'center', gap: '0.35rem', fontFamily: 'monospace' }}>
-                        <span style={{
-                          width: '6px',
-                          height: '6px',
-                          borderRadius: '50%',
-                          background: currentSim?.active ? 'var(--accent-emerald)' : (currentSim?.logs?.length ? 'var(--primary-cyan)' : 'rgba(255, 255, 255, 0.15)'),
-                          display: 'inline-block',
-                          boxShadow: currentSim?.active ? '0 0 6px var(--accent-emerald)' : 'none'
-                        }}></span>
-                        {currentSim?.active ? 'SOLVING_ODE...' : (currentSim?.logs?.length ? 'SIMULATION_LOCKED' : 'SOLVER_IDLE')}
-                      </span>
-                      <button
-                        onClick={() => triggerSimulation(project.id, project.simLogs)}
-                        disabled={currentSim?.active}
-                        style={{
-                          background: currentSim?.active ? 'rgba(16, 185, 129, 0.06)' : 'rgba(14, 165, 233, 0.05)',
-                          border: '1px solid rgba(14, 165, 233, 0.15)',
-                          color: currentSim?.active ? 'var(--accent-emerald)' : 'var(--primary-cyan)',
-                          padding: '0.25rem 0.6rem',
-                          borderRadius: '5px',
-                          cursor: currentSim?.active ? 'not-allowed' : 'pointer',
-                          display: 'inline-flex',
-                          alignItems: 'center',
-                          gap: '0.25rem',
-                          fontWeight: '500',
-                          fontSize: '0.65rem',
-                          fontFamily: 'monospace',
-                          transition: 'all 0.2s'
-                        }}
-                      >
-                        {currentSim?.active ? (
-                          <>
-                            <Sparkles size={8} />
-                            SOLVING
-                          </>
-                        ) : (
-                          <>
-                            <Play size={8} />
-                            RUN_SOLVER
-                          </>
-                        )}
-                      </button>
-                    </div>
-
-                    {/* Console Log Outputs - Collapsible Drawer that slides open ONLY when active or completed logs exist */}
-                    {currentSim && currentSim.logs.length > 0 && (
-                      <div style={{
-                        marginTop: '0.65rem',
-                        paddingTop: '0.5rem',
-                        borderTop: '1px solid rgba(255, 255, 255, 0.03)',
-                        fontFamily: 'monospace',
-                        fontSize: '0.65rem',
-                        display: 'flex',
-                        flexDirection: 'column',
-                        gap: '0.2rem',
-                        maxHeight: '80px',
-                        overflowY: 'auto'
-                      }}>
-                        {currentSim.logs.map((log, idx) => (
-                          <div key={idx} style={{
-                            color: log.startsWith("[SUCCESS]") ? 'var(--accent-emerald)' : (log.startsWith("[ODE]") ? 'var(--primary-cyan)' : 'var(--text-secondary)'),
-                            whiteSpace: 'pre-wrap',
-                            lineHeight: '1.3'
-                          }}>
-                            {log}
-                          </div>
-                        ))}
-                      </div>
-                    )}
-                  </div>
-
-                  <div className="project-links">
-                    <a href={project.github} target="_blank" rel="noopener noreferrer" className="project-link">
-                      <Github size={14} />
-                      Repository
-                    </a>
-                    {project.demo && (
-                      <a href={project.demo} target="_blank" rel="noopener noreferrer" className="project-link">
-                        <ExternalLink size={14} />
-                        Live Demo
-                      </a>
-                    )}
-                  </div>
+          {/* Lab Research Section */}
+          {labProjects.length > 0 && (
+            <div style={{ marginBottom: '3.5rem' }}>
+              <div style={{
+                display: 'flex',
+                flexDirection: 'column',
+                gap: '0.35rem',
+                marginBottom: '1.5rem',
+                borderLeft: '3px solid var(--primary-cyan)',
+                paddingLeft: '0.75rem'
+              }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '0.65rem' }}>
+                  <h3 style={{
+                    fontSize: '1.25rem',
+                    fontFamily: 'var(--font-heading)',
+                    color: 'var(--text-primary)',
+                    fontWeight: '600',
+                    letterSpacing: '-0.01em',
+                    margin: 0
+                  }}>Lab-Affiliated Clinical & Surgical Research</h3>
+                  <span className="badge badge-teal" style={{ fontSize: '0.65rem', textTransform: 'uppercase', padding: '0.15rem 0.4rem' }}>
+                    Affiliated Labs
+                  </span>
                 </div>
-              );
-            })}
-          </div>
+                <p style={{ color: 'var(--text-secondary)', fontSize: '0.88rem', margin: 0, opacity: 0.85, maxWidth: '800px', lineHeight: '1.4' }}>
+                  Academic research and clinical translation systems developed in cooperation with Carnegie Mellon University (CMU CERLAB &amp; Grover Lab) and University of Pittsburgh Medical Center (UPMC) neurosurgeons.
+                </p>
+              </div>
+              
+              <div className="project-grid">
+                {labProjects.map((project) => renderProjectCard(project))}
+              </div>
+            </div>
+          )}
+
+          {/* Section Divider */}
+          {labProjects.length > 0 && courseProjects.length > 0 && (
+            <div style={{
+              height: '1px',
+              background: 'linear-gradient(to right, rgba(0, 242, 254, 0.12), rgba(255, 255, 255, 0.01) 90%)',
+              marginBottom: '3rem',
+              marginTop: '1.5rem'
+            }}></div>
+          )}
+
+          {/* Technical Projects Section */}
+          {courseProjects.length > 0 && (
+            <div>
+              {labProjects.length > 0 && (
+                <div style={{
+                  display: 'flex',
+                  flexDirection: 'column',
+                  gap: '0.35rem',
+                  marginBottom: '1.5rem',
+                  borderLeft: '3px solid rgba(255, 255, 255, 0.15)',
+                  paddingLeft: '0.75rem'
+                }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.65rem' }}>
+                    <h3 style={{
+                      fontSize: '1.25rem',
+                      fontFamily: 'var(--font-heading)',
+                      color: 'var(--text-primary)',
+                      fontWeight: '600',
+                      letterSpacing: '-0.01em',
+                      margin: 0
+                    }}>Engineering &amp; Computational Diagnostics</h3>
+                    <span className="badge" style={{ 
+                      fontSize: '0.65rem', 
+                      background: 'rgba(255, 255, 255, 0.03)', 
+                      color: 'var(--text-secondary)', 
+                      border: '1px solid rgba(255, 255, 255, 0.05)',
+                      textTransform: 'uppercase',
+                      padding: '0.15rem 0.4rem'
+                    }}>
+                      Core Portfolio
+                    </span>
+                  </div>
+                  <p style={{ color: 'var(--text-secondary)', fontSize: '0.88rem', margin: 0, opacity: 0.85, maxWidth: '800px', lineHeight: '1.4' }}>
+                    Interactive 3D computer vision models, differentiable partial differential equation unrolling layers, medical image segmentation pipelines, and robotic surgery tools.
+                  </p>
+                </div>
+              )}
+              
+              <div className="project-grid">
+                {courseProjects.map((project) => renderProjectCard(project))}
+              </div>
+            </div>
+          )}
         </section>
 
         {/* RESEARCH & PUBLICATIONS SECTION */}
