@@ -641,6 +641,7 @@ function App() {
   // Expanded timeline accordion state
   const [expandedTimeline, setExpandedTimeline] = useState(null);
   const [expandedTeachingCourse, setExpandedTeachingCourse] = useState('ml-bme');
+  const [hoveredProjectId, setHoveredProjectId] = useState(null);
 
   // 3D Scanner widget interactive state
   const [scanCoords, setScanCoords] = useState({ x: 124.52, y: 84.18, z: 9.31 });
@@ -745,7 +746,9 @@ function App() {
     return (
       <div
         key={project.id}
-        className="glass-panel project-card"
+        className={`glass-panel project-card ${hoveredProjectId === project.id ? 'is-hovered' : ''}`}
+        onMouseEnter={() => setHoveredProjectId(project.id)}
+        onMouseLeave={() => setHoveredProjectId((current) => (current === project.id ? null : current))}
         style={{
           background: project.highlight ? 'radial-gradient(circle at 50% 0%, rgba(14, 165, 233, 0.02), rgba(14, 16, 21, 0.8) 75%)' : 'var(--bg-surface-glass)',
           borderColor: currentSim?.active 
@@ -894,7 +897,7 @@ function App() {
   };
 
   return (
-    <div className="page-container">
+    <div className={`page-container ${hoveredProjectId ? 'project-spotlight-active' : ''}`}>
       {/* Dynamic interactive Canvas Network */}
       <NeuralBackground />
       <CursorTrail />
@@ -902,6 +905,7 @@ function App() {
       {/* Decorative blurred backgrounds */}
       <div className="glow-blur-1"></div>
       <div className="glow-blur-2"></div>
+      <div className="page-dimmer"></div>
 
       {/* FLOATING GLASS NAVIGATION HEADER */}
       <header className="site-header" style={{
