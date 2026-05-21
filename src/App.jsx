@@ -45,159 +45,216 @@ const Linkedin = ({ size = 18 }) => (
   </svg>
 );
 
+const ScholarIcon = ({ size = 18 }) => (
+  <svg viewBox="0 0 24 24" width={size} height={size} stroke="currentColor" strokeWidth="2" fill="none" strokeLinecap="round" strokeLinejoin="round" style={{ flexShrink: 0, display: 'inline-block', verticalAlign: 'middle' }}>
+    <path d="M22 10v6M2 10l10-5 10 5-10 5z" />
+    <path d="M6 12v5c0 2 2 3 6 3s6-1 6-3v-5" />
+  </svg>
+);
+
 // Full publications dataset
 const PUBLICATIONS = [
   {
     id: 1,
     title: "Automated histopathological detection and classification of lung cancer with an image pre-processing pipeline and spatial attention with deep neural networks",
-    authors: "Tushar Nayak, et al.",
-    venue: "IEEE International Conference on Electronics, Computing and Communication Technologies (CONECCT)",
-    year: 2023,
-    type: "Conference",
+    authors: "Tushar Nayak, Nitila Gokulkrishnan, Krishnaraj Chadaga, Niranjana Sampathila, Hilda Mayrose, Swathi KS",
+    venue: "Cogent Engineering",
+    year: 2024,
+    type: "Journal",
     tags: ["Lung Cancer", "Spatial Attention", "Histopathology"],
     selected: true,
-    link: "#",
-    bibtex: `@inproceedings{nayak2023lung,
+    link: "https://doi.org/10.1080/23311916.2024.2357182",
+    scholar: "https://scholar.google.com/citations?view_op=view_citation&hl=en&user=9xUX7NoAAAAJ&citation_for_view=9xUX7NoAAAAJ:zYLM7Y9cAGgC",
+    bibtex: `@article{nayak2024automated,
+  abbr={lung-cogent},
   title={Automated histopathological detection and classification of lung cancer with an image pre-processing pipeline and spatial attention with deep neural networks},
-  author={Nayak, Tushar and others},
-  booktitle={2023 IEEE International Conference on Electronics, Computing and Communication Technologies (CONECCT)},
-  year={2023}
+  author={Nayak, Tushar and Gokulkrishnan, Nitila and Chadaga, Krishnaraj and Sampathila, Niranjana and Mayrose, Hilda and KS, Swathi},
+  journal={Cogent Engineering},
+  volume={11},
+  pages={2357182},
+  year={2024},
+  publisher={Taylor \\& Francis},
+  doi={10.1080/23311916.2024.2357182},
+  url={https://doi.org/10.1080/23311916.2024.2357182},
+  selected={true}
 }`
   },
   {
     id: 2,
     title: "Deep learning based detection of monkeypox virus using skin lesion images",
-    authors: "Tushar Nayak, et al.",
-    venue: "Journal of Medical Imaging and Health Informatics",
+    authors: "Tushar Nayak, Krishnaraj Chadaga, Niranjana Sampathila, Hilda Mayrose, Nitila Gokulkrishnan, Srikanth Prabhu, Shashikiran Umakanth, et al.",
+    venue: "Medicine in Novel Technology and Devices",
     year: 2023,
     type: "Journal",
     tags: ["Monkeypox", "Skin Lesions", "Deep Learning"],
     selected: true,
-    link: "#",
-    bibtex: `@article{nayak2023monkeypox,
+    link: "https://doi.org/10.1016/j.medntd.2023.100243",
+    scholar: "https://scholar.google.com/citations?view_op=view_citation&hl=en&user=9xUX7NoAAAAJ&citation_for_view=9xUX7NoAAAAJ:u-x6o8ySG0sC",
+    bibtex: `@article{nayak2023deep,
+  abbr={mpox-mintad},
   title={Deep learning based detection of monkeypox virus using skin lesion images},
-  author={Nayak, Tushar and others},
-  journal={Journal of Medical Imaging and Health Informatics},
-  year={2023}
+  author={Nayak, Tushar and Chadaga, Krishnaraj and Sampathila, Niranjana and Mayrose, Hilda and Gokulkrishnan, Nitila and Prabhu, Srikanth and Umakanth, Shashikiran and others},
+  journal={Medicine in Novel Technology and Devices},
+  volume={18},
+  pages={100243},
+  year={2023},
+  month={June},
+  publisher={Elsevier},
+  doi={10.1016/j.medntd.2023.100243},
+  url={https://doi.org/10.1016/j.medntd.2023.100243}
 }`
   },
   {
     id: 3,
     title: "Detection of Monkeypox from skin lesion images using deep learning networks and explainable artificial intelligence",
-    authors: "Tushar Nayak, et al.",
-    venue: "Clinical Diagnostics & AI Support",
+    authors: "Tushar Nayak, Krishnaraj Chadaga, Niranjana Sampathila, Hilda Mayrose, G Muralidhar Bairy, Srikanth Prabhu, Swathi S Katta, Shashikiran Umakanth",
+    venue: "Applied Mathematics in Science and Engineering",
     year: 2023,
     type: "Journal",
     tags: ["Explainable AI (XAI)", "Monkeypox", "Diagnostics"],
     selected: true,
-    link: "#",
-    bibtex: `@article{nayak2023xai,
+    link: "https://doi.org/10.1080/27690911.2023.2225698",
+    scholar: "https://scholar.google.com/citations?view_op=view_citation&hl=en&user=9xUX7NoAAAAJ&citation_for_view=9xUX7NoAAAAJ:9yKSN-GCB0IC",
+    bibtex: `@article{nayak2023detection,
+  abbr={mpox-amisae},
   title={Detection of Monkeypox from skin lesion images using deep learning networks and explainable artificial intelligence},
-  author={Nayak, Tushar and others},
-  journal={Clinical Diagnostics & AI Support},
-  year={2023}
+  author={Nayak, Tushar and Chadaga, Krishnaraj and Sampathila, Niranjana and Mayrose, Hilda and Bairy, G Muralidhar and Prabhu, Srikanth and Katta, Swathi S and Umakanth, Shashikiran},
+  journal={Applied Mathematics in Science and Engineering},
+  volume={31},
+  pages={2225698},
+  year={2023},
+  publisher={Taylor \\& Francis},
+  doi={10.1080/27690911.2023.2225698},
+  url={https://doi.org/10.1080/27690911.2023.2225698}
 }`
   },
   {
     id: 4,
     title: "An explainable artificial intelligence integrated system for automatic detection of dengue from images of blood smears using transfer learning",
-    authors: "Tushar Nayak, et al.",
-    venue: "Hematology & Diagnostic Computing",
-    year: 2023,
+    authors: "Hilda Mayrose, Niranjana Sampathila, G Muralidhar Bairy, Tushar Nayak, Sushma Belurkar, Kavitha Saravu",
+    venue: "IEEE Access",
+    year: 2024,
     type: "Journal",
     tags: ["Dengue", "Explainable AI", "Transfer Learning"],
     selected: false,
-    link: "#",
-    bibtex: `@article{nayak2023denguexai,
+    link: "https://doi.org/10.1109/ACCESS.2024.3378516",
+    scholar: "https://scholar.google.com/citations?view_op=view_citation&hl=en&user=9xUX7NoAAAAJ&citation_for_view=9xUX7NoAAAAJ:IjCSPb-OGe4C",
+    bibtex: `@article{mayrose2024explainable,
+  abbr={dengue-access},
   title={An explainable artificial intelligence integrated system for automatic detection of dengue from images of blood smears using transfer learning},
-  author={Nayak, Tushar and others},
-  journal={Hematology & Diagnostic Computing},
-  year={2023}
+  author={Mayrose, Hilda and Sampathila, Niranjana and Bairy, G Muralidhar and Nayak, Tushar and Belurkar, Sushma and Saravu, Kavitha},
+  journal={IEEE Access},
+  volume={12},
+  pages={41750--41762},
+  year={2024},
+  publisher={IEEE},
+  doi={10.1109/ACCESS.2024.3378516},
+  url={https://doi.org/10.1109/ACCESS.2024.3378516}
 }`
   },
   {
     id: 5,
     title: "Processing and Detection of Lung and Colon Cancer from Histopathological Images using Deep Residual Networks",
-    authors: "Tushar Nayak, et al.",
-    venue: "IEEE Systems Journal / Clinical Computing",
+    authors: "Tushar Nayak, Niranjana Sampathila, Nitila Gokulkrishnan",
+    venue: "IEEE International Conference on Electronics, Computing and Communication Technologies (CONECCT)",
     year: 2023,
-    type: "Journal",
+    type: "Conference",
     tags: ["Colon Cancer", "ResNet", "Histopathology"],
     selected: false,
-    link: "#",
-    bibtex: `@article{nayak2023resnetlung,
+    link: "https://doi.org/10.1109/CONECCT57959.2023.10234757",
+    scholar: "https://scholar.google.com/citations?view_op=view_citation&hl=en&user=9xUX7NoAAAAJ&citation_for_view=9xUX7NoAAAAJ:2osOgNQ5qMEC",
+    bibtex: `@inproceedings{nayak2023processing,
+  abbr={lchist-conecct23},
   title={Processing and Detection of Lung and Colon Cancer from Histopathological Images using Deep Residual Networks},
-  author={Nayak, Tushar and others},
-  journal={IEEE Systems Journal / Clinical Computing},
-  year={2023}
+  author={Nayak, Tushar and Sampathila, Niranjana and Gokulkrishnan, Nitila},
+  booktitle={2023 IEEE International Conference on Electronics, Computing and Communication Technologies (CONECCT)},
+  volume={12},
+  pages={1--6},
+  year={2023},
+  organization={IEEE},
+  doi={10.1109/CONECCT57959.2023.10234757},
+  url={https://doi.org/10.1109/CONECCT57959.2023.10234757}
 }`
   },
   {
     id: 6,
     title: "Deep learning approach for detection of Dengue fever from the microscopic images of blood smear",
-    authors: "Tushar Nayak, et al.",
+    authors: "Hilda Mayrose, Niranjana Sampathila, G Muralidhar Bairy, Tushar Nayak, Sushma Belurkar, Kavitha Saravu",
     venue: "Journal of Physics: Conference Series",
-    year: 2022,
+    year: 2023,
     type: "Conference",
     tags: ["Dengue Fever", "Microscopic Imaging", "Classification"],
     selected: false,
-    link: "#",
-    bibtex: `@article{nayak2022denguephysics,
+    link: "https://doi.org/10.1088/1742-6596/2571/1/012005",
+    scholar: "https://scholar.google.com/citations?view_op=view_citation&hl=en&user=9xUX7NoAAAAJ&citation_for_view=9xUX7NoAAAAJ:UeHWp8X0CEIC",
+    bibtex: `@inproceedings{mayrose2023deep,
+  abbr={dengue-aicecs23},
   title={Deep learning approach for detection of Dengue fever from the microscopic images of blood smear},
-  author={Nayak, Tushar and others},
-  journal={Journal of Physics: Conference Series},
-  year={2022}
+  author={Mayrose, Hilda and Sampathila, Niranjana and Bairy, G Muralidhar and Nayak, Tushar and Belurkar, Sushma and Saravu, Kavitha},
+  booktitle={Journal of Physics: Conference Series},
+  volume={2571},
+  pages={012005},
+  year={2023},
+  organization={IOP Publishing},
+  doi={10.1088/1742-6596/2571/1/012005},
+  url={https://doi.org/10.1088/1742-6596/2571/1/012005}
 }`
   },
   {
     id: 7,
     title: "Deep learning-based analysis of blood smear images for detection of acute lymphoblastic leukemia",
-    authors: "Tushar Nayak, et al.",
+    authors: "Nitila Gokulkrishnan, Tushar Nayak, Niranjana Sampathila",
     venue: "IEEE International Conference on Electronics, Computing and Communication Technologies (CONECCT)",
     year: 2023,
     type: "Conference",
     tags: ["Leukemia (ALL)", "Blood Smears", "Classification"],
     selected: false,
-    link: "#",
-    bibtex: `@inproceedings{nayak2023leukemia,
+    link: "https://doi.org/10.1109/CONECCT57959.2023.10234757",
+    scholar: "https://scholar.google.com/citations?view_op=view_citation&hl=en&user=9xUX7NoAAAAJ&citation_for_view=9xUX7NoAAAAJ:qjMakFHDy7sC",
+    bibtex: `@inproceedings{gokulkrishnan2023deep,
+  abbr={all-conecct23},
   title={Deep learning-based analysis of blood smear images for detection of acute lymphoblastic leukemia},
-  author={Nayak, Tushar and others},
-  booktitle={2023 IEEE International Conference on Electronics, Computing and Communication Technologies (CONECCT)},
-  year={2023}
+  author={Gokulkrishnan, Nitla and Nayak, Tushar and Sampathila, Niranjana},
+  booktitle={2023 IEEE international conference on electronics, computing and communication technologies (CONECCT)},
+  pages={1--5},
+  year={2023},
+  organization={IEEE}
 }`
   },
   {
     id: 8,
     title: "Automated Oral Squamous Cell Carcinoma Detection from Histopathological Images Using Deep Neural Networks",
-    authors: "Tushar Nayak, et al.",
-    venue: "Diagnostic Oncology & Pathology Computing",
+    authors: "Tushar Nayak, Niranjana Sampathila",
+    venue: "Journal of Biomedical Engineering Society of India",
     year: 2023,
     type: "Journal",
     tags: ["OSCC", "Oral Cancer", "Histopathology"],
     selected: false,
     link: "#",
-    bibtex: `@article{nayak2023oscc,
+    bibtex: `@article{nayak2023oc,
+  abbr={nsrtbme-oralcancer},
+  author={Nayak, Tushar and Sampathila, Niranjana},
   title={Automated Oral Squamous Cell Carcinoma Detection from Histopathological Images Using Deep Neural Networks},
-  author={Nayak, Tushar and others},
-  journal={Diagnostic Oncology & Pathology Computing},
+  journal={Journal of Biomedical Engineering Society of India, Vol. 17},
   year={2023}
 }`
   },
   {
     id: 9,
     title: "Binary Detection of Acute Lymphocytic Leukemia Using Blood Smear Images Using Deep Learning Models",
-    authors: "Tushar Nayak, et al.",
-    venue: "Laboratory Hematology and Computing",
-    year: 2022,
+    authors: "Nitila Gokulkrishnan, Tushar Nayak, Niranjana Sampathila, Lavanya Dalmia, Reva Laghate",
+    venue: "Journal of Biomedical Engineering Society of India",
+    year: 2023,
     type: "Journal",
     tags: ["Leukemia", "Hematology", "Deep Learning"],
     selected: false,
     link: "#",
-    bibtex: `@article{nayak2022leukemiabinary,
+    bibtex: `@article{nayak2023lk,
+  abbr={nsrtbme-leukemia},
+  author={Gokulkrishnan, Nitila and Nayak, Tushar and Sampathila, Niranjana and Dalmia, Lavanya and Laghate, Reva},
   title={Binary Detection of Acute Lymphocytic Leukemia Using Blood Smear Images Using Deep Learning Models},
-  author={Nayak, Tushar and others},
-  journal={Laboratory Hematology and Computing},
-  year={2022}
+  journal={Journal of Biomedical Engineering Society of India, Vol. 17},
+  year={2023}
 }`
   }
 ];
@@ -207,78 +264,165 @@ const PROJECTS = [
   {
     id: 1,
     title: "Physics-Informed Endovasculature Deformation Estimation & Registration",
-    desc: "Graduate Thesis project investigating Physics-Informed Neural Networks (PINNs) and Neural Ordinary Differential Equations (Neural ODEs) to quantify deformable vascular displacement from 2D fluoroscopy angiograms and dynamically register it to pre-operative 3D CT angiographs.",
+    desc: "Advised by Dr. Kenji Shimada and Rishi Basdeo (CERLAB) in collaboration with UPMC neurosurgeons. Fuses 2D X-ray angiography features and pre-operative 3D centerlines using MorphPINN with a strain-preserving deformation graph system. Deploys custom CUDA-accelerated solvers.",
     category: "3D & Robotics",
-    tags: ["Physics-Informed ML", "Neural ODEs", "3D Registration", "Robotic Surgery"],
-    github: "https://github.com/tushar-nayak/vascular-reconstruction",
+    tags: ["Physics-Informed ML", "MorphPINN", "Vascular Registration", "Surgical Robotics"],
+    github: "https://github.com/katahar/telesurgery_cerlab/tree/deformation-graph/cv/deformable_registration",
     demo: null,
     highlight: true,
     simLogs: [
-      "[PINN] Initializing Adam Optimizer. Learning Rate = 1e-4...",
-      "[PINN] Loading boundary constraints from CT mesh...",
-      "[ODE] Solving spatial deformation field along catheter trajectory...",
-      "[ODE] Flow field converging. MSE Loss = 0.0024",
-      "[REGISTRATION] Performing 2D projection registration overlay...",
-      "[SUCCESS] Vascular deformation registration matched! Target error = 0.82mm."
+      "[MorphPINN] Initializing Adam Optimizer with strain safety constraint = 1.15...",
+      "[DEFORMATION] Loading pre-operative 3D centerlines from UPMC patient scans...",
+      "[SOLVER] Optimizing deformation graph weights under mechanical strain penalty...",
+      "[SOLVER] Divergence loss = 0.0034 | Hard strain constraint penalty = 0.00...",
+      "[REGISTRATION] Backprojecting 2D X-ray features onto deformation space...",
+      "[SUCCESS] Deformable registration completed! Mean target error = 0.74mm."
     ]
   },
   {
     id: 2,
-    title: "endo-splat",
-    desc: "Real-time, deformable 3D scene reconstruction framework tailored for dynamic surgical environments. Combines Neural Radiance Fields (NeRFs) for parsing complex specular reflections on biological tissues with explicit 3D Gaussian Splatting for sub-millisecond render tracking.",
-    category: "3D & Robotics",
-    tags: ["3D Gaussian Splatting", "NeRF", "Surgical Robotics", "Real-Time 3D"],
-    github: "https://github.com/tushar-nayak/endo-splat",
+    title: "Spatiotemporal Glioblastoma Evolution Visual Prediction",
+    desc: "Advised by Dr. Pulkit Grover, Dr. Aswin Sankaranarayanan, and neurosurgeon Dr. Matthew J. Shepard, MD. Fuses multi-modal MRI sequences (FLAIR, T1, T2, cT1) from the LUMIERE cohort into a continuous-time Neural ODE flow framework for history-conditioned spatiotemporal tumor growth forecasting.",
+    category: "Medical Imaging",
+    tags: ["Neural ODEs", "Glioblastoma", "LUMIERE Cohort", "SimpleITK"],
+    github: "https://github.com/tushar-nayak/glioblastoma-evolution",
     demo: null,
     highlight: true,
     simLogs: [
-      "[NeRF] Querying coordinate radiance fields for specularity mapping...",
-      "[GAUSSIAN] Spawning 120,000 spatial Gaussians over tissue grid...",
-      "[SPLATTING] Performing rasterization. Target FPS = 90...",
-      "[GAUSSIAN] Computing deformable offsets via dynamic scaling...",
-      "[SUCCESS] Scene reconstructed! specularity resolved in 4.2ms."
+      "[NEURAL ODE] Loading LUMIERE patient sequences: T0 (FLAIR), T1 (T1), T2 (cT1)...",
+      "[CO-REGISTRATION] Performing rigid and affine alignment using SimpleITK...",
+      "[SOLVER] Solving continuous-time latent state trajectories via Runge-Kutta 45...",
+      "[SOLVER] Iteration 250: Adjoint gradients matching boundary propagation...",
+      "[FORECAST] Projecting tumor volume boundary expansion forward 30 days...",
+      "[SUCCESS] Volumetric tumor forecasting complete. Dice Score = 0.885 | IoU = 0.824."
     ]
   },
   {
     id: 3,
-    title: "surgi-prompt",
-    desc: "Open-vocabulary surgical tool detection, semantic boundary segmentation, and multi-object tracking in real endoscopic/laparoscopic surgery videos. Integrates text-conditioned vision anchors (Grounding DINO) with sequential mask propagation (Segment Anything 2).",
-    category: "3D & Robotics",
-    tags: ["SAM2", "Grounding DINO", "Surgical Vision", "Open-Vocabulary"],
-    github: "https://github.com/tushar-nayak/surgi-prompt",
-    demo: null,
-    highlight: true,
+    title: "Neural Correlates Associated to Images for Emotional Response",
+    desc: "Course project for Fundamentals of MRI and Neuroimaging Analysis. Maps affective processing of emotional valence (positive/negative/neutral) using a multimodal fMRI workflow on a 3T Siemens Prisma, combining BOLD task-based fMRI, resting-state connectivity, and ASL perfusion.",
+    category: "Medical Imaging",
+    tags: ["BOLD fMRI", "ASL Perfusion", "3T Siemens Prisma", "SPM12"],
+    github: "https://github.com/tushar-nayak",
+    demo: "https://tushar-nayak.github.io/assets/pdf/42668.pdf",
+    highlight: false,
     simLogs: [
-      "[PROMPT] Loading text prompts: 'forceps', 'grasper', 'needle'...",
-      "[DINO] Extracting high-confidence bounding box proposals...",
-      "[DINO] Detected 'forceps' [Score: 0.94] at coordinate [0.32, 0.45]...",
-      "[SAM2] Enforcing temporal memory queue. Propagating boundary mask...",
-      "[SUCCESS] 24 frames tracked. Semantic IoU = 0.912."
+      "[BOLD] Preprocessing 3T Siemens Prisma fMRI: slice timing, motion correction...",
+      "[SPM12] Co-registering T1 structural anatomy to standard MNI152 space...",
+      "[GLM] Fitting General Linear Model with emotional valence stimulus onset...",
+      "[PERFUSION] Estimating cerebral blood flow (CBF) from arterial spin labeling (ASL)...",
+      "[CORRELATE] Extracting amygdala & ventral striatum contrast activation...",
+      "[SUCCESS] Activation contrast mapped. Emotional valence activation verified."
     ]
   },
   {
     id: 4,
-    title: "cardiac-reconstruction-evolved",
-    desc: "Sparse cardiac volume reconstruction utilizing stabilized Gaussian occupancy fields, differentiable slice supervision from limited ultrasound views, and mesh-based surface evaluations for interpretable 3D anatomy recovery.",
+    title: "Few-Shot 2D Echo to 3D Cardiac Reconstruction via Neural Implicit Priors",
+    desc: "Course project for Learning for 3D Vision. Fuses Reptile meta-learning and 3D Implicit Neural Representations (INR) with Test-Time Optimization (TTO) to reconstruct high-fidelity patient-specific 3D ventricular shapes from sparse 2D echocardiograms, utilizing SE(3) pose refinement.",
     category: "3D & Robotics",
-    tags: ["Gaussian Occupancy", "Differentiable Rendering", "Cardiac US"],
-    github: "https://github.com/tushar-nayak/cardiac-reconstruction-evolved",
+    tags: ["Reptile Meta-Learning", "Implicit Neural Reps", "Few-Shot 3D", "Cardiac Echo"],
+    github: "https://github.com/tushar-nayak/cardiac-volume-reconstruction",
     demo: null,
     highlight: true,
     simLogs: [
-      "[GAUSSIAN] Initializing implicit occupancy field mapping...",
-      "[ULTRASOUND] Importing CC & MLO 2D slice configurations...",
-      "[RENDERER] Projecting slices. Backpropagating voxel difference...",
-      "[MESH] Extracting cardiac surface mesh using marching cubes...",
-      "[SUCCESS] 3D mesh exported. Volume deviation = 2.4%."
+      "[META-LEARNING] Initializing Reptile optimizer on 3D cardiac shape prior database...",
+      "[TTO] Injecting 2D echocardiogram slices. Computing SE(3) rigid pose offsets...",
+      "[INR] Optimizing MLPs parameterizing implicit volumetric occupancy functions...",
+      "[SOLVER] Iteration 150/500: Reconstructing cardiac boundary. SDF Loss = 0.0014...",
+      "[MARCHING CUBES] Extracting 3D surface mesh from ventricular zero-isosurface...",
+      "[SUCCESS] Ventricular volume reconstructed. Volume deviation vs CT ground truth = 2.1%."
     ]
   },
   {
     id: 5,
-    title: "Neural Anisotropic Diffusion for Medical Image Relaxation",
-    desc: "Learnable anisotropic diffusion models unrolled as deep networks for high-contrast brain MRI denoising. Features spatially adaptive unrolled PDE conduction weights and optional U-Net guidance for edge-preserving refinement.",
+    title: "Multi-Model Oral Squamous Cell Carcinoma Detection",
+    desc: "Undergraduate thesis at Biomedical Computing Lab. Tri-modal, multi-stage clinical diagnostic pipeline fusing non-invasive oral lesion macrographs, optical coherence tomography (OCT) scans, and invasive histopathology biopsy images using regularized transfer learning.",
+    category: "Cancer & Pathology",
+    tags: ["OSCC Detection", "Multi-Modal Fusion", "Oral Cancer", "Histopathology"],
+    github: "https://github.com/tushar-nayak",
+    demo: null,
+    highlight: false,
+    simLogs: [
+      "[MACROGRAPH] Extracting attention-weighted lesion borders...",
+      "[OCT] Scanning epithelial and sub-epithelial thickness variations...",
+      "[HISTOPATHOLOGY] Analyzing cellular atypia and hyperchromatism grids...",
+      "[ENSEMBLE] Blending tri-modal predictions via soft-voting classifier...",
+      "[SUCCESS] Multiclass OSCC assessment completed! Accuracy = 97.4%."
+    ]
+  },
+  {
+    id: 6,
+    title: "Lung & Colon Cancer Detection using Histopathological Imaging",
+    desc: "Research at Biomedical Computing Lab. Deploys deep residual networks coupled with unsharp masking and contrast stretching to identify Adenocarcinoma and Squamous Cell Carcinoma from H&E histopathology slides. Published in IEEE CONECCT 2023.",
+    category: "Cancer & Pathology",
+    tags: ["Deep Residual Nets", "Histopathology", "IEEE CONECCT", "Attention Layers"],
+    github: "https://github.com/tushar-nayak",
+    demo: null,
+    highlight: false,
+    simLogs: [
+      "[PRE-PROCESSING] Applying unsharp masking & stain normalization...",
+      "[RESNET] Querying deep feature maps for cytological variations...",
+      "[ATTENTION] Pinpointing spatial clusters of malignant cell growth...",
+      "[SUCCESS] Tissue classified. Accuracy = 99.7% | F1-Score = 0.994."
+    ]
+  },
+  {
+    id: 7,
+    title: "Monkeypox Virus Detection Using Skin Lesion Images",
+    desc: "Preliminary project at Biomedical Computing Lab. Built robust clinical classification pipelines processing skin lesion macrographs to distinguish Monkeypox from Chickenpox, Measles, and Healthy skin. Utilized deep transfer learning models with LIME and Grad-CAM overlays.",
     category: "Medical Imaging",
-    tags: ["PDE Denoising", "MRI Relaxation", "Unrolled Nets", "PyTorch"],
+    tags: ["Monkeypox", "XAI Diagnostics", "Grad-CAM", "MATLAB Pipelines"],
+    github: "https://github.com/tushar-nayak",
+    demo: null,
+    highlight: false,
+    simLogs: [
+      "[INPUT] Loading skin lesion macrograph. Resizing to 224x224...",
+      "[RESNET-18] Propagating features. Estimating anomaly indicators...",
+      "[GRAD-CAM] Generating spatial saliency maps on blister boundary...",
+      "[LIME] Estimating local linear model contributions...",
+      "[SUCCESS] Mpox vs others binary classified. Acc = 99.49%."
+    ]
+  },
+  {
+    id: 8,
+    title: "CTA to Mesh & Point-Cloud Coronary Artery Segmentation",
+    desc: "Course project for Image Based Computational Modelling & Analysis. End-to-end 3D deep learning pipeline for automatic coronary artery tree extraction from CT angiography (CTA). Leverages a Residual 3D U-Net backbone, hybrid Dice-BCE loss, and Laplacian mesh smoothing.",
+    category: "Medical Imaging",
+    tags: ["Residual 3D U-Net", "Marching Cubes", "Laplacian Smoothing", "SimpleITK"],
+    github: "https://github.com/tushar-nayak",
+    demo: "https://tushar-nayak.github.io/assets/pdf/42640.pdf",
+    highlight: false,
+    simLogs: [
+      "[3D UNET] Loading 3D CTA coronary volumes. Standardizing spatial voxel spacing...",
+      "[RES-UNET] Segmenting coronary branches: Left Main (LM), Left Anterior Descending (LAD)...",
+      "[GEOMETRY] Running Marching Cubes to generate initial boundary surface triangulation...",
+      "[SMOOTHING] Applying Laplacian smoothing & VTK decimation filters...",
+      "[SUCCESS] Coronary tree mesh exported! Output contains 45,000 vertices."
+    ]
+  },
+  {
+    id: 9,
+    title: "Attention-augmented Dual-View Mammogram Alignment",
+    desc: "Course project for Projects in Biomedical AI. Deep learning pipeline for automatic alignment and BI-RADS classification of dual-view mammograms (Craniocaudal [CC] and Mediolateral Oblique [MLO]). Leverages Spatial Transformer Networks (STNs) for geometric co-registration.",
+    category: "Cancer & Pathology",
+    tags: ["Spatial Transformer Nets", "CC & MLO Views", "BI-RADS Classification", "Attention Fusion"],
+    github: "https://github.com/tushar-nayak/grading-cbisddsm/blob/main/42657A_G3Report",
+    demo: null,
+    highlight: false,
+    simLogs: [
+      "[MAMMOGRAM] Loading paired breast scans: CC view and MLO view...",
+      "[STN] Estimating affine registration parameters to warp CC onto MLO space...",
+      "[FUSION] Appending cross-view attention layer over warped density maps...",
+      "[CLASSIFIER] Performing BI-RADS category scoring...",
+      "[SUCCESS] Pipeline complete. BI-RADS Category 4 predicted | Conf = 0.89."
+    ]
+  },
+  {
+    id: 10,
+    title: "Neural Anisotropic Diffusion for Medical Image Relaxation",
+    desc: "Course project for Medical Image Analysis. Unrolls the classical Perona-Malik Partial Differential Equation (PDE) into a differentiable network layer. Employs a context-aware MiniUNet to dynamically predict spatially adaptive diffusion conduction coefficients.",
+    category: "Medical Imaging",
+    tags: ["PDE Unrolling", "Anisotropic Diffusion", "MiniUNet", "Image Denoising"],
     github: "https://github.com/tushar-nayak/neural-anisotropic-diffusion",
     demo: null,
     highlight: false,
@@ -291,93 +435,12 @@ const PROJECTS = [
     ]
   },
   {
-    id: 6,
-    title: "lobe-ranger",
-    desc: "A prototype multi-scale ordinal pathology foundation network (MOPFN) that fuses 20x and 40x whole-slide pathology scans to preserve architectural (macro) and cytological (micro) tissue contexts via bidirectional cross-attention.",
-    category: "Cancer & Pathology",
-    tags: ["Pathology Foundation Net", "Whole Slide Imaging", "Cross-Attention"],
-    github: "https://github.com/tushar-nayak/lobe-ranger",
-    demo: null,
-    highlight: true,
-    simLogs: [
-      "[MACRO] Loading 20x whole slide scan patch matrix...",
-      "[MICRO] Extracting 40x cellular scale coordinates...",
-      "[CROSS-ATTN] Running bidirectional cross-attention mapping...",
-      "[PATHOLOGY] Compiling ordinal severity scales (Grade I - IV)...",
-      "[SUCCESS] Patient diagnosis resolved: Grade II, Conf = 0.941."
-    ]
-  },
-  {
-    id: 7,
-    title: "Spatiotemporal Glioblastoma Evolution Visual Prediction",
-    desc: "History-conditioned forecasting of brain tumor growth using 2D/3D Attention U-Nets coupled with Neural ODE flow models. Validated on the full clinical LUMIERE dataset with SimpleITK volumetric co-registration, achieving 46.8% improved boundary prediction accuracy.",
-    category: "Medical Imaging",
-    tags: ["Neural ODEs", "Glioblastoma", "Attention U-Net", "SimpleITK"],
-    github: "https://github.com/tushar-nayak/glioblastoma-evolution",
-    demo: null,
-    highlight: false,
-    simLogs: [
-      "[SIMPLEITK] Registering historic timepoints T0, T1, T2...",
-      "[ATTN-UNET] Extracting tumor core features...",
-      "[ODE] Forecasting spatiotemporal growth tensor forward 30 days...",
-      "[SUCCESS] Glioblastoma boundary forecast compiled. Area match IoU = 0.84."
-    ]
-  },
-  {
-    id: 8,
-    title: "CTA to Mesh Coronary Artery Segmentation",
-    desc: "Monolithic pipeline for 3D coronary artery extraction from CT angiographs (CTA) to volumetric meshes and point-clouds. Leverages customized Residual 3D U-Net, MONAI core modules, VTK surface extraction, and marching cubes mesh processing.",
-    category: "Medical Imaging",
-    tags: ["3D U-Net", "MONAI", "VTK Mesh Export", "Marching Cubes"],
-    github: "https://github.com/tushar-nayak/lungvolseg",
-    demo: null,
-    highlight: false,
-    simLogs: [
-      "[MONAI] Preprocessing 3D CTA voxels. Scaling spacing...",
-      "[RES-3D] segmenting left main & circumflex arteries...",
-      "[VTK] Extracting polygonal boundary meshes...",
-      "[SUCCESS] marching cubes exported .obj mesh with 45,000 points."
-    ]
-  },
-  {
-    id: 9,
-    title: "DermaSeg",
-    desc: "High-accuracy skin lesion boundary segmentation project evaluated on the ISIC 2018 benchmark. Built around DeepLabV3+ with custom transformer-based backbone models and dense skip connection U-Net variants.",
-    category: "Cancer & Pathology",
-    tags: ["DeepLabV3+", "Transformers", "ISIC 2018", "Skin Lesions"],
-    github: "https://github.com/tushar-nayak/derma-seg",
-    demo: null,
-    highlight: false,
-    simLogs: [
-      "[ISIC] Preprocessing dermoscopy image patches...",
-      "[TRANSFORMER] Querying self-attention layers on skin pixels...",
-      "[DEEPLAB] Performing ASPP dense feature projection...",
-      "[SUCCESS] Segmentation boundary mask generated. Dice score = 0.931."
-    ]
-  },
-  {
-    id: 10,
-    title: "Attention-augmented Mammogram Alignment",
-    desc: "Dual-view mammography alignment system that simultaneously parses cranio-caudal (CC) and medio-lateral oblique (MLO) views of the breast to fuse corresponding lesion areas and enhance BI-RADS clinical classification.",
-    category: "Cancer & Pathology",
-    tags: ["Mammography", "BI-RADS", "Dual-View Fusion", "Mammogram CC/MLO"],
-    github: "https://github.com/tushar-nayak/grading-cbisddsm",
-    demo: null,
-    highlight: false,
-    simLogs: [
-      "[INPUT] Loading CC View and corresponding MLO View...",
-      "[ALIGN] Running affine registration between mammographic projections...",
-      "[FUSION] Attending to localized tissue densities across views...",
-      "[SUCCESS] BI-RADS assessment: Category 4 (Suspicious), Conf = 0.88."
-    ]
-  },
-  {
     id: 11,
-    title: "neural-active-contours",
-    desc: "Differentiable snake / active contour model layers unrolled into deep learning backbones. Enables training neural network encoders with explicit structural geometric priors for boundary convergence.",
+    title: "Neural Active Contours",
+    desc: "Personal project. Investigates unrolling classical active contour models (Snakes) directly into differentiable neural network backbones, allowing end-to-end backpropagation of geometric boundary forces (elasticity, stiffness, balloon forces).",
     category: "Medical Imaging",
-    tags: ["Active Contours", "Differentiable Snaking", "Geometric Priors"],
-    github: "https://github.com/tushar-nayak/neural-active-contours",
+    tags: ["Active Contours", "Differentiable Snaking", "Geometric Priors", "PyTorch"],
+    github: "https://github.com/tushar-nayak/neural-active-contours/",
     demo: null,
     highlight: false,
     simLogs: [
@@ -389,83 +452,72 @@ const PROJECTS = [
   },
   {
     id: 12,
-    title: "glass-path",
-    desc: "Whole-slide histopathology scanner simulator and diagnostic classifier, validating cell classification pipelines on massive digital tissue slices.",
-    category: "Cancer & Pathology",
-    tags: ["Histopathology", "Digital Pathology", "Classifier Pipelines"],
-    github: "https://github.com/tushar-nayak/glass-path",
+    title: "LungVolSeg: 3D Lung CT Segmentation",
+    desc: "Personal project. High-reproducibility 3D full-volume lung CT segmentation and watertight surface export pipeline utilizing a 3D UNet backbone from MONAI, evaluated on the Zenodo chest CT benchmark. Exports watertight STL and VTK surface meshes.",
+    category: "Medical Imaging",
+    tags: ["MONAI 3D UNet", "Zenodo Dataset", "STL Surface Export", "Volumetric Analysis"],
+    github: "https://github.com/tushar-nayak/lungvolseg",
     demo: null,
     highlight: false,
     simLogs: [
-      "[SIMULATOR] Parsing 8.4 GB whole slide file...",
-      "[TILE] Slicing image into 12,000 sub-tiles in memory...",
-      "[CELL] Classifying nuclei profiles using ResNet backbone...",
-      "[SUCCESS] Cell classification completed. Found 4,231 malignant profiles."
+      "[INPUT] Loading 3D chest CT volume from Zenodo cohort...",
+      "[MONAI] Running 3D UNet inference for lung field segmentation...",
+      "[VOXELS] Compiling volumetric metrics. Calculating watertight boundaries...",
+      "[SURFACE] Applying Marching Cubes to generate polygonal mesh...",
+      "[SUCCESS] Watertight STL surface mesh successfully exported for 3D printing."
     ]
   },
   {
     id: 13,
-    title: "Multi-Model Oral Squamous Cell Carcinoma Detection",
-    desc: "Multi-modal model stack analyzing biopsy histopathological imaging and patient clinical parameters to classify early-stage Oral Squamous Cell Carcinoma.",
-    category: "Cancer & Pathology",
-    tags: ["OSCC Detection", "Biopsy Analysis", "Ensemble Learning"],
-    github: "https://github.com/tushar-nayak",
+    title: "EndoSemantic-Splat",
+    desc: "Personal project. Real-time deformable 3D scene reconstruction pipeline tailored for endoscopic and laparoscopic environments. Fuses sparse point-cloud initialization from depth maps, fast 3D Gaussian Splatting, and CLIP/LSeg-guided open-vocabulary semantic querying.",
+    category: "3D & Robotics",
+    tags: ["Deformable 3DGS", "Open-Vocabulary VLM", "Surgical Vision", "Real-Time Rendering"],
+    github: "https://github.com/tushar-nayak/endo-splat/",
     demo: null,
-    highlight: false,
+    highlight: true,
     simLogs: [
-      "[PATHOLOGY] Scanning cell keratinization clusters...",
-      "[CLINICAL] Parsing demographic risk factor arrays...",
-      "[ENSEMBLE] Fusing histopathology CNN scores and risk trees...",
-      "[SUCCESS] OSCC likelihood evaluated: 82.4% (Early Stage)."
+      "[GAUSSIAN] Spawning 120,000 spatial Gaussians from sparse depth cloud...",
+      "[SPLATTING] Performing differentiable rasterization at 100+ fps...",
+      "[VLM] Injecting CLIP/LSeg language embeddings into Gaussian feature space...",
+      "[SEMANTIC] Querying open-vocabulary tags: 'forceps', 'tissue boundary'...",
+      "[SUCCESS] Deformable semantic splatting completed. Specularity resolved in 4.2ms."
     ]
   },
   {
     id: 14,
-    title: "Neural Correlates of Emotional Imaging",
-    desc: "Investigating spatial neural activation profiles and EEG electrode correlates corresponding to visual affective image stimulations.",
+    title: "Fungal-Neo: Fungal Morphological Analysis",
+    desc: "Personal project. Deploys a patch-based learning pipeline leveraging ResNet18-based classifiers to perform robust classification of 9 different fungal species from high-resolution microscopic image patches (3600x5760).",
     category: "Medical Imaging",
-    tags: ["EEG Analysis", "Neural Correlates", "Emotional Diagnostics"],
-    github: "https://github.com/tushar-nayak",
+    tags: ["ResNet18", "Patch-Based Learning", "Fungal Classification", "Microscopy"],
+    github: "https://github.com/tushar-nayak/fungal-neo/",
     demo: null,
     highlight: false,
     simLogs: [
-      "[EEG] Aligning multi-electrode channels: Fp1, Fp2, Cz...",
-      "[SIGNAL] Performing Fast Fourier Transform (FFT) noise filters...",
-      "[CORRELATE] Mapping alpha/beta power asymmetry to image timelines...",
-      "[SUCCESS] Emotion score: Positive valence, activation verified."
+      "[MICROSCOPY] Loading high-resolution microscopic image scan (3600x5760)...",
+      "[PATCHING] Splitting high-res field into 224x224 cellular patches...",
+      "[RESNET18] Performing patch classification across 9 fungal species...",
+      "[ENSEMBLE] Aggregating regional patches to generate slide-level score...",
+      "[SUCCESS] Microscopic diagnostic classification complete. Confidence = 94.8%."
     ]
   },
   {
     id: 15,
-    title: "Monkeypox Virus XAI Diagnostics",
-    desc: "Clinical support skin lesion classification system augmented with explainable artificial intelligence (XAI) overlays (Grad-CAM, SHAP, Integrated Gradients).",
-    category: "Medical Imaging",
-    tags: ["Explainable AI", "Grad-CAM", "SHAP", "Skin Lesions"],
+    title: "DermaSeg: ISIC 2018 Skin Lesion Segmentation",
+    desc: "Personal project. Medical image segmentation and comparative benchmarking framework evaluating classical CNN segmentation models, attention-based architectures (U-Net variants), and lightweight transformers on ISIC 2018 Task 1.",
+    category: "Cancer & Pathology",
+    tags: ["ISIC 2018", "Skin Lesion Segmentation", "Transformer Backbones", "U-Net Variants"],
     github: "https://github.com/tushar-nayak/derma-seg",
     demo: null,
     highlight: false,
     simLogs: [
-      "[XAI] Generating Grad-CAM activation heatmap overlay...",
-      "[SHAP] Calculating pixel contribution values...",
-      "[SUCCESS] Diagnostic support maps exported. Saliency matched."
-    ]
-  },
-  {
-    id: 16,
-    title: "Fetal Anomaly Ultrasound Diagnostic Support",
-    desc: "Ultrasound-based morphological measurement helper, detecting fetal developmental anomalies using transfer learning during ICMR research stint.",
-    category: "Medical Imaging",
-    tags: ["Ultrasound", "Fetal Morphometrics", "Diagnostic Support"],
-    github: "https://github.com/tushar-nayak",
-    demo: null,
-    highlight: false,
-    simLogs: [
-      "[ULTRASOUND] Segmenting cerebral ventricle indices...",
-      "[CALIPER] Computing morphological diameter measurements...",
-      "[SUCCESS] calipers calibrated. Index is within standard deviation."
+      "[ISIC] Preprocessing dermoscopy image patches...",
+      "[TRANSFORMER] Querying self-attention layers on skin pixels...",
+      "[DEEPLAB] Performing ASPP dense feature projection...",
+      "[SUCCESS] Segmentation boundary mask generated. Dice score = 0.931."
     ]
   }
-];
+];;
 
 function App() {
   const [activeTab, setActiveTab] = useState('about');
@@ -732,13 +784,17 @@ function App() {
                   <Linkedin size={18} />
                   LinkedIn
                 </a>
+                <a href="https://scholar.google.com/citations?user=9xUX7NoAAAAJ&hl=en" target="_blank" rel="noopener noreferrer" className="btn btn-secondary">
+                  <ScholarIcon size={18} />
+                  Google Scholar
+                </a>
               </div>
             </div>
 
-            {/* Right Column: Ultra-Interactive 3D Scanning Visual Widget (Medical Target) */}
+            {/* Right Column: Sleek Interactive 3D Spatial Grid (Focal Projection Viewport) */}
             <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
               <div 
-                className="glass-panel pulse-glow"
+                className="glass-panel"
                 onMouseMove={handleScannerMouseMove}
                 onClick={handleScannerClick}
                 style={{
@@ -748,90 +804,108 @@ function App() {
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
-                  background: 'rgba(10, 11, 14, 0.4)',
-                  borderColor: 'rgba(0, 242, 254, 0.25)',
+                  background: 'rgba(10, 11, 14, 0.25)',
+                  borderColor: 'rgba(255, 255, 255, 0.08)',
                   cursor: 'crosshair',
-                  boxShadow: '0 0 40px rgba(0, 242, 254, 0.05)',
-                  borderRadius: '24px'
+                  boxShadow: 'none',
+                  borderRadius: '20px',
+                  overflow: 'hidden'
                 }}
               >
-                {/* Custom CSS spinning scanner ring */}
+                {/* 5x5 Camera Sensor Grid Overlay */}
+                <div style={{ position: 'absolute', inset: 0, display: 'grid', gridTemplateColumns: 'repeat(5, 1fr)', gridTemplateRows: 'repeat(5, 1fr)', pointerEvents: 'none' }}>
+                  {Array.from({ length: 25 }).map((_, i) => (
+                    <div key={i} style={{ borderRight: '1px solid rgba(255, 255, 255, 0.02)', borderBottom: '1px solid rgba(255, 255, 255, 0.02)' }} />
+                  ))}
+                </div>
+
+                {/* Perspective 3D Frustum Bounding Box Lines */}
+                <div style={{
+                  position: 'absolute',
+                  width: '70%',
+                  height: '70%',
+                  border: '1px solid rgba(14, 165, 233, 0.1)',
+                  borderRadius: '12px',
+                  pointerEvents: 'none'
+                }} />
+                <div style={{
+                  position: 'absolute',
+                  width: '45%',
+                  height: '45%',
+                  border: '1px solid rgba(16, 185, 129, 0.06)',
+                  borderRadius: '6px',
+                  pointerEvents: 'none'
+                }} />
+
+                {/* Dynamic Camera Sensor Projection Line (Dashed) */}
                 <div style={{
                   position: 'absolute',
                   width: '100%',
-                  height: '100%',
-                  borderRadius: '50%',
-                  border: '1px dashed rgba(0, 242, 254, 0.3)',
-                  animation: `spin ${widgetSpinRate}s linear infinite`,
+                  height: '1px',
+                  borderTop: '1px dashed rgba(255, 255, 255, 0.03)',
+                  top: '50%',
                   pointerEvents: 'none'
                 }} />
-                
                 <div style={{
                   position: 'absolute',
-                  width: '85%',
-                  height: '85%',
-                  borderRadius: '50%',
-                  border: '1px solid rgba(0, 245, 160, 0.12)',
-                  animation: `spin-reverse ${widgetSpinRate * 0.8}s linear infinite`,
+                  height: '100%',
+                  width: '1px',
+                  borderLeft: '1px dashed rgba(255, 255, 255, 0.03)',
+                  left: '50%',
                   pointerEvents: 'none'
                 }} />
 
-                {/* Micro target dots */}
-                <div style={{ position: 'absolute', width: '6px', height: '6px', borderRadius: '50%', background: 'var(--primary-cyan)', top: '15%', left: '15%', boxShadow: '0 0 10px var(--primary-cyan)' }} />
-                <div style={{ position: 'absolute', width: '6px', height: '6px', borderRadius: '50%', background: 'var(--accent-emerald)', bottom: '15%', right: '15%', boxShadow: '0 0 10px var(--accent-emerald)' }} />
-                
-                {/* Glowing central target node */}
+                {/* Precise Dynamic Reticle Tracking Point Cloud */}
                 <div style={{
-                  width: '60px',
-                  height: '60px',
-                  borderRadius: '50%',
-                  background: 'radial-gradient(circle, rgba(0, 242, 254, 0.8) 0%, transparent 70%)',
+                  position: 'absolute',
+                  left: `${scanCoords.x / 2}%`,
+                  top: `${scanCoords.y / 2}%`,
+                  transform: 'translate(-50%, -50%)',
+                  pointerEvents: 'none',
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
-                  boxShadow: '0 0 30px rgba(0, 242, 254, 0.5)',
-                  animation: 'pulse-glow 2.5s infinite ease-in-out',
-                  pointerEvents: 'none',
-                  zIndex: 2
+                  transition: 'left 0.08s ease-out, top 0.08s ease-out'
                 }}>
-                  <Eye size={22} color="#000" />
+                  {/* Dynamic Pointer Dot */}
+                  <div style={{
+                    width: '6px',
+                    height: '6px',
+                    borderRadius: '50%',
+                    background: 'var(--primary-cyan)',
+                    boxShadow: '0 0 8px var(--primary-cyan)'
+                  }} />
+                  {/* Surrounding Dynamic Calibration Reticle Ring */}
+                  <div style={{
+                    position: 'absolute',
+                    width: '32px',
+                    height: '32px',
+                    borderRadius: '50%',
+                    border: '1px solid var(--primary-cyan)',
+                    opacity: 0.35,
+                    animation: `spin ${widgetSpinRate}s linear infinite`
+                  }} />
+                  {/* Fine Crosshair Ticks */}
+                  <div style={{ position: 'absolute', width: '1px', height: '12px', background: 'var(--primary-cyan)', opacity: 0.4 }} />
+                  <div style={{ position: 'absolute', height: '1px', width: '12px', background: 'var(--primary-cyan)', opacity: 0.4 }} />
                 </div>
 
-                {/* Rotating crosshair simulation lines */}
+                {/* Minimal Calibration Pill Action */}
                 <div style={{
                   position: 'absolute',
-                  width: '2px',
-                  height: '110%',
-                  background: 'linear-gradient(transparent, var(--primary-cyan), transparent)',
-                  transform: 'rotate(45deg)',
-                  opacity: 0.3,
-                  pointerEvents: 'none'
-                }} />
-                <div style={{
-                  position: 'absolute',
-                  width: '2px',
-                  height: '110%',
-                  background: 'linear-gradient(transparent, var(--accent-emerald), transparent)',
-                  transform: 'rotate(-45deg)',
-                  opacity: 0.3,
-                  pointerEvents: 'none'
-                }} />
-
-                {/* Floating click prompt overlay */}
-                <div style={{
-                  position: 'absolute',
-                  bottom: '12px',
-                  fontSize: '0.75rem',
-                  fontFamily: 'var(--font-heading)',
-                  color: 'var(--primary-cyan)',
-                  letterSpacing: '0.05em',
-                  background: 'rgba(0, 0, 0, 0.6)',
-                  padding: '2px 8px',
-                  borderRadius: '4px',
-                  border: '1px solid rgba(0, 242, 254, 0.15)',
-                  pointerEvents: 'none'
+                  bottom: '16px',
+                  fontSize: '0.65rem',
+                  fontFamily: 'monospace',
+                  color: 'var(--text-secondary)',
+                  letterSpacing: '0.08em',
+                  background: 'rgba(15, 17, 24, 0.8)',
+                  padding: '4px 10px',
+                  borderRadius: '6px',
+                  border: '1px solid rgba(255, 255, 255, 0.05)',
+                  cursor: 'pointer',
+                  userSelect: 'none'
                 }}>
-                  CLICK TO RE-CALIBRATE
+                  RE-CALIBRATE FOCAL PLANES
                 </div>
               </div>
 
@@ -841,29 +915,29 @@ function App() {
                 width: '280px',
                 padding: '0.85rem 1.25rem',
                 borderColor: 'var(--border-glow)',
-                background: 'rgba(10, 11, 14, 0.7)',
-                borderRadius: '16px'
+                background: 'rgba(14, 16, 21, 0.5)',
+                borderRadius: '14px'
               }}>
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.5rem' }}>
-                  <span style={{ fontSize: '0.7rem', color: 'var(--text-muted)', fontWeight: '600', letterSpacing: '0.05em' }}>3D SCANNER TELEMETRY</span>
-                  <div style={{ width: '6px', height: '6px', borderRadius: '50%', background: scanStatus.startsWith("RE-") ? 'var(--primary-cyan)' : 'var(--accent-emerald)', boxShadow: '0 0 10px currentColor' }}></div>
+                  <span style={{ fontSize: '0.65rem', color: 'var(--text-secondary)', fontWeight: '600', letterSpacing: '0.08em', fontFamily: 'monospace' }}>SPATIAL_RESOLVER_V1</span>
+                  <div style={{ width: '6px', height: '6px', borderRadius: '50%', background: scanStatus.startsWith("RE-") ? 'var(--primary-cyan)' : 'var(--accent-emerald)', transition: 'background-color 0.3s' }}></div>
                 </div>
                 <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '0.35rem' }}>
-                  <span style={{ fontSize: '0.8rem', color: 'var(--text-secondary)' }}>Status:</span>
-                  <span style={{ fontSize: '0.8rem', color: 'var(--primary-cyan)', fontWeight: '600', fontFamily: 'var(--font-heading)' }} className="pulse-glow">{scanStatus}</span>
+                  <span style={{ fontSize: '0.75rem', color: 'var(--text-secondary)' }}>Status:</span>
+                  <span style={{ fontSize: '0.75rem', color: 'var(--primary-cyan)', fontWeight: '600', fontFamily: 'monospace' }}>{scanStatus}</span>
                 </div>
-                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '0.5rem', borderTop: '1px solid rgba(255, 255, 255, 0.05)', paddingTop: '0.5rem' }}>
+                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '0.5rem', borderTop: '1px solid rgba(255, 255, 255, 0.04)', paddingTop: '0.5rem' }}>
                   <div style={{ display: 'flex', flexDirection: 'column' }}>
-                    <span style={{ fontSize: '0.65rem', color: 'var(--text-muted)' }}>COORD_X</span>
-                    <span style={{ fontSize: '0.8rem', color: 'var(--text-primary)', fontFamily: 'monospace' }}>{scanCoords.x}</span>
+                    <span style={{ fontSize: '0.65rem', color: 'var(--text-muted)' }}>FOCAL_X</span>
+                    <span style={{ fontSize: '0.75rem', color: 'var(--text-primary)', fontFamily: 'monospace' }}>{scanCoords.x}mm</span>
                   </div>
                   <div style={{ display: 'flex', flexDirection: 'column' }}>
-                    <span style={{ fontSize: '0.65rem', color: 'var(--text-muted)' }}>COORD_Y</span>
-                    <span style={{ fontSize: '0.8rem', color: 'var(--text-primary)', fontFamily: 'monospace' }}>{scanCoords.y}</span>
+                    <span style={{ fontSize: '0.65rem', color: 'var(--text-muted)' }}>FOCAL_Y</span>
+                    <span style={{ fontSize: '0.75rem', color: 'var(--text-primary)', fontFamily: 'monospace' }}>{scanCoords.y}mm</span>
                   </div>
                   <div style={{ display: 'flex', flexDirection: 'column' }}>
-                    <span style={{ fontSize: '0.65rem', color: 'var(--text-muted)' }}>COORD_Z</span>
-                    <span style={{ fontSize: '0.8rem', color: 'var(--text-primary)', fontFamily: 'monospace' }}>{scanCoords.z}</span>
+                    <span style={{ fontSize: '0.65rem', color: 'var(--text-muted)' }}>DEPTH_Z</span>
+                    <span style={{ fontSize: '0.75rem', color: 'var(--text-primary)', fontFamily: 'monospace' }}>{scanCoords.z}mm</span>
                   </div>
                 </div>
               </div>
@@ -1042,6 +1116,29 @@ function App() {
                         <ClipboardCopy size={14} />
                         Get BibTeX
                       </button>
+                      {pub.scholar && (
+                        <a
+                          href={pub.scholar}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          style={{
+                            background: 'rgba(0, 242, 254, 0.05)',
+                            border: '1px solid rgba(0, 242, 254, 0.15)',
+                            color: 'var(--primary-cyan)',
+                            padding: '0.45rem 0.75rem',
+                            borderRadius: '8px',
+                            fontSize: '0.8rem',
+                            display: 'inline-flex',
+                            alignItems: 'center',
+                            gap: '0.35rem',
+                            textDecoration: 'none',
+                            transition: 'var(--transition-fast)'
+                          }}
+                        >
+                          <ScholarIcon size={14} />
+                          Scholar
+                        </a>
+                      )}
                       <a
                         href={pub.link}
                         style={{
@@ -1126,13 +1223,13 @@ function App() {
                   key={project.id}
                   className="glass-panel project-card"
                   style={{
-                    background: project.highlight ? 'radial-gradient(circle at 50% 0%, rgba(0, 242, 254, 0.04), rgba(18, 20, 28, 0.75) 75%)' : 'var(--bg-surface-glass)',
+                    background: project.highlight ? 'radial-gradient(circle at 50% 0%, rgba(14, 165, 233, 0.02), rgba(14, 16, 21, 0.8) 75%)' : 'var(--bg-surface-glass)',
                     borderColor: currentSim?.active 
                       ? 'var(--accent-emerald)' 
-                      : (project.highlight ? 'rgba(0, 242, 254, 0.3)' : 'var(--border-glow)'),
+                      : (project.highlight ? 'rgba(14, 165, 233, 0.12)' : 'var(--border-glow)'),
                     boxShadow: currentSim?.active 
-                      ? '0 0 20px rgba(0, 245, 160, 0.15)' 
-                      : (project.highlight ? '0 0 20px rgba(0, 242, 254, 0.05)' : 'none')
+                      ? '0 0 15px rgba(16, 185, 129, 0.05)' 
+                      : 'none'
                   }}
                 >
                   <div className="project-card-header">
@@ -1151,77 +1248,6 @@ function App() {
                   <h3 className="project-card-title">{project.title}</h3>
                   <p className="project-card-desc">{project.desc}</p>
 
-                  {/* INTERACTIVE ALGORITHM SIMULATOR WINDOW (TERMINAL EFFECT) */}
-                  <div style={{
-                    background: '#07080a',
-                    border: '1px solid rgba(255, 255, 255, 0.08)',
-                    borderRadius: '8px',
-                    padding: '0.75rem',
-                    marginBottom: '1.25rem',
-                    fontFamily: 'monospace',
-                    fontSize: '0.75rem',
-                    minHeight: '120px',
-                    display: 'flex',
-                    flexDirection: 'column',
-                    justifyContent: 'space-between',
-                    position: 'relative'
-                  }}>
-                    {/* Console header */}
-                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderBottom: '1px solid rgba(255, 255, 255, 0.05)', paddingBottom: '0.25rem', marginBottom: '0.5rem' }}>
-                      <span style={{ color: 'var(--text-muted)', display: 'inline-flex', alignItems: 'center', gap: '0.25rem' }}>
-                        <Terminal size={12} />
-                        DIAGNOSTICS_LAB_V1
-                      </span>
-                      <button
-                        onClick={() => triggerSimulation(project.id, project.simLogs)}
-                        disabled={currentSim?.active}
-                        style={{
-                          background: currentSim?.active ? 'rgba(0, 245, 160, 0.12)' : 'rgba(0, 242, 254, 0.1)',
-                          border: 'none',
-                          color: currentSim?.active ? 'var(--accent-emerald)' : 'var(--primary-cyan)',
-                          padding: '0.15rem 0.5rem',
-                          borderRadius: '4px',
-                          cursor: currentSim?.active ? 'not-allowed' : 'pointer',
-                          display: 'inline-flex',
-                          alignItems: 'center',
-                          gap: '0.25rem',
-                          fontWeight: '600',
-                          fontSize: '0.65rem'
-                        }}
-                      >
-                        {currentSim?.active ? (
-                          <>
-                            <Sparkles size={10} className="pulse-glow" />
-                            SOLVING...
-                          </>
-                        ) : (
-                          <>
-                            <Play size={10} />
-                            SIMULATE
-                          </>
-                        )}
-                      </button>
-                    </div>
-
-                    {/* Console Log Outputs */}
-                    <div style={{ flexGrow: 1, overflowY: 'auto', display: 'flex', flexDirection: 'column', gap: '0.25rem', maxHeight: '72px' }}>
-                      {currentSim && currentSim.logs.length > 0 ? (
-                        currentSim.logs.map((log, idx) => (
-                          <div key={idx} style={{
-                            color: log.startsWith("[SUCCESS]") ? 'var(--accent-emerald)' : (log.startsWith("[ODE]") ? 'var(--primary-teal)' : 'var(--text-secondary)'),
-                            whiteSpace: 'pre-wrap'
-                          }}>
-                            {log}
-                          </div>
-                        ))
-                      ) : (
-                        <div style={{ color: 'var(--text-muted)', fontStyle: 'italic' }}>
-                          Terminal Idle. Click 'SIMULATE' to trigger physics solvers.
-                        </div>
-                      )}
-                    </div>
-                  </div>
-
                   <div className="project-tags">
                     {project.tags.map((tag, idx) => (
                       <span key={idx} style={{
@@ -1233,6 +1259,87 @@ function App() {
                         border: '1px solid rgba(255, 255, 255, 0.05)'
                       }}>{tag}</span>
                     ))}
+                  </div>
+
+                  {/* Sleek, Integrated Pipeline Simulator Telemetry */}
+                  <div style={{
+                    marginTop: 'auto',
+                    marginBottom: '1rem',
+                    background: 'rgba(0, 0, 0, 0.15)',
+                    border: '1px solid rgba(255, 255, 255, 0.03)',
+                    borderRadius: '8px',
+                    padding: '0.65rem 0.85rem'
+                  }}>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                      <span style={{ fontSize: '0.75rem', color: currentSim?.active ? 'var(--accent-emerald)' : 'var(--text-secondary)', display: 'inline-flex', alignItems: 'center', gap: '0.35rem', fontFamily: 'monospace' }}>
+                        <span style={{
+                          width: '6px',
+                          height: '6px',
+                          borderRadius: '50%',
+                          background: currentSim?.active ? 'var(--accent-emerald)' : (currentSim?.logs?.length ? 'var(--primary-cyan)' : 'rgba(255, 255, 255, 0.15)'),
+                          display: 'inline-block',
+                          boxShadow: currentSim?.active ? '0 0 6px var(--accent-emerald)' : 'none'
+                        }}></span>
+                        {currentSim?.active ? 'SOLVING_ODE...' : (currentSim?.logs?.length ? 'SIMULATION_LOCKED' : 'SOLVER_IDLE')}
+                      </span>
+                      <button
+                        onClick={() => triggerSimulation(project.id, project.simLogs)}
+                        disabled={currentSim?.active}
+                        style={{
+                          background: currentSim?.active ? 'rgba(16, 185, 129, 0.06)' : 'rgba(14, 165, 233, 0.05)',
+                          border: '1px solid rgba(14, 165, 233, 0.15)',
+                          color: currentSim?.active ? 'var(--accent-emerald)' : 'var(--primary-cyan)',
+                          padding: '0.25rem 0.6rem',
+                          borderRadius: '5px',
+                          cursor: currentSim?.active ? 'not-allowed' : 'pointer',
+                          display: 'inline-flex',
+                          alignItems: 'center',
+                          gap: '0.25rem',
+                          fontWeight: '500',
+                          fontSize: '0.65rem',
+                          fontFamily: 'monospace',
+                          transition: 'all 0.2s'
+                        }}
+                      >
+                        {currentSim?.active ? (
+                          <>
+                            <Sparkles size={8} />
+                            SOLVING
+                          </>
+                        ) : (
+                          <>
+                            <Play size={8} />
+                            RUN_SOLVER
+                          </>
+                        )}
+                      </button>
+                    </div>
+
+                    {/* Console Log Outputs - Collapsible Drawer that slides open ONLY when active or completed logs exist */}
+                    {currentSim && currentSim.logs.length > 0 && (
+                      <div style={{
+                        marginTop: '0.65rem',
+                        paddingTop: '0.5rem',
+                        borderTop: '1px solid rgba(255, 255, 255, 0.03)',
+                        fontFamily: 'monospace',
+                        fontSize: '0.65rem',
+                        display: 'flex',
+                        flexDirection: 'column',
+                        gap: '0.2rem',
+                        maxHeight: '80px',
+                        overflowY: 'auto'
+                      }}>
+                        {currentSim.logs.map((log, idx) => (
+                          <div key={idx} style={{
+                            color: log.startsWith("[SUCCESS]") ? 'var(--accent-emerald)' : (log.startsWith("[ODE]") ? 'var(--primary-cyan)' : 'var(--text-secondary)'),
+                            whiteSpace: 'pre-wrap',
+                            lineHeight: '1.3'
+                          }}>
+                            {log}
+                          </div>
+                        ))}
+                      </div>
+                    )}
                   </div>
 
                   <div className="project-links">
@@ -1459,9 +1566,17 @@ function App() {
                 <Mail size={18} />
                 Send an Email
               </a>
+              <a href="https://github.com/tushar-nayak" target="_blank" rel="noopener noreferrer" className="btn btn-secondary" style={{ padding: '0.9rem 2rem' }}>
+                <Github size={18} />
+                GitHub Profile
+              </a>
               <a href="https://www.linkedin.com/in/nayaktushar/" target="_blank" rel="noopener noreferrer" className="btn btn-secondary" style={{ padding: '0.9rem 2rem' }}>
                 <Linkedin size={18} />
                 LinkedIn Profile
+              </a>
+              <a href="https://scholar.google.com/citations?user=9xUX7NoAAAAJ&hl=en" target="_blank" rel="noopener noreferrer" className="btn btn-secondary" style={{ padding: '0.9rem 2rem' }}>
+                <ScholarIcon size={18} />
+                Google Scholar Profile
               </a>
             </div>
 
