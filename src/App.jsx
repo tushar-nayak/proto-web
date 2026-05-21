@@ -977,11 +977,11 @@ function App() {
               <div style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', marginBottom: '1.25rem' }}>
                 <span className="badge badge-teal">
                   <Stethoscope size={12} style={{ marginRight: '0.25rem' }} />
-                  Robotic Tele-surgery
+                  Surgical Robotics
                 </span>
                 <span className="badge badge-emerald">
                   <Cpu size={12} style={{ marginRight: '0.25rem' }} />
-                  Physics informed AI
+                  Physics-informed AI
                 </span>
               </div>
               
@@ -997,17 +997,17 @@ function App() {
                 marginBottom: '1.5rem',
                 lineHeight: '1.4'
               }}>
-                Graduate Researcher at <span style={{ color: 'var(--primary-cyan)', fontWeight: '500' }}>Carnegie Mellon University</span>
+                Graduate researcher at <span style={{ color: 'var(--primary-cyan)', fontWeight: '500' }}>Carnegie Mellon University</span>
               </p>
               
               <p style={{ color: 'var(--text-secondary)', fontSize: '1.05rem', marginBottom: '2.5rem', maxWidth: '650px', lineHeight: '1.7' }}>
-                Hey there! I am pursuing a research-oriented Masters in the <span style={{ color: 'var(--text-primary)' }}>Biomedical Engineering</span> department at CMU, advised by <span style={{ color: 'var(--text-primary)', fontWeight: '500' }}>Prof. Kenji Shimada</span> in the <span style={{ color: 'var(--text-primary)' }}>Steffey Robotics Lab</span>. My focus lies at the intersection of computer vision, differentiable rendering, and physics-based learning models to automate and guide surgical robotics through real-time medical imaging.
+                I'm pursuing a master's in the <span style={{ color: 'var(--text-primary)' }}>Biomedical Engineering</span> department at CMU, advised by <span style={{ color: 'var(--text-primary)', fontWeight: '500' }}>Prof. Kenji Shimada</span> in the <span style={{ color: 'var(--text-primary)' }}>Steffey Robotics Lab</span>. My work sits at the intersection of computer vision, differentiable rendering, and physics-based learning for surgical robotics and medical imaging.
               </p>
 
               <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap' }}>
                 <a href="mailto:tusharn@andrew.cmu.edu" className="btn btn-primary">
                   <Mail size={18} />
-                  tusharn@andrew.cmu.edu
+                  Email
                 </a>
                 <a href="https://github.com/tushar-nayak" target="_blank" rel="noopener noreferrer" className="btn btn-secondary">
                   <Github size={18} />
@@ -1098,10 +1098,10 @@ function App() {
           <div style={{ marginBottom: '2.5rem' }}>
             <h2 style={{ fontSize: '2.25rem', fontFamily: 'var(--font-heading)', display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
               <FolderGit2 className="gradient-text" />
-              Projects Portfolio & Diagnostics Lab
+              Projects & Demos
             </h2>
             <p style={{ color: 'var(--text-secondary)', fontSize: '1rem', marginTop: '0.25rem' }}>
-              Explore clinical research codebases, interactive deployment demos, and computational pipelines.
+              Explore research code, demos, and interactive pipelines.
             </p>
           </div>
 
@@ -1156,13 +1156,13 @@ function App() {
                     fontWeight: '600',
                     letterSpacing: '-0.01em',
                     margin: 0
-                  }}>Lab-Affiliated Clinical & Surgical Research</h3>
+                  }}>Lab-Affiliated Research</h3>
                   <span className="badge badge-teal" style={{ fontSize: '0.65rem', textTransform: 'uppercase', padding: '0.15rem 0.4rem' }}>
                     Affiliated Labs
                   </span>
                 </div>
                 <p style={{ color: 'var(--text-secondary)', fontSize: '0.88rem', margin: 0, opacity: 0.85, maxWidth: '800px', lineHeight: '1.4' }}>
-                  Academic research and clinical translation systems developed in cooperation with Carnegie Mellon University (CMU CERLAB &amp; Grover Lab) and University of Pittsburgh Medical Center (UPMC) neurosurgeons.
+                  Research projects developed with Carnegie Mellon University (CMU CERLAB &amp; Grover Lab) and University of Pittsburgh Medical Center (UPMC) collaborators.
                 </p>
               </div>
               
@@ -1202,7 +1202,7 @@ function App() {
                       fontWeight: '600',
                       letterSpacing: '-0.01em',
                       margin: 0
-                    }}>Engineering &amp; Computational Diagnostics</h3>
+                    }}>Coursework &amp; Technical Projects</h3>
                     <span className="badge" style={{ 
                       fontSize: '0.65rem', 
                       background: 'rgba(255, 255, 255, 0.03)', 
@@ -1215,7 +1215,7 @@ function App() {
                     </span>
                   </div>
                   <p style={{ color: 'var(--text-secondary)', fontSize: '0.88rem', margin: 0, opacity: 0.85, maxWidth: '800px', lineHeight: '1.4' }}>
-                    Interactive 3D computer vision models, differentiable partial differential equation unrolling layers, medical image segmentation pipelines, and robotic surgery tools.
+                    Interactive 3D computer vision models, differentiable partial differential equation unrolling, medical image segmentation, and robotic surgery tools.
                   </p>
                 </div>
               )}
@@ -1237,7 +1237,7 @@ function App() {
                   Research & Publications
                 </h2>
                 <p style={{ color: 'var(--text-secondary)', fontSize: '0.95rem', marginTop: '0.25rem' }}>
-                  Investigating AI-assisted clinical diagnosis and medical computer vision.
+                  Selected papers and related work in medical computer vision.
                 </p>
               </div>
 
@@ -1456,10 +1456,10 @@ function App() {
           <div style={{ marginBottom: '2.5rem' }}>
             <h2 style={{ fontSize: '2.25rem', fontFamily: 'var(--font-heading)', display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
               <GraduationCap className="gradient-text" />
-              Academic & Research Timeline
+              Academic Timeline
             </h2>
             <p style={{ color: 'var(--text-secondary)', fontSize: '1rem', marginTop: '0.25rem' }}>
-              Tracing my journey across institutions and advisor groups. Click items to toggle detailed breakdowns.
+              A quick look at my research and academic path. Click items to expand the details.
             </p>
           </div>
 
@@ -1480,7 +1480,7 @@ function App() {
                       <span className="badge badge-teal">Graduate Research</span>
                     </h3>
                     <p style={{ color: 'var(--primary-cyan)', fontSize: '0.95rem', fontWeight: '500', marginTop: '0.25rem' }}>
-                      Masters in Biomedical Engineering (Advised by Prof. Kenji Shimada)
+                      Master's in Biomedical Engineering (Advised by Prof. Kenji Shimada)
                     </p>
                   </div>
                   <span style={{ fontSize: '0.85rem', color: 'var(--text-muted)', display: 'inline-flex', alignItems: 'center', gap: '0.25rem' }}>
@@ -1646,28 +1646,28 @@ function App() {
             borderRadius: '24px'
           }}>
             <h2 style={{ fontSize: '2.5rem', fontWeight: '800', marginBottom: '1rem', fontFamily: 'var(--font-heading)' }}>
-              Let's Connect & <span className="gradient-text">Collaborate</span>
+              Get in <span className="gradient-text">Touch</span>
             </h2>
             <p style={{ color: 'var(--text-secondary)', fontSize: '1.1rem', maxWidth: '600px', margin: '0 auto 2.5rem auto', lineHeight: '1.7' }}>
-              I am always happy to discuss research collaborations, computer vision innovations, or image-guided medical robotics projects. Reach out via email or connect on social platforms!
+              I'm open to research collaborations, computer vision ideas, and image-guided robotics projects. Reach out by email or on the platforms below.
             </p>
             
             <div style={{ display: 'flex', gap: '1.5rem', justifyValue: 'center', justifyContent: 'center', flexWrap: 'wrap', marginBottom: '3rem' }}>
               <a href="mailto:tusharn@andrew.cmu.edu" className="btn btn-primary" style={{ padding: '0.9rem 2rem' }}>
                 <Mail size={18} />
-                Send an Email
+                Email
               </a>
               <a href="https://github.com/tushar-nayak" target="_blank" rel="noopener noreferrer" className="btn btn-secondary" style={{ padding: '0.9rem 2rem' }}>
                 <Github size={18} />
-                GitHub Profile
+                GitHub
               </a>
               <a href="https://www.linkedin.com/in/nayaktushar/" target="_blank" rel="noopener noreferrer" className="btn btn-secondary" style={{ padding: '0.9rem 2rem' }}>
                 <Linkedin size={18} />
-                LinkedIn Profile
+                LinkedIn
               </a>
               <a href="https://scholar.google.com/citations?user=9xUX7NoAAAAJ&hl=en" target="_blank" rel="noopener noreferrer" className="btn btn-secondary" style={{ padding: '0.9rem 2rem' }}>
                 <ScholarIcon size={18} />
-                Google Scholar Profile
+                Scholar
               </a>
             </div>
 
