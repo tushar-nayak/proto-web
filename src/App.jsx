@@ -24,7 +24,6 @@ import ProfileSplat from './components/ProfileSplat';
 import CursorTrail from './components/CursorTrail';
 import LiquidGlassPointer from './components/LiquidGlassPointer';
 import BackgroundAudio from './components/BackgroundAudio';
-import armoryTrack from './assets/Armory.mp3';
 
 // Custom inline SVG replacements for brand/common icons to prevent build resolution errors
 const Mail = ({ size = 18 }) => (
@@ -768,7 +767,6 @@ const THEME_OPTIONS = [
 ];
 
 function App() {
-  const projectAudioRef = useRef(null);
   const [siteTheme, setSiteTheme] = useState(() => {
     if (typeof window === 'undefined') return 'tron';
     return window.localStorage.getItem('site-theme') || 'tron';
@@ -801,7 +799,6 @@ function App() {
   const isLiquidGlass = resolvedTheme === 'liquid-glass';
   const isGoogleMaterial = resolvedTheme === 'google-material';
   const isLinuxTerminal = resolvedTheme === 'linux-terminal';
-  const usesDedicatedThemeSoundtrack = isLiquidGlass || isGoogleMaterial;
 
   useEffect(() => {
     document.documentElement.dataset.theme = resolvedTheme;
@@ -860,44 +857,22 @@ function App() {
   }, []);
 
   useEffect(() => {
-    const audio = projectAudioRef.current;
-    if (!audio) return;
-
-    if (usesDedicatedThemeSoundtrack) {
-      audio.pause();
-      audio.currentTime = 0;
-      window.dispatchEvent(new CustomEvent('project-audio:stop'));
-      return;
-    }
-
-    audio.muted = isAudioMuted;
-    audio.volume = 0.5;
-  }, [isAudioMuted, usesDedicatedThemeSoundtrack]);
-
-  useEffect(() => {
-    if (usesDedicatedThemeSoundtrack) {
-      return undefined;
-    }
-
     if (selectedProjectId === null) return undefined;
 
     const handlePointerDown = (event) => {
       if (!(event.target instanceof Element)) {
         setSelectedProjectId(null);
-        window.dispatchEvent(new CustomEvent('project-audio:stop'));
         return;
       }
 
       if (!event.target.closest('.project-card.is-selected')) {
         setSelectedProjectId(null);
-        window.dispatchEvent(new CustomEvent('project-audio:stop'));
       }
     };
 
     const handleEscape = (event) => {
       if (event.key === 'Escape') {
         setSelectedProjectId(null);
-        window.dispatchEvent(new CustomEvent('project-audio:stop'));
       }
     };
 
@@ -908,41 +883,7 @@ function App() {
       document.removeEventListener('pointerdown', handlePointerDown);
       window.removeEventListener('keydown', handleEscape);
     };
-  }, [selectedProjectId, usesDedicatedThemeSoundtrack]);
-
-  useEffect(() => {
-    const audio = projectAudioRef.current;
-    if (!audio) return;
-
-    if (usesDedicatedThemeSoundtrack) {
-      audio.pause();
-      audio.currentTime = 0;
-      window.dispatchEvent(new CustomEvent('project-audio:stop'));
-      return;
-    }
-
-    if (selectedProjectId === null) {
-      audio.pause();
-      audio.currentTime = 0;
-      window.dispatchEvent(new CustomEvent('project-audio:stop'));
-      return;
-    }
-
-    window.dispatchEvent(new CustomEvent('project-audio:play'));
-    audio.currentTime = 0;
-
-    if (isAudioMuted) return;
-
-    const startProjectAudio = async () => {
-      try {
-        await audio.play();
-      } catch {
-        // Ignore playback failures until the next user interaction.
-      }
-    };
-
-    startProjectAudio();
-  }, [isAudioMuted, selectedProjectId, usesDedicatedThemeSoundtrack]);
+  }, [selectedProjectId]);
 
   const handleProjectClick = (projectId) => {
     setSelectedProjectId((current) => (current === projectId ? null : projectId));
@@ -1238,7 +1179,6 @@ function App() {
 
   return (
     <div className={`page-container theme-${resolvedTheme}`}>
-      <audio ref={projectAudioRef} src={armoryTrack} preload="auto" />
       {/* Dynamic interactive Canvas Network */}
       <NeuralBackground theme={resolvedTheme} />
       <CursorTrail theme={resolvedTheme} />

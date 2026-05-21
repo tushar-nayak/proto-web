@@ -44,31 +44,6 @@ export default function BackgroundAudio({ theme = 'tron' }) {
       startPlayback();
     };
 
-    const handleProjectAudioPlay = () => {
-      if (isLiquidGlass || isGoogleMaterial || isLinuxTerminal) return;
-      audio.pause();
-      syncStarted();
-    };
-
-    const handleProjectAudioStop = async () => {
-      if (isLiquidGlass || isGoogleMaterial || isLinuxTerminal) {
-        syncStarted();
-        return;
-      }
-
-      if (isMuted) {
-        syncStarted();
-        return;
-      }
-
-      try {
-        await audio.play();
-        syncStarted();
-      } catch {
-        // Ignore resume failures until the next user interaction.
-      }
-    };
-
     const handleToggleMute = () => {
       setIsMuted((current) => !current);
     };
@@ -95,8 +70,6 @@ export default function BackgroundAudio({ theme = 'tron' }) {
     audio.addEventListener('pause', syncStarted);
     window.addEventListener('pointerdown', handleFirstInteraction, { passive: true });
     window.addEventListener('keydown', handleFirstInteraction);
-    window.addEventListener('project-audio:play', handleProjectAudioPlay);
-    window.addEventListener('project-audio:stop', handleProjectAudioStop);
     window.addEventListener('audio:toggle-mute', handleToggleMute);
     window.addEventListener('keydown', handleMuteShortcut);
 
@@ -105,8 +78,6 @@ export default function BackgroundAudio({ theme = 'tron' }) {
       audio.removeEventListener('pause', syncStarted);
       window.removeEventListener('pointerdown', handleFirstInteraction);
       window.removeEventListener('keydown', handleFirstInteraction);
-      window.removeEventListener('project-audio:play', handleProjectAudioPlay);
-      window.removeEventListener('project-audio:stop', handleProjectAudioStop);
       window.removeEventListener('audio:toggle-mute', handleToggleMute);
       window.removeEventListener('keydown', handleMuteShortcut);
     };
