@@ -267,7 +267,7 @@ const PROJECTS = [
     desc: "Advised by Dr. Kenji Shimada and Rishi Basdeo (CERLAB) in collaboration with UPMC neurosurgeons. Fuses 2D X-ray angiography features and pre-operative 3D centerlines using MorphPINN with a strain-preserving deformation graph system. Deploys custom CUDA-accelerated solvers.",
     category: "3D & Robotics",
     tags: ["Physics-Informed ML", "MorphPINN", "Vascular Registration", "Surgical Robotics"],
-    github: "https://github.com/tushar-nayak/vascular-reconstruction",
+    github: "https://github.com/katahar/telesurgery_cerlab/tree/deformation-graph/cv/deformable_registration",
     demo: null,
     highlight: true,
     simLogs: [
@@ -565,6 +565,23 @@ const PROJECTS = [
       "[OPTIMIZER] Running Adam step to minimize projection boundaries matching echo scans...",
       "[MESH] Applying Marching Cubes to recover watertight 3D ventricular boundary...",
       "[SUCCESS] Ventricular volume recovery completed! Chamfer Distance = 0.92mm."
+    ]
+  },
+  {
+    id: 19,
+    title: "VascularReconstruction: Sparse 3D Coronary Vessel Angiographic Recovery",
+    desc: "Personal project. Research prototype for sparse-view 3D coronary vessel reconstruction from sparse angiographic projections. Fuses explicit 3D Gaussian geometry, differentiable vascular raymarching, and PINN-based hemodynamic regularization to estimate arterial volumes.",
+    category: "3D & Robotics",
+    tags: ["Gaussian Geometry", "Differentiable Rendering", "Hemodynamics PINN", "Angiography"],
+    github: "https://github.com/tushar-nayak/vascular-reconstruction",
+    demo: null,
+    highlight: true,
+    simLogs: [
+      "[VASCULAR-RECON] Loading sparse-view X-ray angiographic projections...",
+      "[GAUSSIAN] Initializing 3D Gaussian points along vessel centerline priors...",
+      "[RENDERER] Simulating differentiable raymarching over projection grids...",
+      "[PINN] Solving Navier-Stokes boundary equations for flow-regularized optimization...",
+      "[SUCCESS] 3D coronary artery reconstruction complete! Mean surface voxel deviation = 0.52mm."
     ]
   }
 ];
