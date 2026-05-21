@@ -286,7 +286,7 @@ const PROJECTS = [
     category: "Medical Imaging",
     tags: ["Neural ODEs", "Glioblastoma", "LUMIERE Cohort", "SimpleITK"],
     github: "https://github.com/tushar-nayak/glioblastoma-evolution",
-    demo: null,
+    demo: "https://tushar-nayak.github.io/glioblastoma-evolution/",
     highlight: true,
     simLogs: [
       "[NEURAL ODE] Loading LUMIERE patient sequences: T0 (FLAIR), T1 (T1), T2 (cT1)...",
@@ -322,7 +322,7 @@ const PROJECTS = [
     category: "3D & Robotics",
     tags: ["Reptile Meta-Learning", "Implicit Neural Reps", "Few-Shot 3D", "Cardiac Echo"],
     github: "https://github.com/tushar-nayak/cardiac-volume-reconstruction",
-    demo: null,
+    demo: "https://tushar-nayak.github.io/cardiac-volume-reconstruction/",
     highlight: true,
     simLogs: [
       "[META-LEARNING] Initializing Reptile optimizer on 3D cardiac shape prior database...",
@@ -373,7 +373,7 @@ const PROJECTS = [
     category: "Medical Imaging",
     tags: ["Monkeypox", "XAI Diagnostics", "Grad-CAM", "MATLAB Pipelines"],
     github: "https://github.com/tushar-nayak",
-    demo: null,
+    demo: "https://tushar-nayak.github.io/assets/pdf/mpox-binary.pdf",
     highlight: false,
     simLogs: [
       "[INPUT] Loading skin lesion macrograph. Resizing to 224x224...",
@@ -407,7 +407,7 @@ const PROJECTS = [
     category: "Cancer & Pathology",
     tags: ["Spatial Transformer Nets", "CC & MLO Views", "BI-RADS Classification", "Attention Fusion"],
     github: "https://github.com/tushar-nayak/grading-cbisddsm/blob/main/42657A_G3Report",
-    demo: null,
+    demo: "https://github.com/tushar-nayak/grading-cbisddsm/blob/main/42657A_G3Report.pdf",
     highlight: false,
     simLogs: [
       "[MAMMOGRAM] Loading paired breast scans: CC view and MLO view...",
@@ -424,7 +424,7 @@ const PROJECTS = [
     category: "Medical Imaging",
     tags: ["PDE Unrolling", "Anisotropic Diffusion", "MiniUNet", "Image Denoising"],
     github: "https://github.com/tushar-nayak/neural-anisotropic-diffusion",
-    demo: null,
+    demo: "https://tushar-nayak.github.io/neural-anisotropic-diffusion/",
     highlight: false,
     simLogs: [
       "[PDE] Initializing anisotropic diffusion coefficients...",
@@ -441,7 +441,7 @@ const PROJECTS = [
     category: "Medical Imaging",
     tags: ["Active Contours", "Differentiable Snaking", "Geometric Priors", "PyTorch"],
     github: "https://github.com/tushar-nayak/neural-active-contours/",
-    demo: null,
+    demo: "https://tushar-nayak.github.io/neural-active-contours/",
     highlight: false,
     simLogs: [
       "[SNAKE] Loading elastic, tension, and balloon forces...",
@@ -457,7 +457,7 @@ const PROJECTS = [
     category: "Medical Imaging",
     tags: ["MONAI 3D UNet", "Zenodo Dataset", "STL Surface Export", "Volumetric Analysis"],
     github: "https://github.com/tushar-nayak/lungvolseg",
-    demo: null,
+    demo: "https://tushar-nayak.github.io/lungvolseg/",
     highlight: false,
     simLogs: [
       "[INPUT] Loading 3D chest CT volume from Zenodo cohort...",
@@ -474,7 +474,7 @@ const PROJECTS = [
     category: "3D & Robotics",
     tags: ["Deformable 3DGS", "Open-Vocabulary VLM", "Surgical Vision", "Real-Time Rendering"],
     github: "https://github.com/tushar-nayak/endo-splat/",
-    demo: null,
+    demo: "https://tushar-nayak.github.io/endo-splat/",
     highlight: true,
     simLogs: [
       "[GAUSSIAN] Spawning 120,000 spatial Gaussians from sparse depth cloud...",
@@ -491,7 +491,7 @@ const PROJECTS = [
     category: "Medical Imaging",
     tags: ["ResNet18", "Patch-Based Learning", "Fungal Classification", "Microscopy"],
     github: "https://github.com/tushar-nayak/fungal-neo/",
-    demo: null,
+    demo: "https://tushar-nayak.github.io/fungal-neo/",
     highlight: false,
     simLogs: [
       "[MICROSCOPY] Loading high-resolution microscopic image scan (3600x5760)...",
@@ -508,7 +508,7 @@ const PROJECTS = [
     category: "Cancer & Pathology",
     tags: ["ISIC 2018", "Skin Lesion Segmentation", "Transformer Backbones", "U-Net Variants"],
     github: "https://github.com/tushar-nayak/derma-seg",
-    demo: null,
+    demo: "https://tushar-nayak.github.io/derma-seg/",
     highlight: false,
     simLogs: [
       "[ISIC] Preprocessing dermoscopy image patches...",
@@ -524,7 +524,7 @@ const PROJECTS = [
     category: "3D & Robotics",
     tags: ["Grounding DINO", "SAM2", "Surgical Vision", "Open-Vocabulary tracking"],
     github: "https://github.com/tushar-nayak/surgi-prompt",
-    demo: null,
+    demo: "https://tushar-nayak.github.io/surgi-prompt/",
     highlight: true,
     simLogs: [
       "[SURGI-PROMPT] Loading laparoscopic video frame sequence...",
@@ -541,7 +541,7 @@ const PROJECTS = [
     category: "Cancer & Pathology",
     tags: ["Foundation Models", "Gigapixel WSI", "Pathology Staging", "Cross-Attention"],
     github: "https://github.com/tushar-nayak/lobe-ranger",
-    demo: null,
+    demo: "https://tushar-nayak.github.io/lobe-ranger/",
     highlight: true,
     simLogs: [
       "[LOBE-RANGER] Loading paired gigapixel whole-slide scans (20x macro & 40x micro)...",
@@ -557,7 +557,7 @@ const PROJECTS = [
     category: "3D & Robotics",
     tags: ["3D Gaussian Occupancy", "Differentiable Projection", "Sparse Cardiac 3D", "Mesh Evaluation"],
     github: "https://github.com/tushar-nayak/cardiac-reconstruction-evolved",
-    demo: null,
+    demo: "https://tushar-nayak.github.io/cardiac-reconstruction-evolved/",
     highlight: false,
     simLogs: [
       "[CARDIAC-EVOLVED] Spawning 150,000 stabilized spatial Gaussian occupancy points...",
@@ -574,7 +574,7 @@ const PROJECTS = [
     category: "3D & Robotics",
     tags: ["Gaussian Geometry", "Differentiable Rendering", "Hemodynamics PINN", "Angiography"],
     github: "https://github.com/tushar-nayak/vascular-reconstruction",
-    demo: null,
+    demo: "https://tushar-nayak.github.io/vascular-reconstruction/",
     highlight: true,
     simLogs: [
       "[VASCULAR-RECON] Loading sparse-view X-ray angiographic projections...",
@@ -766,7 +766,7 @@ function App() {
 
           {/* Navigation Items */}
           <nav style={{ display: 'flex', gap: '0.5rem' }}>
-            {['about', 'research', 'projects', 'timeline'].map((tab) => (
+            {['about', 'projects', 'research', 'timeline'].map((tab) => (
               <button
                 key={tab}
                 onClick={() => {
@@ -1013,6 +1013,196 @@ function App() {
           </div>
         </section>
 
+        {/* PROJECTS SHOWCASE SECTION */}
+        <section id="projects" style={{ scrollMarginTop: '8rem', marginBottom: '6rem' }}>
+          <div style={{ marginBottom: '2.5rem' }}>
+            <h2 style={{ fontSize: '2.25rem', fontFamily: 'var(--font-heading)', display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+              <FolderGit2 className="gradient-text" />
+              Projects Portfolio & Diagnostics Lab
+            </h2>
+            <p style={{ color: 'var(--text-secondary)', fontSize: '1rem', marginTop: '0.25rem' }}>
+              Interact with the systems below! You can **run mock algorithm diagnostics** directly inside each project card.
+            </p>
+          </div>
+
+          {/* Project Categories */}
+          <div style={{
+            display: 'flex',
+            gap: '0.5rem',
+            overflowX: 'auto',
+            paddingBottom: '0.5rem',
+            marginBottom: '2rem',
+            borderBottom: '1px solid rgba(255, 255, 255, 0.05)'
+          }}>
+            {['All', '3D & Robotics', 'Medical Imaging', 'Cancer & Pathology'].map((cat) => (
+              <button
+                key={cat}
+                onClick={() => setProjectFilter(cat)}
+                style={{
+                  background: projectFilter === cat ? 'var(--grad-primary)' : 'rgba(255, 255, 255, 0.02)',
+                  border: projectFilter === cat ? 'none' : '1px solid rgba(255, 255, 255, 0.05)',
+                  color: projectFilter === cat ? '#000' : 'var(--text-secondary)',
+                  padding: '0.5rem 1.2rem',
+                  borderRadius: '12px',
+                  fontSize: '0.85rem',
+                  fontWeight: projectFilter === cat ? '600' : '500',
+                  cursor: 'pointer',
+                  transition: 'var(--transition-fast)',
+                  whiteSpace: 'nowrap',
+                  fontFamily: 'var(--font-heading)'
+                }}
+              >
+                {cat}
+              </button>
+            ))}
+          </div>
+
+          {/* Project Grid */}
+          <div className="project-grid">
+            {filteredProjects.map((project) => {
+              const currentSim = simulations[project.id];
+              return (
+                <div
+                  key={project.id}
+                  className="glass-panel project-card"
+                  style={{
+                    background: project.highlight ? 'radial-gradient(circle at 50% 0%, rgba(14, 165, 233, 0.02), rgba(14, 16, 21, 0.8) 75%)' : 'var(--bg-surface-glass)',
+                    borderColor: currentSim?.active 
+                      ? 'var(--accent-emerald)' 
+                      : (project.highlight ? 'rgba(14, 165, 233, 0.12)' : 'var(--border-glow)'),
+                    boxShadow: currentSim?.active 
+                      ? '0 0 15px rgba(16, 185, 129, 0.05)' 
+                      : 'none'
+                  }}
+                >
+                  <div className="project-card-header">
+                    <span className="badge badge-teal" style={{ fontSize: '0.7rem' }}>
+                      {project.category}
+                    </span>
+                    <div style={{ display: 'flex', gap: '0.35rem' }}>
+                      {project.highlight && (
+                        <span className="badge badge-emerald" style={{ fontSize: '0.7rem' }}>
+                          Featured
+                        </span>
+                      )}
+                    </div>
+                  </div>
+
+                  <h3 className="project-card-title">{project.title}</h3>
+                  <p className="project-card-desc">{project.desc}</p>
+
+                  <div className="project-tags">
+                    {project.tags.map((tag, idx) => (
+                      <span key={idx} style={{
+                        fontSize: '0.75rem',
+                        color: 'var(--text-secondary)',
+                        background: 'rgba(255, 255, 255, 0.02)',
+                        padding: '0.15rem 0.5rem',
+                        borderRadius: '4px',
+                        border: '1px solid rgba(255, 255, 255, 0.05)'
+                      }}>{tag}</span>
+                    ))}
+                  </div>
+
+                  {/* Sleek, Integrated Pipeline Simulator Telemetry */}
+                  <div style={{
+                    marginTop: 'auto',
+                    marginBottom: '1rem',
+                    background: 'rgba(0, 0, 0, 0.15)',
+                    border: '1px solid rgba(255, 255, 255, 0.03)',
+                    borderRadius: '8px',
+                    padding: '0.65rem 0.85rem'
+                  }}>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                      <span style={{ fontSize: '0.75rem', color: currentSim?.active ? 'var(--accent-emerald)' : 'var(--text-secondary)', display: 'inline-flex', alignItems: 'center', gap: '0.35rem', fontFamily: 'monospace' }}>
+                        <span style={{
+                          width: '6px',
+                          height: '6px',
+                          borderRadius: '50%',
+                          background: currentSim?.active ? 'var(--accent-emerald)' : (currentSim?.logs?.length ? 'var(--primary-cyan)' : 'rgba(255, 255, 255, 0.15)'),
+                          display: 'inline-block',
+                          boxShadow: currentSim?.active ? '0 0 6px var(--accent-emerald)' : 'none'
+                        }}></span>
+                        {currentSim?.active ? 'SOLVING_ODE...' : (currentSim?.logs?.length ? 'SIMULATION_LOCKED' : 'SOLVER_IDLE')}
+                      </span>
+                      <button
+                        onClick={() => triggerSimulation(project.id, project.simLogs)}
+                        disabled={currentSim?.active}
+                        style={{
+                          background: currentSim?.active ? 'rgba(16, 185, 129, 0.06)' : 'rgba(14, 165, 233, 0.05)',
+                          border: '1px solid rgba(14, 165, 233, 0.15)',
+                          color: currentSim?.active ? 'var(--accent-emerald)' : 'var(--primary-cyan)',
+                          padding: '0.25rem 0.6rem',
+                          borderRadius: '5px',
+                          cursor: currentSim?.active ? 'not-allowed' : 'pointer',
+                          display: 'inline-flex',
+                          alignItems: 'center',
+                          gap: '0.25rem',
+                          fontWeight: '500',
+                          fontSize: '0.65rem',
+                          fontFamily: 'monospace',
+                          transition: 'all 0.2s'
+                        }}
+                      >
+                        {currentSim?.active ? (
+                          <>
+                            <Sparkles size={8} />
+                            SOLVING
+                          </>
+                        ) : (
+                          <>
+                            <Play size={8} />
+                            RUN_SOLVER
+                          </>
+                        )}
+                      </button>
+                    </div>
+
+                    {/* Console Log Outputs - Collapsible Drawer that slides open ONLY when active or completed logs exist */}
+                    {currentSim && currentSim.logs.length > 0 && (
+                      <div style={{
+                        marginTop: '0.65rem',
+                        paddingTop: '0.5rem',
+                        borderTop: '1px solid rgba(255, 255, 255, 0.03)',
+                        fontFamily: 'monospace',
+                        fontSize: '0.65rem',
+                        display: 'flex',
+                        flexDirection: 'column',
+                        gap: '0.2rem',
+                        maxHeight: '80px',
+                        overflowY: 'auto'
+                      }}>
+                        {currentSim.logs.map((log, idx) => (
+                          <div key={idx} style={{
+                            color: log.startsWith("[SUCCESS]") ? 'var(--accent-emerald)' : (log.startsWith("[ODE]") ? 'var(--primary-cyan)' : 'var(--text-secondary)'),
+                            whiteSpace: 'pre-wrap',
+                            lineHeight: '1.3'
+                          }}>
+                            {log}
+                          </div>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+
+                  <div className="project-links">
+                    <a href={project.github} target="_blank" rel="noopener noreferrer" className="project-link">
+                      <Github size={14} />
+                      Repository
+                    </a>
+                    {project.demo && (
+                      <a href={project.demo} target="_blank" rel="noopener noreferrer" className="project-link">
+                        <ExternalLink size={14} />
+                        Live Demo
+                      </a>
+                    )}
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </section>
+
         {/* RESEARCH & PUBLICATIONS SECTION */}
         <section id="research" style={{ scrollMarginTop: '8rem', marginBottom: '6rem' }}>
           <div className="glass-panel" style={{ padding: '2.5rem' }}>
@@ -1234,196 +1424,6 @@ function App() {
                 </div>
               )}
             </div>
-          </div>
-        </section>
-
-        {/* PROJECTS SHOWCASE SECTION */}
-        <section id="projects" style={{ scrollMarginTop: '8rem', marginBottom: '6rem' }}>
-          <div style={{ marginBottom: '2.5rem' }}>
-            <h2 style={{ fontSize: '2.25rem', fontFamily: 'var(--font-heading)', display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
-              <FolderGit2 className="gradient-text" />
-              Projects Portfolio & Diagnostics Lab
-            </h2>
-            <p style={{ color: 'var(--text-secondary)', fontSize: '1rem', marginTop: '0.25rem' }}>
-              Interact with the systems below! You can **run mock algorithm diagnostics** directly inside each project card.
-            </p>
-          </div>
-
-          {/* Project Categories */}
-          <div style={{
-            display: 'flex',
-            gap: '0.5rem',
-            overflowX: 'auto',
-            paddingBottom: '0.5rem',
-            marginBottom: '2rem',
-            borderBottom: '1px solid rgba(255, 255, 255, 0.05)'
-          }}>
-            {['All', '3D & Robotics', 'Medical Imaging', 'Cancer & Pathology'].map((cat) => (
-              <button
-                key={cat}
-                onClick={() => setProjectFilter(cat)}
-                style={{
-                  background: projectFilter === cat ? 'var(--grad-primary)' : 'rgba(255, 255, 255, 0.02)',
-                  border: projectFilter === cat ? 'none' : '1px solid rgba(255, 255, 255, 0.05)',
-                  color: projectFilter === cat ? '#000' : 'var(--text-secondary)',
-                  padding: '0.5rem 1.2rem',
-                  borderRadius: '12px',
-                  fontSize: '0.85rem',
-                  fontWeight: projectFilter === cat ? '600' : '500',
-                  cursor: 'pointer',
-                  transition: 'var(--transition-fast)',
-                  whiteSpace: 'nowrap',
-                  fontFamily: 'var(--font-heading)'
-                }}
-              >
-                {cat}
-              </button>
-            ))}
-          </div>
-
-          {/* Project Grid */}
-          <div className="project-grid">
-            {filteredProjects.map((project) => {
-              const currentSim = simulations[project.id];
-              return (
-                <div
-                  key={project.id}
-                  className="glass-panel project-card"
-                  style={{
-                    background: project.highlight ? 'radial-gradient(circle at 50% 0%, rgba(14, 165, 233, 0.02), rgba(14, 16, 21, 0.8) 75%)' : 'var(--bg-surface-glass)',
-                    borderColor: currentSim?.active 
-                      ? 'var(--accent-emerald)' 
-                      : (project.highlight ? 'rgba(14, 165, 233, 0.12)' : 'var(--border-glow)'),
-                    boxShadow: currentSim?.active 
-                      ? '0 0 15px rgba(16, 185, 129, 0.05)' 
-                      : 'none'
-                  }}
-                >
-                  <div className="project-card-header">
-                    <span className="badge badge-teal" style={{ fontSize: '0.7rem' }}>
-                      {project.category}
-                    </span>
-                    <div style={{ display: 'flex', gap: '0.35rem' }}>
-                      {project.highlight && (
-                        <span className="badge badge-emerald" style={{ fontSize: '0.7rem' }}>
-                          Featured
-                        </span>
-                      )}
-                    </div>
-                  </div>
-
-                  <h3 className="project-card-title">{project.title}</h3>
-                  <p className="project-card-desc">{project.desc}</p>
-
-                  <div className="project-tags">
-                    {project.tags.map((tag, idx) => (
-                      <span key={idx} style={{
-                        fontSize: '0.75rem',
-                        color: 'var(--text-secondary)',
-                        background: 'rgba(255, 255, 255, 0.02)',
-                        padding: '0.15rem 0.5rem',
-                        borderRadius: '4px',
-                        border: '1px solid rgba(255, 255, 255, 0.05)'
-                      }}>{tag}</span>
-                    ))}
-                  </div>
-
-                  {/* Sleek, Integrated Pipeline Simulator Telemetry */}
-                  <div style={{
-                    marginTop: 'auto',
-                    marginBottom: '1rem',
-                    background: 'rgba(0, 0, 0, 0.15)',
-                    border: '1px solid rgba(255, 255, 255, 0.03)',
-                    borderRadius: '8px',
-                    padding: '0.65rem 0.85rem'
-                  }}>
-                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                      <span style={{ fontSize: '0.75rem', color: currentSim?.active ? 'var(--accent-emerald)' : 'var(--text-secondary)', display: 'inline-flex', alignItems: 'center', gap: '0.35rem', fontFamily: 'monospace' }}>
-                        <span style={{
-                          width: '6px',
-                          height: '6px',
-                          borderRadius: '50%',
-                          background: currentSim?.active ? 'var(--accent-emerald)' : (currentSim?.logs?.length ? 'var(--primary-cyan)' : 'rgba(255, 255, 255, 0.15)'),
-                          display: 'inline-block',
-                          boxShadow: currentSim?.active ? '0 0 6px var(--accent-emerald)' : 'none'
-                        }}></span>
-                        {currentSim?.active ? 'SOLVING_ODE...' : (currentSim?.logs?.length ? 'SIMULATION_LOCKED' : 'SOLVER_IDLE')}
-                      </span>
-                      <button
-                        onClick={() => triggerSimulation(project.id, project.simLogs)}
-                        disabled={currentSim?.active}
-                        style={{
-                          background: currentSim?.active ? 'rgba(16, 185, 129, 0.06)' : 'rgba(14, 165, 233, 0.05)',
-                          border: '1px solid rgba(14, 165, 233, 0.15)',
-                          color: currentSim?.active ? 'var(--accent-emerald)' : 'var(--primary-cyan)',
-                          padding: '0.25rem 0.6rem',
-                          borderRadius: '5px',
-                          cursor: currentSim?.active ? 'not-allowed' : 'pointer',
-                          display: 'inline-flex',
-                          alignItems: 'center',
-                          gap: '0.25rem',
-                          fontWeight: '500',
-                          fontSize: '0.65rem',
-                          fontFamily: 'monospace',
-                          transition: 'all 0.2s'
-                        }}
-                      >
-                        {currentSim?.active ? (
-                          <>
-                            <Sparkles size={8} />
-                            SOLVING
-                          </>
-                        ) : (
-                          <>
-                            <Play size={8} />
-                            RUN_SOLVER
-                          </>
-                        )}
-                      </button>
-                    </div>
-
-                    {/* Console Log Outputs - Collapsible Drawer that slides open ONLY when active or completed logs exist */}
-                    {currentSim && currentSim.logs.length > 0 && (
-                      <div style={{
-                        marginTop: '0.65rem',
-                        paddingTop: '0.5rem',
-                        borderTop: '1px solid rgba(255, 255, 255, 0.03)',
-                        fontFamily: 'monospace',
-                        fontSize: '0.65rem',
-                        display: 'flex',
-                        flexDirection: 'column',
-                        gap: '0.2rem',
-                        maxHeight: '80px',
-                        overflowY: 'auto'
-                      }}>
-                        {currentSim.logs.map((log, idx) => (
-                          <div key={idx} style={{
-                            color: log.startsWith("[SUCCESS]") ? 'var(--accent-emerald)' : (log.startsWith("[ODE]") ? 'var(--primary-cyan)' : 'var(--text-secondary)'),
-                            whiteSpace: 'pre-wrap',
-                            lineHeight: '1.3'
-                          }}>
-                            {log}
-                          </div>
-                        ))}
-                      </div>
-                    )}
-                  </div>
-
-                  <div className="project-links">
-                    <a href={project.github} target="_blank" rel="noopener noreferrer" className="project-link">
-                      <Github size={14} />
-                      Repository
-                    </a>
-                    {project.demo && (
-                      <a href={project.demo} target="_blank" rel="noopener noreferrer" className="project-link">
-                        <ExternalLink size={14} />
-                        Live Demo
-                      </a>
-                    )}
-                  </div>
-                </div>
-              );
-            })}
           </div>
         </section>
 
