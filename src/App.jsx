@@ -13,12 +13,15 @@ import {
   ScanEye,
   MapPin,
   Stethoscope,
+  Presentation,
+  ChevronDown,
   Play,
   Sparkles
 } from 'lucide-react';
 import NeuralBackground from './components/NeuralBackground';
 import ProjectVisual from './components/ProjectVisual';
 import ProfileSplat from './components/ProfileSplat';
+import CursorTrail from './components/CursorTrail';
 
 // Custom inline SVG replacements for brand/common icons to prevent build resolution errors
 const Mail = ({ size = 18 }) => (
@@ -579,6 +582,50 @@ const PROJECTS = [
   }
 ];
 
+const TEACHING_COURSES = [
+  {
+    id: 'ml-bme',
+    title: 'Machine Learning in Experimental Biomedical Engineering Research',
+    note: 'Previously Clinical Translations of AI',
+    term: 'Spring 2026',
+    level: 'Graduate students',
+    instructor: 'Dr. Newell Washburn',
+    department: 'Biomedical Engineering, College of Engineering',
+    summary: 'Applications of AI and machine learning for experimental BME data: small tabular datasets, images, spectra, and time series.',
+    topics: ['Experimental ML', 'TabPFN', 'Feature Selection', 'Transfer Learning']
+  },
+  {
+    id: 'cv-engineers',
+    title: 'Computer Vision for Engineers',
+    term: 'Fall 2025',
+    level: 'Graduate students',
+    instructor: 'Dr. Kenji Shimada',
+    department: 'Mechanical Engineering, College of Engineering',
+    summary: 'Computer vision from sensor selection and image analysis through motion, 3D reconstruction, point clouds, tracking, and object detection.',
+    topics: ['3D Reconstruction', 'Point Clouds', 'Feature Tracking', 'Object Detection']
+  },
+  {
+    id: 'computational-bme',
+    title: 'Fundamentals of Computational Biomedical Engineering',
+    term: 'Fall 2025',
+    level: 'Graduate students',
+    instructor: 'Dr. Jason Szafron',
+    department: 'Biomedical Engineering, College of Engineering',
+    summary: 'A coding bridge for biomedical engineers using MATLAB, Simulink, and Python across modeling, visualization, and machine learning examples.',
+    topics: ['MATLAB', 'Simulink', 'ODEs', 'Python']
+  },
+  {
+    id: 'applied-deep-learning',
+    title: 'Applied Deep Learning',
+    term: 'Spring 2025',
+    level: 'Graduate students',
+    instructor: 'Dr. Clarence Worrell',
+    department: 'Software and Societal Systems, School of Computer Science',
+    summary: 'Hands-on deep learning concepts, architectures, and the software engineering realities of building and deploying neural systems.',
+    topics: ['Neural Architectures', 'Model Deployment', 'Software Systems', 'Deep Learning Projects']
+  }
+];
+
 function App() {
   const [activeTab, setActiveTab] = useState('about');
   const [projectFilter, setProjectFilter] = useState('All');
@@ -593,6 +640,7 @@ function App() {
 
   // Expanded timeline accordion state
   const [expandedTimeline, setExpandedTimeline] = useState(null);
+  const [expandedTeachingCourse, setExpandedTeachingCourse] = useState('ml-bme');
 
   // 3D Scanner widget interactive state
   const [scanCoords, setScanCoords] = useState({ x: 124.52, y: 84.18, z: 9.31 });
@@ -848,6 +896,7 @@ function App() {
     <div className="page-container">
       {/* Dynamic interactive Canvas Network */}
       <NeuralBackground />
+      <CursorTrail />
 
       {/* Decorative blurred backgrounds */}
       <div className="glow-blur-1"></div>
@@ -859,7 +908,7 @@ function App() {
         top: '1.5rem',
         zIndex: 50,
         margin: '0 auto',
-        maxWidth: '750px',
+        maxWidth: '900px',
         padding: '0 1rem',
       }}>
         <div style={{
@@ -903,8 +952,8 @@ function App() {
           </div>
 
           {/* Navigation Items */}
-          <nav style={{ display: 'flex', gap: '0.5rem' }}>
-            {['about', 'projects', 'research', 'timeline'].map((tab) => (
+          <nav style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap', justifyContent: 'flex-end' }}>
+            {['about', 'projects', 'research', 'teaching', 'timeline'].map((tab) => (
               <button
                 key={tab}
                 onClick={() => {
@@ -1458,6 +1507,101 @@ function App() {
                   No publications matched your search terms or filters.
                 </div>
               )}
+            </div>
+          </div>
+        </section>
+
+        {/* TEACHING SECTION */}
+        <section id="teaching" style={{ scrollMarginTop: '8rem', marginBottom: '6rem' }}>
+          <div style={{ marginBottom: '2.5rem' }}>
+            <h2 style={{ fontSize: '2.25rem', fontFamily: 'var(--font-heading)', display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+              <Presentation className="gradient-text" />
+              Teaching
+            </h2>
+            <p style={{ color: 'var(--text-secondary)', fontSize: '1rem', marginTop: '0.25rem', maxWidth: '720px' }}>
+              I have mostly been on the TA side of the classroom so far, plus a few workshops and an open computer vision course in progress.
+            </p>
+          </div>
+
+          <div className="teaching-layout">
+            <div className="glass-panel teaching-spotlight">
+              <div style={{ display: 'flex', justifyContent: 'space-between', gap: '1rem', alignItems: 'flex-start', flexWrap: 'wrap' }}>
+                <div>
+                  <span className="badge badge-emerald">Course Authoring</span>
+                  <h3 style={{ fontSize: '1.5rem', marginTop: '1rem' }}>Open Horizon Robotics</h3>
+                </div>
+                <span className="badge">Open Source</span>
+              </div>
+              <p style={{ color: 'var(--text-secondary)', marginTop: '1rem', maxWidth: '640px' }}>
+                Building a computer vision course that moves from classical 2D vision into deep learning, 3D vision, geometry, localization and mapping, synthesis, and perception physics.
+              </p>
+              <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap', marginTop: '1.25rem' }}>
+                {['Classical Vision', '3D Vision', 'Vision Geometry', 'Localization & Mapping', 'Perception Physics'].map((topic) => (
+                  <span key={topic} className="badge badge-teal">{topic}</span>
+                ))}
+              </div>
+            </div>
+
+            <div className="glass-panel teaching-spotlight">
+              <span className="badge badge-teal">Workshops</span>
+              <h3 style={{ fontSize: '1.5rem', marginTop: '1rem' }}>Manipal Institute of Technology</h3>
+              <p style={{ color: 'var(--primary-cyan)', fontSize: '0.9rem', marginTop: '0.35rem' }}>
+                BioInnovate Technical Workshop Series, IEEE EMBS Student Chapter Manipal
+              </p>
+              <p style={{ color: 'var(--text-secondary)', marginTop: '1rem' }}>
+                Led beginner-friendly sessions on signal and image processing, deep learning, microcontrollers, Linux, electronics, programming, and applied research habits.
+              </p>
+              <p style={{ color: 'var(--text-secondary)', marginTop: '0.75rem' }}>
+                The longer learning track also helped junior members move from workshops into lab shadowing and a university symposium study.
+              </p>
+            </div>
+          </div>
+
+          <div className="glass-panel teaching-courses">
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', gap: '1rem', flexWrap: 'wrap', marginBottom: '1.25rem' }}>
+              <div>
+                <span className="badge badge-teal">Teaching Assistant</span>
+                <h3 style={{ fontSize: '1.5rem', marginTop: '0.85rem' }}>Carnegie Mellon University</h3>
+              </div>
+              <span style={{ color: 'var(--text-muted)', fontSize: '0.85rem' }}>
+                Click a course for the short version.
+              </span>
+            </div>
+
+            <div className="teaching-course-list">
+              {TEACHING_COURSES.map((course) => {
+                const isExpanded = expandedTeachingCourse === course.id;
+
+                return (
+                  <div key={course.id} className={`teaching-course ${isExpanded ? 'is-open' : ''}`}>
+                    <button
+                      type="button"
+                      className="teaching-course-toggle"
+                      onClick={() => setExpandedTeachingCourse(isExpanded ? null : course.id)}
+                      aria-expanded={isExpanded}
+                    >
+                      <span>
+                        <span className="teaching-course-term">{course.term}</span>
+                        <span className="teaching-course-title">{course.title}</span>
+                        {course.note && <span className="teaching-course-note">{course.note}</span>}
+                      </span>
+                      <ChevronDown size={18} className="teaching-course-chevron" />
+                    </button>
+
+                    {isExpanded && (
+                      <div className="teaching-course-details">
+                        <p>{course.level} with {course.instructor}. {course.department}.</p>
+                        <p>{course.summary}</p>
+                        <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap' }}>
+                          {course.topics.map((topic) => (
+                            <span key={topic} className="badge">{topic}</span>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                );
+              })}
             </div>
           </div>
         </section>
