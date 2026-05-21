@@ -702,8 +702,7 @@ function App() {
     return (
       <div
         key={project.id}
-        className={`glass-panel terminal-panel project-card ${isHovered ? 'is-hovered' : ''}`}
-        data-terminal={`project_${String(project.id).padStart(2, '0')}`}
+        className={`glass-panel project-card ${isHovered ? 'is-hovered' : ''}`}
         onMouseEnter={() => setHoveredProjectId(project.id)}
         onMouseLeave={() => setHoveredProjectId((current) => (current === project.id ? null : current))}
         style={{
@@ -834,7 +833,7 @@ function App() {
         maxWidth: '900px',
         padding: '0 1rem',
       }}>
-        <div className="site-header-shell terminal-shell" style={{
+        <div className="site-header-shell" style={{
           background: 'rgba(10, 11, 14, 0.75)',
           backdropFilter: 'blur(16px)',
           WebkitBackdropFilter: 'blur(16px)',
@@ -975,8 +974,7 @@ function App() {
             {/* Right Column: Sleek Interactive 3D Spatial Grid (Focal Projection Viewport) */}
             <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
               <div 
-                className="glass-panel terminal-panel"
-                data-terminal="portrait_scan"
+                className="glass-panel"
                 style={{
                   position: 'relative',
                   width: '280px',
@@ -1006,7 +1004,7 @@ function App() {
               </div>
 
               {/* Real-time Tracking Info Dashboard Widget */}
-              <div className="glass-panel terminal-panel" data-terminal="spatial_resolver" style={{
+              <div className="glass-panel" style={{
                 marginTop: '1rem',
                 width: '280px',
                 padding: '0.85rem 1.25rem',
@@ -1213,7 +1211,7 @@ function App() {
 
         {/* RESEARCH & PUBLICATIONS SECTION */}
         <section id="research" style={{ scrollMarginTop: '8rem', marginBottom: '6rem' }}>
-          <div className="glass-panel terminal-panel" data-terminal="pub_index" style={{ padding: '2.5rem' }}>
+          <div className="glass-panel" style={{ padding: '2.5rem' }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap', gap: '1.5rem', marginBottom: '2.5rem' }}>
               <div>
                 <h2 style={{ fontSize: '2rem', fontFamily: 'var(--font-heading)', display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
@@ -1448,7 +1446,7 @@ function App() {
           </div>
 
           <div className="teaching-layout">
-            <div className="glass-panel terminal-panel teaching-spotlight" data-terminal="course_authoring">
+            <div className="glass-panel teaching-spotlight">
               <div style={{ display: 'flex', justifyContent: 'space-between', gap: '1rem', alignItems: 'flex-start', flexWrap: 'wrap' }}>
                 <div>
                   <span className="badge badge-emerald">Course Authoring</span>
@@ -1466,7 +1464,7 @@ function App() {
               </div>
             </div>
 
-            <div className="glass-panel terminal-panel teaching-spotlight" data-terminal="workshop_log">
+            <div className="glass-panel teaching-spotlight">
               <span className="badge badge-teal">Workshops</span>
               <h3 style={{ fontSize: '1.5rem', marginTop: '1rem' }}>Manipal Institute of Technology</h3>
               <p style={{ color: 'var(--primary-cyan)', fontSize: '0.9rem', marginTop: '0.35rem' }}>
@@ -1481,7 +1479,7 @@ function App() {
             </div>
           </div>
 
-          <div className="glass-panel terminal-panel teaching-courses" data-terminal="ta_registry">
+          <div className="glass-panel teaching-courses">
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', gap: '1rem', flexWrap: 'wrap', marginBottom: '1.25rem' }}>
               <div>
                 <span className="badge badge-teal">Teaching Assistant</span>
@@ -1548,8 +1546,7 @@ function App() {
             <div className="timeline-item">
               <div className="timeline-dot"></div>
               <div
-                className="glass-panel terminal-panel"
-                data-terminal="timeline_cmu"
+                className="glass-panel"
                 onClick={() => setExpandedTimeline(expandedTimeline === 1 ? null : 1)}
                 style={{ cursor: 'pointer' }}
               >
@@ -1591,8 +1588,7 @@ function App() {
             <div className="timeline-item">
               <div className="timeline-dot"></div>
               <div
-                className="glass-panel terminal-panel"
-                data-terminal="timeline_iith"
+                className="glass-panel"
                 onClick={() => setExpandedTimeline(expandedTimeline === 2 ? null : 2)}
                 style={{ cursor: 'pointer' }}
               >
@@ -1634,8 +1630,7 @@ function App() {
             <div className="timeline-item">
               <div className="timeline-dot"></div>
               <div
-                className="glass-panel terminal-panel"
-                data-terminal="timeline_icmr"
+                className="glass-panel"
                 onClick={() => setExpandedTimeline(expandedTimeline === 3 ? null : 3)}
                 style={{ cursor: 'pointer' }}
               >
@@ -1677,8 +1672,7 @@ function App() {
             <div className="timeline-item">
               <div className="timeline-dot"></div>
               <div
-                className="glass-panel terminal-panel"
-                data-terminal="timeline_mit"
+                className="glass-panel"
                 onClick={() => setExpandedTimeline(expandedTimeline === 4 ? null : 4)}
                 style={{ cursor: 'pointer' }}
               >
@@ -1721,7 +1715,7 @@ function App() {
 
         {/* CALL TO ACTION & FOOTER SECTION */}
         <section id="contact" style={{ scrollMarginTop: '8rem', marginTop: '6rem' }}>
-          <div className="glass-panel terminal-panel" data-terminal="contact_node" style={{
+          <div className="glass-panel" style={{
             background: 'radial-gradient(circle at 50% 0%, rgba(0, 242, 254, 0.1), var(--bg-surface-glass) 80%)',
             borderColor: 'rgba(0, 242, 254, 0.3)',
             padding: '3rem',
