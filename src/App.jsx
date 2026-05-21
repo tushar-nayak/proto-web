@@ -1,24 +1,19 @@
-import React, { useState, useMemo, useEffect, useRef } from 'react';
+import { useState, useMemo } from 'react';
 import {
   GraduationCap,
   BookOpen,
   FolderGit2,
   Calendar,
-  Layers,
-  ArrowUpRight,
   Search,
   ExternalLink,
+  Globe,
   ClipboardCopy,
   Check,
   Cpu,
-  Eye,
-  Sliders,
-  ChevronDown,
+  ScanEye,
   MapPin,
   Stethoscope,
-  Terminal,
   Play,
-  RotateCcw,
   Sparkles
 } from 'lucide-react';
 import NeuralBackground from './components/NeuralBackground';
@@ -273,12 +268,11 @@ const PROJECTS = [
     demo: null,
     highlight: true,
     simLogs: [
-      "[MorphPINN] Initializing Adam Optimizer with strain safety constraint = 1.15...",
-      "[DEFORMATION] Loading pre-operative 3D centerlines from UPMC patient scans...",
-      "[SOLVER] Optimizing deformation graph weights under mechanical strain penalty...",
-      "[SOLVER] Divergence loss = 0.0034 | Hard strain constraint penalty = 0.00...",
-      "[REGISTRATION] Backprojecting 2D X-ray features onto deformation space...",
-      "[SUCCESS] Deformable registration completed! Mean target error = 0.74mm."
+      "[MORPHPINN] Loading angiography frames and pre-operative centerlines...",
+      "[DEFORMATION] Building strain-preserving graph nodes along the vessel tree...",
+      "[PROJECTION] Backprojecting 2D X-ray cues into 3D registration space...",
+      "[OPTIMIZER] Updating deformation weights with mechanical constraints...",
+      "[SUCCESS] Endovasculature registration locked. Mean target error = 0.74mm."
     ]
   },
   {
@@ -291,12 +285,11 @@ const PROJECTS = [
     demo: "https://tushar-nayak.github.io/glioblastoma-evolution/",
     highlight: true,
     simLogs: [
-      "[NEURAL ODE] Loading LUMIERE patient sequences: T0 (FLAIR), T1 (T1), T2 (cT1)...",
-      "[CO-REGISTRATION] Performing rigid and affine alignment using SimpleITK...",
-      "[SOLVER] Solving continuous-time latent state trajectories via Runge-Kutta 45...",
-      "[SOLVER] Iteration 250: Adjoint gradients matching boundary propagation...",
-      "[FORECAST] Projecting tumor volume boundary expansion forward 30 days...",
-      "[SUCCESS] Volumetric tumor forecasting complete. Dice Score = 0.885 | IoU = 0.824."
+      "[LUMIERE] Loading FLAIR, T1, T2, and cT1 sequences...",
+      "[CO-REGISTRATION] Aligning multimodal MRI volumes in patient space...",
+      "[NEURAL ODE] Fitting continuous-time tumor dynamics from history-conditioned scans...",
+      "[FORECAST] Propagating lesion boundary forward 30 days...",
+      "[SUCCESS] Glioblastoma evolution forecast complete. Dice Score = 0.885 | IoU = 0.824."
     ]
   },
   {
@@ -309,11 +302,11 @@ const PROJECTS = [
     demo: "https://tushar-nayak.github.io/cardiac-reconstruction-evolved/",
     highlight: true,
     simLogs: [
-      "[CARDIAC-EVOLVED] Spawning 150,000 stabilized spatial Gaussian occupancy points...",
-      "[DIFFERENTIABLE] Projecting 3D occupancy volume onto 2D echocardiographic slice planes...",
-      "[OPTIMIZER] Running Adam step to minimize projection boundaries matching echo scans...",
-      "[MESH] Applying Marching Cubes to recover watertight 3D ventricular boundary...",
-      "[SUCCESS] Ventricular volume recovery completed! Chamfer Distance = 0.92mm."
+      "[ECHO] Loading sparse 2D cardiac views from ultrasound...",
+      "[OCCUPANCY] Seeding Gaussian fields across the ventricular volume...",
+      "[PROJECTION] Matching slice supervision against echo contours...",
+      "[MESH] Extracting a watertight cardiac surface with Marching Cubes...",
+      "[SUCCESS] Cardiac recovery completed. Chamfer Distance = 0.92mm."
     ]
   },
   {
@@ -326,12 +319,11 @@ const PROJECTS = [
     demo: "https://tushar-nayak.github.io/cardiac-volume-reconstruction/",
     highlight: true,
     simLogs: [
-      "[META-LEARNING] Initializing Reptile optimizer on 3D cardiac shape prior database...",
-      "[TTO] Injecting 2D echocardiogram slices. Computing SE(3) rigid pose offsets...",
-      "[INR] Optimizing MLPs parameterizing implicit volumetric occupancy functions...",
-      "[SOLVER] Iteration 150/500: Reconstructing cardiac boundary. SDF Loss = 0.0014...",
-      "[MARCHING CUBES] Extracting 3D surface mesh from ventricular zero-isosurface...",
-      "[SUCCESS] Ventricular volume reconstructed. Volume deviation vs CT ground truth = 2.1%."
+      "[REPTILE] Loading the cardiac shape prior and support echo set...",
+      "[TTO] Refining SE(3) pose offsets for sparse 2D views...",
+      "[INR] Fitting implicit occupancy to patient-specific ventricular geometry...",
+      "[MARCHING CUBES] Converting the field into a surface mesh...",
+      "[SUCCESS] Few-shot cardiac reconstruction complete. Volume deviation = 2.1%."
     ]
   },
   {
@@ -344,11 +336,11 @@ const PROJECTS = [
     demo: "https://tushar-nayak.github.io/neural-anisotropic-diffusion/",
     highlight: true,
     simLogs: [
-      "[PDE] Initializing anisotropic diffusion coefficients...",
-      "[UNROLLING] Unrolling solver step 1 of 5. Edge-preserving mode...",
-      "[UNET] Predicting spatial adaptivity scale parameters...",
-      "[FILTER] Denoising. PSNR improved from 24.2dB to 38.5dB...",
-      "[SUCCESS] MRI noise filtered. Boundary edges preserved."
+      "[PDE] Loading the noisy MRI slice and initializing diffusion terms...",
+      "[UNROLLING] Running edge-preserving diffusion step 1 of 5...",
+      "[MINIUNET] Predicting spatially adaptive conduction coefficients...",
+      "[FILTER] Denoising in place. PSNR improved from 24.2dB to 38.5dB...",
+      "[SUCCESS] MRI relaxation finished. Boundary edges preserved."
     ]
   },
   {
@@ -361,11 +353,11 @@ const PROJECTS = [
     demo: "https://tushar-nayak.github.io/surgi-prompt/",
     highlight: true,
     simLogs: [
-      "[SURGI-PROMPT] Loading laparoscopic video frame sequence...",
-      "[DETECTION] Feeding text prompts: 'forceps', 'grasper', 'needle driver' to Grounding DINO...",
-      "[SAM2] Translating detected bounding boxes to spatial prompts for SAM2...",
-      "[TRACKING] Propagating tool mask state forward through neural memory grids...",
-      "[SUCCESS] Real-time surgical tool tracking locked! Mean IoU = 0.892 | FPS = 42.5."
+      "[SURGIPROMPT] Loading laparoscopic frames and text prompts...",
+      "[GROUNDING DINO] Detecting forceps, graspers, and needle drivers...",
+      "[SAM2] Converting detections into surgical tool masks...",
+      "[TRACKING] Propagating tool identities through the video sequence...",
+      "[SUCCESS] Open-vocabulary tool tracking locked. Mean IoU = 0.892 | FPS = 42.5."
     ]
   },
   {
@@ -378,11 +370,11 @@ const PROJECTS = [
     demo: "https://tushar-nayak.github.io/endo-splat/",
     highlight: false,
     simLogs: [
-      "[GAUSSIAN] Spawning 120,000 spatial Gaussians from sparse depth cloud...",
-      "[SPLATTING] Performing differentiable rasterization at 100+ fps...",
-      "[VLM] Injecting CLIP/LSeg language embeddings into Gaussian feature space...",
-      "[SEMANTIC] Querying open-vocabulary tags: 'forceps', 'tissue boundary'...",
-      "[SUCCESS] Deformable semantic splatting completed. Specularity resolved in 4.2ms."
+      "[DEPTH] Initializing sparse depth cloud from the endoscopic scene...",
+      "[SPLATTING] Rasterizing deformable Gaussians across the frame...",
+      "[VLM] Injecting CLIP/LSeg semantics into the scene representation...",
+      "[SEMANTIC] Querying forceps and tissue boundary labels...",
+      "[SUCCESS] Endoscopic semantic splat stabilized. Specularity resolved in 4.2ms."
     ]
   },
   {
@@ -395,11 +387,11 @@ const PROJECTS = [
     demo: "https://tushar-nayak.github.io/vascular-reconstruction/",
     highlight: false,
     simLogs: [
-      "[VASCULAR-RECON] Loading sparse-view X-ray angiographic projections...",
-      "[GAUSSIAN] Initializing 3D Gaussian points along vessel centerline priors...",
-      "[RENDERER] Simulating differentiable raymarching over projection grids...",
-      "[PINN] Solving Navier-Stokes boundary equations for flow-regularized optimization...",
-      "[SUCCESS] 3D coronary artery reconstruction complete! Mean surface voxel deviation = 0.52mm."
+      "[ANGIOGRAPHY] Loading sparse coronary projections and centerline priors...",
+      "[GAUSSIAN] Seeding vessel geometry along the artery tree...",
+      "[RAYMARCH] Rendering projections through the vascular volume...",
+      "[PINN] Applying flow-aware regularization to the reconstruction...",
+      "[SUCCESS] Coronary vessel recovery complete. Mean surface voxel deviation = 0.52mm."
     ]
   },
   {
@@ -412,10 +404,10 @@ const PROJECTS = [
     demo: "https://tushar-nayak.github.io/lobe-ranger/",
     highlight: false,
     simLogs: [
-      "[LOBE-RANGER] Loading paired gigapixel whole-slide scans (20x macro & 40x micro)...",
-      "[ATTENTION] Aligning architectural tissue patches and high-power cytologic tokens...",
-      "[CLASSIFIER] Projecting attention-weighted feature maps onto ordinal staging categories...",
-      "[SUCCESS] Pathology staging complete. Grade II (Adenocarcinoma) locked | F1-Score = 0.941."
+      "[LOBERANGER] Loading paired 20x and 40x whole-slide images...",
+      "[ATTENTION] Aligning macro-architecture with high-power cytology patches...",
+      "[CLASSIFIER] Fusing cross-attention features into ordinal staging labels...",
+      "[SUCCESS] Pathology staging complete. Grade II locked | F1-Score = 0.941."
     ]
   },
   {
@@ -428,11 +420,11 @@ const PROJECTS = [
     demo: "https://tushar-nayak.github.io/assets/pdf/42640.pdf",
     highlight: false,
     simLogs: [
-      "[3D UNET] Loading 3D CTA coronary volumes. Standardizing spatial voxel spacing...",
-      "[RES-UNET] Segmenting coronary branches: Left Main (LM), Left Anterior Descending (LAD)...",
-      "[GEOMETRY] Running Marching Cubes to generate initial boundary surface triangulation...",
-      "[SMOOTHING] Applying Laplacian smoothing & VTK decimation filters...",
-      "[SUCCESS] Coronary tree mesh exported! Output contains 45,000 vertices."
+      "[CTA] Loading the coronary angiography volume and normalizing spacing...",
+      "[RES-UNET] Segmenting Left Main, LAD, and downstream branches...",
+      "[GEOMETRY] Extracting the coronary surface with Marching Cubes...",
+      "[SMOOTHING] Applying Laplacian smoothing and mesh cleanup...",
+      "[SUCCESS] Coronary artery mesh exported. Output contains 45,000 vertices."
     ]
   },
   {
@@ -445,11 +437,11 @@ const PROJECTS = [
     demo: "https://github.com/tushar-nayak/grading-cbisddsm/blob/main/42657A_G3Report.pdf",
     highlight: false,
     simLogs: [
-      "[MAMMOGRAM] Loading paired breast scans: CC view and MLO view...",
-      "[STN] Estimating affine registration parameters to warp CC onto MLO space...",
-      "[FUSION] Appending cross-view attention layer over warped density maps...",
-      "[CLASSIFIER] Performing BI-RADS category scoring...",
-      "[SUCCESS] Pipeline complete. BI-RADS Category 4 predicted | Conf = 0.89."
+      "[MAMMOGRAM] Loading CC and MLO breast views...",
+      "[STN] Estimating the alignment transform between views...",
+      "[FUSION] Blending cross-view attention over the warped density maps...",
+      "[CLASSIFIER] Scoring BI-RADS category from the fused representation...",
+      "[SUCCESS] Dual-view alignment complete. BI-RADS 4 predicted | Conf = 0.89."
     ]
   },
   {
@@ -462,11 +454,11 @@ const PROJECTS = [
     demo: "https://tushar-nayak.github.io/lungvolseg/",
     highlight: false,
     simLogs: [
-      "[INPUT] Loading 3D chest CT volume from Zenodo cohort...",
+      "[INPUT] Loading the chest CT volume from the Zenodo cohort...",
       "[MONAI] Running 3D UNet inference for lung field segmentation...",
-      "[VOXELS] Compiling volumetric metrics. Calculating watertight boundaries...",
-      "[SURFACE] Applying Marching Cubes to generate polygonal mesh...",
-      "[SUCCESS] Watertight STL surface mesh successfully exported for 3D printing."
+      "[VOXELS] Measuring the segmented volume and boundary quality...",
+      "[SURFACE] Generating a watertight mesh with Marching Cubes...",
+      "[SUCCESS] Lung surface exported as STL and VTK for downstream use."
     ]
   },
   {
@@ -479,10 +471,10 @@ const PROJECTS = [
     demo: "https://tushar-nayak.github.io/derma-seg/",
     highlight: false,
     simLogs: [
-      "[ISIC] Preprocessing dermoscopy image patches...",
-      "[TRANSFORMER] Querying self-attention layers on skin pixels...",
-      "[DEEPLAB] Performing ASPP dense feature projection...",
-      "[SUCCESS] Segmentation boundary mask generated. Dice score = 0.931."
+      "[ISIC] Preprocessing dermoscopy patches from the ISIC 2018 set...",
+      "[TRANSFORMER] Comparing attention-based segmentation candidates...",
+      "[DEEPLAB] Refining the lesion boundary with dense feature projection...",
+      "[SUCCESS] Skin lesion mask generated. Dice score = 0.931."
     ]
   },
   {
@@ -495,11 +487,11 @@ const PROJECTS = [
     demo: null,
     highlight: false,
     simLogs: [
-      "[MACROGRAPH] Extracting attention-weighted lesion borders...",
+      "[MACROGRAPH] Loading oral lesion images and extracting lesion borders...",
       "[OCT] Scanning epithelial and sub-epithelial thickness variations...",
-      "[HISTOPATHOLOGY] Analyzing cellular atypia and hyperchromatism grids...",
-      "[ENSEMBLE] Blending tri-modal predictions via soft-voting classifier...",
-      "[SUCCESS] Multiclass OSCC assessment completed! Accuracy = 97.4%."
+      "[HISTOPATHOLOGY] Reading cellular atypia from biopsy patches...",
+      "[ENSEMBLE] Fusing the three modalities with soft voting...",
+      "[SUCCESS] OSCC assessment complete. Accuracy = 97.4%."
     ]
   },
   {
@@ -512,10 +504,10 @@ const PROJECTS = [
     demo: null,
     highlight: false,
     simLogs: [
-      "[PRE-PROCESSING] Applying unsharp masking & stain normalization...",
-      "[RESNET] Querying deep feature maps for cytological variations...",
-      "[ATTENTION] Pinpointing spatial clusters of malignant cell growth...",
-      "[SUCCESS] Tissue classified. Accuracy = 99.7% | F1-Score = 0.994."
+      "[PREPROCESSING] Applying stain normalization and unsharp masking...",
+      "[RESNET] Reading histology features across the slide...",
+      "[ATTENTION] Localizing malignant clusters in the tissue image...",
+      "[SUCCESS] Lung and colon slide classified. Accuracy = 99.7% | F1-Score = 0.994."
     ]
   },
   {
@@ -528,11 +520,11 @@ const PROJECTS = [
     demo: "https://tushar-nayak.github.io/assets/pdf/mpox-binary.pdf",
     highlight: false,
     simLogs: [
-      "[INPUT] Loading skin lesion macrograph. Resizing to 224x224...",
-      "[RESNET-18] Propagating features. Estimating anomaly indicators...",
-      "[GRAD-CAM] Generating spatial saliency maps on blister boundary...",
-      "[LIME] Estimating local linear model contributions...",
-      "[SUCCESS] Mpox vs others binary classified. Acc = 99.49%."
+      "[INPUT] Loading the skin lesion macrograph and resizing to 224x224...",
+      "[RESNET-18] Reading lesion features for anomaly cues...",
+      "[GRAD-CAM] Highlighting the blister boundary on the saliency map...",
+      "[LIME] Explaining the binary prediction locally...",
+      "[SUCCESS] Monkeypox detection complete. Accuracy = 99.49%."
     ]
   },
   {
@@ -545,11 +537,11 @@ const PROJECTS = [
     demo: "https://tushar-nayak.github.io/fungal-neo/",
     highlight: false,
     simLogs: [
-      "[MICROSCOPY] Loading high-resolution microscopic image scan (3600x5760)...",
-      "[PATCHING] Splitting high-res field into 224x224 cellular patches...",
-      "[RESNET18] Performing patch classification across 9 fungal species...",
-      "[ENSEMBLE] Aggregating regional patches to generate slide-level score...",
-      "[SUCCESS] Microscopic diagnostic classification complete. Confidence = 94.8%."
+      "[MICROSCOPY] Loading the 3600x5760 fungal slide scan...",
+      "[PATCHING] Splitting the slide into 224x224 patches...",
+      "[RESNET18] Classifying 9 fungal species from local regions...",
+      "[ENSEMBLE] Aggregating patch predictions into a slide score...",
+      "[SUCCESS] Fungal classification complete. Confidence = 94.8%."
     ]
   },
   {
@@ -563,9 +555,9 @@ const PROJECTS = [
     highlight: false,
     simLogs: [
       "[SNAKE] Loading elastic, tension, and balloon forces...",
-      "[ENCODER] Generating energy fields on biological boundaries...",
-      "[DIFFERENTIABLE] Propagating contour coordinates down network...",
-      "[SUCCESS] Snake converged in 8 neural iterations. Loss = 0.001."
+      "[ENERGY] Building the boundary energy field...",
+      "[DIFFERENTIABLE] Propagating contour coordinates through the model...",
+      "[SUCCESS] Active contour converged in 8 iterations. Loss = 0.001."
     ]
   },
   {
@@ -578,12 +570,11 @@ const PROJECTS = [
     demo: "https://tushar-nayak.github.io/assets/pdf/42668.pdf",
     highlight: false,
     simLogs: [
-      "[BOLD] Preprocessing 3T Siemens Prisma fMRI: slice timing, motion correction...",
-      "[SPM12] Co-registering T1 structural anatomy to standard MNI152 space...",
-      "[GLM] Fitting General Linear Model with emotional valence stimulus onset...",
-      "[PERFUSION] Estimating cerebral blood flow (CBF) from arterial spin labeling (ASL)...",
-      "[CORRELATE] Extracting amygdala & ventral striatum contrast activation...",
-      "[SUCCESS] Activation contrast mapped. Emotional valence activation verified."
+      "[BOLD] Preprocessing the 3T Siemens Prisma fMRI sequence...",
+      "[SPM12] Co-registering T1 anatomy to MNI152 space...",
+      "[GLM] Fitting the emotional valence response model...",
+      "[PERFUSION] Estimating CBF from ASL data...",
+      "[SUCCESS] Emotional response contrast mapped successfully."
     ]
   }
 ];
@@ -611,29 +602,6 @@ function App() {
 
   // Dynamic algorithm simulator state per project
   const [simulations, setSimulations] = useState({}); // project_id -> { active: bool, logs: array, step: int }
-
-  // 3D scanner widget hover coordinate generator
-  const handleScannerMouseMove = (e) => {
-    const rect = e.currentTarget.getBoundingClientRect();
-    const x = ((e.clientX - rect.left) / rect.width * 200).toFixed(2);
-    const y = ((e.clientY - rect.top) / rect.height * 200).toFixed(2);
-    const z = (Math.sin(e.clientX * 0.05) * 50 + 20).toFixed(2);
-    setScanCoords({ x, y, z });
-    if (Math.random() > 0.85) {
-      const statuses = ["SCANNING TARGET...", "ANALYST ACTIVE", "SOLVING ODE...", "CT REGISTRATION...", "SPECULAR REMOVAL..."];
-      setScanStatus(statuses[Math.floor(Math.random() * statuses.length)]);
-    }
-  };
-
-  const handleScannerClick = () => {
-    setWidgetClicks(prev => prev + 1);
-    setWidgetSpinRate(2);
-    setScanStatus("RE-CALIBRATING TARGET...");
-    setTimeout(() => {
-      setWidgetSpinRate(15);
-      setScanStatus("CALIBRATION COMPLETE (99.92%)");
-    }, 1500);
-  };
 
   // Run Project simulation logs
   const triggerSimulation = (projId, simLogs) => {
@@ -680,13 +648,17 @@ function App() {
     return PROJECTS.filter(p => p.category === projectFilter);
   }, [projectFilter]);
 
-  // Separate lab-affiliated research projects and technical/course projects
-  const labProjects = useMemo(() => {
+  // Separate graduate research, undergraduate research, and technical projects
+  const graduateProjects = useMemo(() => {
     return filteredProjects.filter(p => p.id === 1 || p.id === 2);
   }, [filteredProjects]);
 
-  const courseProjects = useMemo(() => {
-    return filteredProjects.filter(p => p.id !== 1 && p.id !== 2);
+  const undergraduateResearchProjects = useMemo(() => {
+    return filteredProjects.filter(p => p.id === 5 || p.id === 6 || p.id === 7);
+  }, [filteredProjects]);
+
+  const projectProjects = useMemo(() => {
+    return filteredProjects.filter(p => p.id !== 1 && p.id !== 2 && p.id !== 5 && p.id !== 6 && p.id !== 7);
   }, [filteredProjects]);
 
   // Filter, sort, and process publications
@@ -863,8 +835,8 @@ function App() {
           </a>
           {project.demo && (
             <a href={project.demo} target="_blank" rel="noopener noreferrer" className="project-link">
-              <ExternalLink size={14} />
-              Live Demo
+              <Globe size={14} />
+              Project Page
             </a>
           )}
         </div>
@@ -974,7 +946,7 @@ function App() {
             
             {/* Left Column: Brief details */}
             <div>
-              <div style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', marginBottom: '1.25rem' }}>
+              <div style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', flexWrap: 'wrap', marginBottom: '1.25rem' }}>
                 <span className="badge badge-teal">
                   <Stethoscope size={12} style={{ marginRight: '0.25rem' }} />
                   Surgical Robotics
@@ -982,6 +954,10 @@ function App() {
                 <span className="badge badge-emerald">
                   <Cpu size={12} style={{ marginRight: '0.25rem' }} />
                   Physics-informed AI
+                </span>
+                <span className="badge">
+                  <ScanEye size={12} style={{ marginRight: '0.25rem' }} />
+                  3D Vision
                 </span>
               </div>
               
@@ -1001,7 +977,7 @@ function App() {
               </p>
               
               <p style={{ color: 'var(--text-secondary)', fontSize: '1.05rem', marginBottom: '2.5rem', maxWidth: '650px', lineHeight: '1.7' }}>
-                I'm pursuing a master's in the <span style={{ color: 'var(--text-primary)' }}>Biomedical Engineering</span> department at CMU, advised by <span style={{ color: 'var(--text-primary)', fontWeight: '500' }}>Prof. Kenji Shimada</span> in the <span style={{ color: 'var(--text-primary)' }}>Steffey Robotics Lab</span>. My work sits at the intersection of computer vision, differentiable rendering, and physics-based learning for surgical robotics and medical imaging.
+                I'm pursuing a master's in the <span style={{ color: 'var(--text-primary)' }}>Biomedical Engineering</span> department at CMU, advised by <span style={{ color: 'var(--text-primary)', fontWeight: '500' }}>Prof. Kenji Shimada</span> in the <span style={{ color: 'var(--text-primary)' }}>Computational Engineering &amp; Robotics Lab</span>. My work sits at the intersection of computer vision, differentiable rendering, and physics-based learning for surgical robotics and medical imaging.
               </p>
 
               <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap' }}>
@@ -1137,8 +1113,8 @@ function App() {
             ))}
           </div>
 
-          {/* Lab Research Section */}
-          {labProjects.length > 0 && (
+          {/* Graduate Research Section */}
+          {graduateProjects.length > 0 && (
             <div style={{ marginBottom: '3.5rem' }}>
               <div style={{
                 display: 'flex',
@@ -1156,9 +1132,9 @@ function App() {
                     fontWeight: '600',
                     letterSpacing: '-0.01em',
                     margin: 0
-                  }}>Lab-Affiliated Research</h3>
+                  }}>Graduate Research</h3>
                   <span className="badge badge-teal" style={{ fontSize: '0.65rem', textTransform: 'uppercase', padding: '0.15rem 0.4rem' }}>
-                    Affiliated Labs
+                    Graduate Work
                   </span>
                 </div>
                 <p style={{ color: 'var(--text-secondary)', fontSize: '0.88rem', margin: 0, opacity: 0.85, maxWidth: '800px', lineHeight: '1.4' }}>
@@ -1167,13 +1143,13 @@ function App() {
               </div>
               
               <div className="project-grid">
-                {labProjects.map((project) => renderProjectCard(project))}
+                {graduateProjects.map((project) => renderProjectCard(project))}
               </div>
             </div>
           )}
 
           {/* Section Divider */}
-          {labProjects.length > 0 && courseProjects.length > 0 && (
+          {graduateProjects.length > 0 && projectProjects.length > 0 && (
             <div style={{
               height: '1px',
               background: 'linear-gradient(to right, rgba(0, 242, 254, 0.12), rgba(255, 255, 255, 0.01) 90%)',
@@ -1182,10 +1158,10 @@ function App() {
             }}></div>
           )}
 
-          {/* Technical Projects Section */}
-          {courseProjects.length > 0 && (
+          {/* Projects Section */}
+          {projectProjects.length > 0 && (
             <div>
-              {labProjects.length > 0 && (
+              {graduateProjects.length > 0 && (
                 <div style={{
                   display: 'flex',
                   flexDirection: 'column',
@@ -1196,13 +1172,13 @@ function App() {
                 }}>
                   <div style={{ display: 'flex', alignItems: 'center', gap: '0.65rem' }}>
                     <h3 style={{
-                      fontSize: '1.25rem',
-                      fontFamily: 'var(--font-heading)',
-                      color: 'var(--text-primary)',
-                      fontWeight: '600',
-                      letterSpacing: '-0.01em',
-                      margin: 0
-                    }}>Coursework &amp; Technical Projects</h3>
+                    fontSize: '1.25rem',
+                    fontFamily: 'var(--font-heading)',
+                    color: 'var(--text-primary)',
+                    fontWeight: '600',
+                    letterSpacing: '-0.01em',
+                    margin: 0
+                    }}>Projects</h3>
                     <span className="badge" style={{ 
                       fontSize: '0.65rem', 
                       background: 'rgba(255, 255, 255, 0.03)', 
@@ -1211,17 +1187,52 @@ function App() {
                       textTransform: 'uppercase',
                       padding: '0.15rem 0.4rem'
                     }}>
-                      Core Portfolio
+                      Selected Work
                     </span>
                   </div>
                   <p style={{ color: 'var(--text-secondary)', fontSize: '0.88rem', margin: 0, opacity: 0.85, maxWidth: '800px', lineHeight: '1.4' }}>
-                    Interactive 3D computer vision models, differentiable partial differential equation unrolling, medical image segmentation, and robotic surgery tools.
+                    Interactive 3D computer vision models, medical imaging systems, and surgical tooling.
                   </p>
                 </div>
               )}
               
               <div className="project-grid">
-                {courseProjects.map((project) => renderProjectCard(project))}
+                {projectProjects.map((project) => renderProjectCard(project))}
+              </div>
+            </div>
+          )}
+
+          {/* Undergraduate Research Projects Section */}
+          {undergraduateResearchProjects.length > 0 && (
+            <div style={{ marginTop: '3.5rem' }}>
+              <div style={{
+                display: 'flex',
+                flexDirection: 'column',
+                gap: '0.35rem',
+                marginBottom: '1.5rem',
+                borderLeft: '3px solid var(--accent-emerald)',
+                paddingLeft: '0.75rem'
+              }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '0.65rem' }}>
+                  <h3 style={{
+                    fontSize: '1.25rem',
+                    fontFamily: 'var(--font-heading)',
+                    color: 'var(--text-primary)',
+                    fontWeight: '600',
+                    letterSpacing: '-0.01em',
+                    margin: 0
+                  }}>Undergraduate Research Projects</h3>
+                  <span className="badge badge-emerald" style={{ fontSize: '0.65rem', textTransform: 'uppercase', padding: '0.15rem 0.4rem' }}>
+                    Undergraduate
+                  </span>
+                </div>
+                <p style={{ color: 'var(--text-secondary)', fontSize: '0.88rem', margin: 0, opacity: 0.85, maxWidth: '800px', lineHeight: '1.4' }}>
+                  Early research work in histopathology, skin lesion analysis, and clinical classification.
+                </p>
+              </div>
+
+              <div className="project-grid">
+                {undergraduateResearchProjects.map((project) => renderProjectCard(project))}
               </div>
             </div>
           )}
@@ -1610,12 +1621,12 @@ function App() {
                     </p>
                   </div>
                   <span style={{ fontSize: '0.85rem', color: 'var(--text-muted)', display: 'inline-flex', alignItems: 'center', gap: '0.25rem' }}>
-                    <Calendar size={14} /> 2018 - 2022
+                    <Calendar size={14} /> 2019 - 2023
                   </span>
                 </div>
                 
                 <p style={{ color: 'var(--text-secondary)', fontSize: '0.95rem', marginTop: '1rem' }}>
-                  Graduated with top marks, publishing deep diagnostic models mapping skin anomalies (monkeypox), oral malignancies, and blood leukemia indices.
+                  Published deep diagnostic models mapping skin anomalies (monkeypox), oral malignancies, and blood leukemia indices.
                 </p>
 
                 {expandedTimeline === 4 && (

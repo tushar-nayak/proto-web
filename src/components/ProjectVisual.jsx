@@ -1,5 +1,3 @@
-import React from 'react';
-
 export default function ProjectVisual({ category, active, id, style }) {
   // Category-specific high-fidelity SVG graphics with CSS animations
   const renderVisualContent = () => {
