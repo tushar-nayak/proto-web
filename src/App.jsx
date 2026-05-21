@@ -757,6 +757,7 @@ function App() {
         }}
       >
         <ProjectVisual 
+          project={project}
           category={project.category} 
           active={currentSim?.active} 
           id={project.id} 
@@ -903,7 +904,7 @@ function App() {
       <div className="glow-blur-2"></div>
 
       {/* FLOATING GLASS NAVIGATION HEADER */}
-      <header style={{
+      <header className="site-header" style={{
         position: 'sticky',
         top: '1.5rem',
         zIndex: 50,
@@ -911,7 +912,7 @@ function App() {
         maxWidth: '900px',
         padding: '0 1rem',
       }}>
-        <div style={{
+        <div className="site-header-shell" style={{
           background: 'rgba(10, 11, 14, 0.75)',
           backdropFilter: 'blur(16px)',
           WebkitBackdropFilter: 'blur(16px)',
@@ -924,8 +925,8 @@ function App() {
           boxShadow: '0 8px 32px 0 rgba(0, 0, 0, 0.4)'
         }}>
           {/* Logo / Initials */}
-          <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-            <div style={{
+          <div className="site-header-brand" style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+            <div className="site-header-mark" style={{
               width: '32px',
               height: '32px',
               borderRadius: '50%',
@@ -940,19 +941,19 @@ function App() {
             }}>
               TN
             </div>
-            <span style={{
+            <span className="site-header-wordmark" style={{
               fontFamily: 'var(--font-heading)',
               fontWeight: '600',
               fontSize: '0.95rem',
               letterSpacing: '-0.01em',
               color: 'var(--text-primary)'
             }}>
-              tushar-nayak <span style={{ color: 'var(--primary-cyan)', fontWeight: '500' }}>&&</span> technologyfoundhere
+              tushar-nayak <span className="site-header-wordmark-sep" style={{ color: 'var(--primary-cyan)', fontWeight: '500' }}>&&</span> <span className="site-header-wordmark-tail">technologyfoundhere</span>
             </span>
           </div>
 
           {/* Navigation Items */}
-          <nav style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap', justifyContent: 'flex-end' }}>
+          <nav className="site-header-nav" style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap', justifyContent: 'flex-end' }}>
             {['about', 'projects', 'research', 'teaching', 'timeline'].map((tab) => (
               <button
                 key={tab}
@@ -973,7 +974,7 @@ function App() {
                   transition: 'var(--transition-fast)',
                   fontFamily: 'var(--font-heading)'
                 }}
-                className={activeTab === tab ? 'pulse-glow' : ''}
+                className={`site-header-tab ${activeTab === tab ? 'pulse-glow' : ''}`}
               >
                 {tab}
               </button>
