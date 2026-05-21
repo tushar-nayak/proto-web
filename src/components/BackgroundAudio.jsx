@@ -8,10 +8,14 @@ export default function BackgroundAudio() {
   const [hasStarted, setHasStarted] = useState(false);
 
   useEffect(() => {
+    window.dispatchEvent(new CustomEvent('audio:mute-change', { detail: isMuted }));
+  }, [isMuted]);
+
+  useEffect(() => {
     const audio = audioRef.current;
     if (!audio) return undefined;
 
-    audio.volume = 0.32;
+    audio.volume = 0.05;
     audio.loop = true;
     audio.muted = isMuted;
 
@@ -34,35 +38,70 @@ export default function BackgroundAudio() {
       startPlayback();
     };
 
+    const handleProjectAudioPlay = () => {
+      audio.pause();
+      syncStarted();
+    };
+
+    const handleProjectAudioStop = async () => {
+      if (isMuted) {
+        syncStarted();
+        return;
+      }
+
+      try {
+        await audio.play();
+        syncStarted();
+      } catch {
+        // Ignore resume failures until the next user interaction.
+      }
+    };
+
+    const handleToggleMute = () => {
+      setIsMuted((current) => !current);
+    };
+
+    const handleMuteShortcut = (event) => {
+      const target = event.target;
+      const isEditableTarget = target instanceof HTMLElement && (
+        target.isContentEditable ||
+        target.tagName === 'INPUT' ||
+        target.tagName === 'TEXTAREA' ||
+        target.tagName === 'SELECT'
+      );
+
+      if (isEditableTarget || event.metaKey || event.ctrlKey || event.altKey) {
+        return;
+      }
+
+      if (event.key.toLowerCase() === 'm') {
+        setIsMuted((current) => !current);
+      }
+    };
+
     audio.addEventListener('play', syncStarted);
     audio.addEventListener('pause', syncStarted);
     window.addEventListener('pointerdown', handleFirstInteraction, { passive: true });
     window.addEventListener('keydown', handleFirstInteraction);
+    window.addEventListener('project-audio:play', handleProjectAudioPlay);
+    window.addEventListener('project-audio:stop', handleProjectAudioStop);
+    window.addEventListener('audio:toggle-mute', handleToggleMute);
+    window.addEventListener('keydown', handleMuteShortcut);
 
     return () => {
       audio.removeEventListener('play', syncStarted);
       audio.removeEventListener('pause', syncStarted);
       window.removeEventListener('pointerdown', handleFirstInteraction);
       window.removeEventListener('keydown', handleFirstInteraction);
+      window.removeEventListener('project-audio:play', handleProjectAudioPlay);
+      window.removeEventListener('project-audio:stop', handleProjectAudioStop);
+      window.removeEventListener('audio:toggle-mute', handleToggleMute);
+      window.removeEventListener('keydown', handleMuteShortcut);
     };
   }, [isMuted]);
 
-  const toggleMute = async () => {
-    const audio = audioRef.current;
-    if (!audio) return;
-
-    if (!hasStarted || audio.paused) {
-      try {
-        await audio.play();
-        setIsMuted(false);
-        setHasStarted(true);
-      } catch {
-        return;
-      }
-      return;
-    }
-
-    setIsMuted((current) => !current);
+  const toggleMute = () => {
+    window.dispatchEvent(new CustomEvent('audio:toggle-mute'));
   };
 
   return (
@@ -72,11 +111,11 @@ export default function BackgroundAudio() {
         type="button"
         className="audio-toggle"
         onClick={toggleMute}
-        aria-label={!hasStarted ? 'Enable background audio' : (isMuted ? 'Unmute background audio' : 'Mute background audio')}
-        title={!hasStarted ? 'Enable audio' : (isMuted ? 'Unmute' : 'Mute')}
+        aria-label={!hasStarted ? 'Enable background audio with M shortcut' : (isMuted ? 'Unmute audio with M shortcut' : 'Mute audio with M shortcut')}
+        title={!hasStarted ? 'Enable audio (M)' : (isMuted ? 'Unmute (M)' : 'Mute (M)')}
       >
         {isMuted ? <VolumeX size={16} /> : <Volume2 size={16} />}
-        <span>{!hasStarted ? 'Enable Audio' : (isMuted ? 'Muted' : 'Audio On')}</span>
+        <span>{!hasStarted ? 'Enable Audio (M)' : (isMuted ? 'Muted (M)' : 'Audio On (M)')}</span>
       </button>
     </>
   );

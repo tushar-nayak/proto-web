@@ -1,4 +1,4 @@
-import { useState, useMemo } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import {
   GraduationCap,
   BookOpen,
@@ -6,7 +6,6 @@ import {
   Calendar,
   Search,
   ExternalLink,
-  Globe,
   ClipboardCopy,
   Check,
   Cpu,
@@ -21,6 +20,7 @@ import ProjectVisual from './components/ProjectVisual';
 import ProfileSplat from './components/ProfileSplat';
 import CursorTrail from './components/CursorTrail';
 import BackgroundAudio from './components/BackgroundAudio';
+import armoryTrack from './assets/Armory.mp3';
 
 // Custom inline SVG replacements for brand/common icons to prevent build resolution errors
 const Mail = ({ size = 18 }) => (
@@ -626,6 +626,7 @@ const TEACHING_COURSES = [
 ];
 
 function App() {
+  const projectAudioRef = useRef(null);
   const [activeTab, setActiveTab] = useState('about');
   const [projectFilter, setProjectFilter] = useState('All');
   const [pubSearch, setPubSearch] = useState('');
@@ -641,12 +642,97 @@ function App() {
   const [expandedTimeline, setExpandedTimeline] = useState(null);
   const [expandedTeachingCourse, setExpandedTeachingCourse] = useState('ml-bme');
   const [hoveredProjectId, setHoveredProjectId] = useState(null);
+  const [selectedProjectId, setSelectedProjectId] = useState(null);
+  const [isAudioMuted, setIsAudioMuted] = useState(false);
 
   // 3D Scanner widget interactive state
   const [scanCoords, setScanCoords] = useState({ x: 124.52, y: 84.18, z: 9.31 });
   const [scanStatus, setScanStatus] = useState("SYSTEM READY");
   const [widgetClicks, setWidgetClicks] = useState(0);
   const [widgetSpinRate, setWidgetSpinRate] = useState(15);
+
+  useEffect(() => {
+    const handleMuteChange = (event) => {
+      setIsAudioMuted(Boolean(event.detail));
+    };
+
+    window.addEventListener('audio:mute-change', handleMuteChange);
+
+    return () => {
+      window.removeEventListener('audio:mute-change', handleMuteChange);
+    };
+  }, []);
+
+  useEffect(() => {
+    const audio = projectAudioRef.current;
+    if (!audio) return;
+
+    audio.muted = isAudioMuted;
+    audio.volume = 0.5;
+  }, [isAudioMuted]);
+
+  useEffect(() => {
+    if (selectedProjectId === null) return undefined;
+
+    const handlePointerDown = (event) => {
+      if (!(event.target instanceof Element)) {
+        setSelectedProjectId(null);
+        window.dispatchEvent(new CustomEvent('project-audio:stop'));
+        return;
+      }
+
+      if (!event.target.closest('.project-card.is-selected')) {
+        setSelectedProjectId(null);
+        window.dispatchEvent(new CustomEvent('project-audio:stop'));
+      }
+    };
+
+    const handleEscape = (event) => {
+      if (event.key === 'Escape') {
+        setSelectedProjectId(null);
+        window.dispatchEvent(new CustomEvent('project-audio:stop'));
+      }
+    };
+
+    document.addEventListener('pointerdown', handlePointerDown);
+    window.addEventListener('keydown', handleEscape);
+
+    return () => {
+      document.removeEventListener('pointerdown', handlePointerDown);
+      window.removeEventListener('keydown', handleEscape);
+    };
+  }, [selectedProjectId]);
+
+  useEffect(() => {
+    const audio = projectAudioRef.current;
+    if (!audio) return;
+
+    if (selectedProjectId === null) {
+      audio.pause();
+      audio.currentTime = 0;
+      window.dispatchEvent(new CustomEvent('project-audio:stop'));
+      return;
+    }
+
+    window.dispatchEvent(new CustomEvent('project-audio:play'));
+    audio.currentTime = 0;
+
+    if (isAudioMuted) return;
+
+    const startProjectAudio = async () => {
+      try {
+        await audio.play();
+      } catch {
+        // Ignore playback failures until the next user interaction.
+      }
+    };
+
+    startProjectAudio();
+  }, [isAudioMuted, selectedProjectId]);
+
+  const handleProjectClick = (projectId) => {
+    setSelectedProjectId((current) => (current === projectId ? null : projectId));
+  };
 
   // Filter projects
   const filteredProjects = useMemo(() => {
@@ -700,18 +786,26 @@ function App() {
   // Reusable Project Card Renderer
   const renderProjectCard = (project) => {
     const isHovered = hoveredProjectId === project.id;
+    const isSelected = selectedProjectId === project.id;
+    const isDimmed = selectedProjectId !== null && !isSelected;
     return (
       <div
         key={project.id}
-        className={`glass-panel project-card ${isHovered ? 'is-hovered' : ''}`}
+        className={`glass-panel project-card ${isHovered ? 'is-hovered' : ''} ${isSelected ? 'is-selected' : ''} ${isDimmed ? 'is-dimmed' : ''}`}
+        onClick={() => handleProjectClick(project.id)}
         onMouseEnter={() => setHoveredProjectId(project.id)}
         onMouseLeave={() => setHoveredProjectId((current) => (current === project.id ? null : current))}
         style={{
+          cursor: 'pointer',
           background: project.highlight ? 'radial-gradient(circle at 50% 0%, rgba(14, 165, 233, 0.02), rgba(14, 16, 21, 0.8) 75%)' : 'var(--bg-surface-glass)',
-          borderColor: isHovered
+          borderColor: isSelected
+            ? 'rgba(94, 234, 212, 0.9)'
+            : isHovered
             ? 'var(--accent-emerald)'
             : (project.highlight ? 'rgba(14, 165, 233, 0.12)' : 'var(--border-glow)'),
-          boxShadow: isHovered
+          boxShadow: isSelected
+            ? 'inset 0 0 0 1px rgba(94, 234, 212, 0.24), 0 0 28px rgba(94, 234, 212, 0.28), 0 20px 52px rgba(0, 0, 0, 0.54)'
+            : isHovered
             ? '0 0 15px rgba(16, 185, 129, 0.05)' 
             : 'none'
         }}
@@ -799,14 +893,14 @@ function App() {
           </div>
         </div>
 
-        <div className="project-links">
-          <a href={project.github} target="_blank" rel="noopener noreferrer" className="project-link">
+        <div className="project-links" onClick={(event) => event.stopPropagation()}>
+          <a href={project.github} target="_blank" rel="noopener noreferrer" className="project-link project-link-github">
             <Github size={14} />
             Repository
           </a>
           {project.demo && (
-            <a href={project.demo} target="_blank" rel="noopener noreferrer" className="project-link">
-              <Globe size={14} />
+            <a href={project.demo} target="_blank" rel="noopener noreferrer" className="project-link project-link-page">
+              <ScanEye size={14} />
               Project Page
             </a>
           )}
@@ -817,6 +911,7 @@ function App() {
 
   return (
     <div className="page-container">
+      <audio ref={projectAudioRef} src={armoryTrack} preload="auto" />
       {/* Dynamic interactive Canvas Network */}
       <NeuralBackground />
       <CursorTrail />
@@ -1043,7 +1138,11 @@ function App() {
         </section>
 
         {/* PROJECTS SHOWCASE SECTION */}
-        <section id="projects" style={{ scrollMarginTop: '8rem', marginBottom: '6rem' }}>
+        <section
+          id="projects"
+          className={`project-showcase ${selectedProjectId !== null ? 'is-project-active' : ''}`}
+          style={{ scrollMarginTop: '8rem', marginBottom: '6rem' }}
+        >
           <div style={{ marginBottom: '2.5rem' }}>
             <h2 style={{ fontSize: '2.25rem', fontFamily: 'var(--font-heading)', display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
               <FolderGit2 className="gradient-text" />
