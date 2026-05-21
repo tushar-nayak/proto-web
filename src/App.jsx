@@ -14,9 +14,7 @@ import {
   MapPin,
   Stethoscope,
   Presentation,
-  ChevronDown,
-  Play,
-  Sparkles
+  ChevronDown
 } from 'lucide-react';
 import NeuralBackground from './components/NeuralBackground';
 import ProjectVisual from './components/ProjectVisual';
@@ -649,48 +647,6 @@ function App() {
   const [widgetClicks, setWidgetClicks] = useState(0);
   const [widgetSpinRate, setWidgetSpinRate] = useState(15);
 
-  // Dynamic algorithm simulator state per project
-  const [simulations, setSimulations] = useState({}); // project_id -> { active: bool, logs: array, step: int }
-
-  // Run Project simulation logs
-  const triggerSimulation = (projId, simLogs) => {
-    if (simulations[projId]?.active) return; // already active
-
-    // Reset/Initialize state
-    setSimulations(prev => ({
-      ...prev,
-      [projId]: { active: true, logs: [], step: 0 }
-    }));
-
-    let currentStep = 0;
-    const interval = setInterval(() => {
-      if (currentStep < simLogs.length) {
-        setSimulations(prev => {
-          const currentSim = prev[projId];
-          if (!currentSim) return prev;
-          return {
-            ...prev,
-            [projId]: {
-              ...currentSim,
-              logs: [...currentSim.logs, simLogs[currentStep]],
-              step: currentStep + 1
-            }
-          };
-        });
-        currentStep++;
-      } else {
-        clearInterval(interval);
-        setTimeout(() => {
-          // Finished status
-          setSimulations(prev => ({
-            ...prev,
-            [projId]: { ...prev[projId], active: false }
-          }));
-        }, 1000);
-      }
-    }, 450);
-  };
-
   // Filter projects
   const filteredProjects = useMemo(() => {
     if (projectFilter === 'All') return PROJECTS;
@@ -742,19 +698,20 @@ function App() {
 
   // Reusable Project Card Renderer
   const renderProjectCard = (project) => {
-    const currentSim = simulations[project.id];
+    const isHovered = hoveredProjectId === project.id;
     return (
       <div
         key={project.id}
-        className={`glass-panel project-card ${hoveredProjectId === project.id ? 'is-hovered' : ''}`}
+        className={`glass-panel terminal-panel project-card ${isHovered ? 'is-hovered' : ''}`}
+        data-terminal={`project_${String(project.id).padStart(2, '0')}`}
         onMouseEnter={() => setHoveredProjectId(project.id)}
         onMouseLeave={() => setHoveredProjectId((current) => (current === project.id ? null : current))}
         style={{
           background: project.highlight ? 'radial-gradient(circle at 50% 0%, rgba(14, 165, 233, 0.02), rgba(14, 16, 21, 0.8) 75%)' : 'var(--bg-surface-glass)',
-          borderColor: currentSim?.active 
-            ? 'var(--accent-emerald)' 
+          borderColor: isHovered
+            ? 'var(--accent-emerald)'
             : (project.highlight ? 'rgba(14, 165, 233, 0.12)' : 'var(--border-glow)'),
-          boxShadow: currentSim?.active 
+          boxShadow: isHovered
             ? '0 0 15px rgba(16, 185, 129, 0.05)' 
             : 'none'
         }}
@@ -762,7 +719,7 @@ function App() {
         <ProjectVisual 
           project={project}
           category={project.category} 
-          active={currentSim?.active} 
+          active={isHovered} 
           id={project.id} 
           style={{ 
             margin: '-2rem -2rem 1.5rem -2rem', 
@@ -799,8 +756,7 @@ function App() {
           ))}
         </div>
 
-        {/* Sleek, Integrated Pipeline Simulator Telemetry */}
-        <div style={{
+        <div className="project-console" style={{
           marginTop: 'auto',
           marginBottom: '1rem',
           background: 'rgba(0, 0, 0, 0.15)',
@@ -809,75 +765,38 @@ function App() {
           padding: '0.65rem 0.85rem'
         }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-            <span style={{ fontSize: '0.75rem', color: currentSim?.active ? 'var(--accent-emerald)' : 'var(--text-secondary)', display: 'inline-flex', alignItems: 'center', gap: '0.35rem', fontFamily: 'monospace' }}>
+            <span style={{ fontSize: '0.75rem', color: isHovered ? 'var(--accent-emerald)' : 'var(--text-secondary)', display: 'inline-flex', alignItems: 'center', gap: '0.35rem', fontFamily: 'monospace' }}>
               <span style={{
                 width: '6px',
                 height: '6px',
                 borderRadius: '50%',
-                background: currentSim?.active ? 'var(--accent-emerald)' : (currentSim?.logs?.length ? 'var(--primary-cyan)' : 'rgba(255, 255, 255, 0.15)'),
+                background: isHovered ? 'var(--accent-emerald)' : 'var(--primary-cyan)',
                 display: 'inline-block',
-                boxShadow: currentSim?.active ? '0 0 6px var(--accent-emerald)' : 'none'
+                boxShadow: isHovered ? '0 0 6px var(--accent-emerald)' : 'none'
               }}></span>
-              {currentSim?.active ? 'SOLVING_ODE...' : (currentSim?.logs?.length ? 'SIMULATION_LOCKED' : 'SOLVER_IDLE')}
+              {isHovered ? 'PIPELINE_FOCUS' : 'PROJECT_READY'}
             </span>
-            <button
-              onClick={() => triggerSimulation(project.id, project.simLogs)}
-              disabled={currentSim?.active}
-              style={{
-                background: currentSim?.active ? 'rgba(16, 185, 129, 0.06)' : 'rgba(14, 165, 233, 0.05)',
-                border: '1px solid rgba(14, 165, 233, 0.15)',
-                color: currentSim?.active ? 'var(--accent-emerald)' : 'var(--primary-cyan)',
-                padding: '0.25rem 0.6rem',
-                borderRadius: '5px',
-                cursor: currentSim?.active ? 'not-allowed' : 'pointer',
-                display: 'inline-flex',
-                alignItems: 'center',
-                gap: '0.25rem',
-                fontWeight: '500',
-                fontSize: '0.65rem',
-                fontFamily: 'monospace',
-                transition: 'all 0.2s'
-              }}
-            >
-              {currentSim?.active ? (
-                <>
-                  <Sparkles size={8} />
-                  SOLVING
-                </>
-              ) : (
-                <>
-                  <Play size={8} />
-                  RUN_SOLVER
-                </>
-              )}
-            </button>
+            <span style={{ fontSize: '0.65rem', color: 'var(--primary-cyan)', fontFamily: 'monospace', letterSpacing: '0.06em' }}>
+              {project.category.toUpperCase()}
+            </span>
           </div>
-
-          {/* Console Log Outputs - Collapsible Drawer that slides open ONLY when active or completed logs exist */}
-          {currentSim && currentSim.logs.length > 0 && (
-            <div style={{
-              marginTop: '0.65rem',
-              paddingTop: '0.5rem',
-              borderTop: '1px solid rgba(255, 255, 255, 0.03)',
-              fontFamily: 'monospace',
-              fontSize: '0.65rem',
-              display: 'flex',
-              flexDirection: 'column',
-              gap: '0.2rem',
-              maxHeight: '80px',
-              overflowY: 'auto'
-            }}>
-              {currentSim.logs.map((log, idx) => (
-                <div key={idx} style={{
-                  color: log.startsWith("[SUCCESS]") ? 'var(--accent-emerald)' : (log.startsWith("[ODE]") ? 'var(--primary-cyan)' : 'var(--text-secondary)'),
-                  whiteSpace: 'pre-wrap',
-                  lineHeight: '1.3'
-                }}>
-                  {log}
-                </div>
-              ))}
+          <div style={{
+            marginTop: '0.65rem',
+            paddingTop: '0.5rem',
+            borderTop: '1px solid rgba(255, 255, 255, 0.03)',
+            fontFamily: 'monospace',
+            fontSize: '0.65rem',
+            display: 'flex',
+            flexDirection: 'column',
+            gap: '0.24rem'
+          }}>
+            <div style={{ color: 'var(--text-secondary)', whiteSpace: 'pre-wrap', lineHeight: '1.3' }}>
+              {project.simLogs[0]}
             </div>
-          )}
+            <div style={{ color: isHovered ? 'var(--accent-emerald)' : 'var(--primary-cyan)', whiteSpace: 'pre-wrap', lineHeight: '1.3' }}>
+              {project.simLogs[project.simLogs.length - 1]}
+            </div>
+          </div>
         </div>
 
         <div className="project-links">
@@ -916,7 +835,7 @@ function App() {
         maxWidth: '900px',
         padding: '0 1rem',
       }}>
-        <div className="site-header-shell" style={{
+        <div className="site-header-shell terminal-shell" style={{
           background: 'rgba(10, 11, 14, 0.75)',
           backdropFilter: 'blur(16px)',
           WebkitBackdropFilter: 'blur(16px)',
@@ -1057,7 +976,8 @@ function App() {
             {/* Right Column: Sleek Interactive 3D Spatial Grid (Focal Projection Viewport) */}
             <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
               <div 
-                className="glass-panel"
+                className="glass-panel terminal-panel"
+                data-terminal="portrait_scan"
                 style={{
                   position: 'relative',
                   width: '280px',
@@ -1087,7 +1007,7 @@ function App() {
               </div>
 
               {/* Real-time Tracking Info Dashboard Widget */}
-              <div className="glass-panel" style={{
+              <div className="glass-panel terminal-panel" data-terminal="spatial_resolver" style={{
                 marginTop: '1rem',
                 width: '280px',
                 padding: '0.85rem 1.25rem',
@@ -1294,7 +1214,7 @@ function App() {
 
         {/* RESEARCH & PUBLICATIONS SECTION */}
         <section id="research" style={{ scrollMarginTop: '8rem', marginBottom: '6rem' }}>
-          <div className="glass-panel" style={{ padding: '2.5rem' }}>
+          <div className="glass-panel terminal-panel" data-terminal="pub_index" style={{ padding: '2.5rem' }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap', gap: '1.5rem', marginBottom: '2.5rem' }}>
               <div>
                 <h2 style={{ fontSize: '2rem', fontFamily: 'var(--font-heading)', display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
@@ -1529,7 +1449,7 @@ function App() {
           </div>
 
           <div className="teaching-layout">
-            <div className="glass-panel teaching-spotlight">
+            <div className="glass-panel terminal-panel teaching-spotlight" data-terminal="course_authoring">
               <div style={{ display: 'flex', justifyContent: 'space-between', gap: '1rem', alignItems: 'flex-start', flexWrap: 'wrap' }}>
                 <div>
                   <span className="badge badge-emerald">Course Authoring</span>
@@ -1547,7 +1467,7 @@ function App() {
               </div>
             </div>
 
-            <div className="glass-panel teaching-spotlight">
+            <div className="glass-panel terminal-panel teaching-spotlight" data-terminal="workshop_log">
               <span className="badge badge-teal">Workshops</span>
               <h3 style={{ fontSize: '1.5rem', marginTop: '1rem' }}>Manipal Institute of Technology</h3>
               <p style={{ color: 'var(--primary-cyan)', fontSize: '0.9rem', marginTop: '0.35rem' }}>
@@ -1562,7 +1482,7 @@ function App() {
             </div>
           </div>
 
-          <div className="glass-panel teaching-courses">
+          <div className="glass-panel terminal-panel teaching-courses" data-terminal="ta_registry">
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', gap: '1rem', flexWrap: 'wrap', marginBottom: '1.25rem' }}>
               <div>
                 <span className="badge badge-teal">Teaching Assistant</span>
@@ -1629,7 +1549,8 @@ function App() {
             <div className="timeline-item">
               <div className="timeline-dot"></div>
               <div
-                className="glass-panel"
+                className="glass-panel terminal-panel"
+                data-terminal="timeline_cmu"
                 onClick={() => setExpandedTimeline(expandedTimeline === 1 ? null : 1)}
                 style={{ cursor: 'pointer' }}
               >
@@ -1671,7 +1592,8 @@ function App() {
             <div className="timeline-item">
               <div className="timeline-dot"></div>
               <div
-                className="glass-panel"
+                className="glass-panel terminal-panel"
+                data-terminal="timeline_iith"
                 onClick={() => setExpandedTimeline(expandedTimeline === 2 ? null : 2)}
                 style={{ cursor: 'pointer' }}
               >
@@ -1713,7 +1635,8 @@ function App() {
             <div className="timeline-item">
               <div className="timeline-dot"></div>
               <div
-                className="glass-panel"
+                className="glass-panel terminal-panel"
+                data-terminal="timeline_icmr"
                 onClick={() => setExpandedTimeline(expandedTimeline === 3 ? null : 3)}
                 style={{ cursor: 'pointer' }}
               >
@@ -1755,7 +1678,8 @@ function App() {
             <div className="timeline-item">
               <div className="timeline-dot"></div>
               <div
-                className="glass-panel"
+                className="glass-panel terminal-panel"
+                data-terminal="timeline_mit"
                 onClick={() => setExpandedTimeline(expandedTimeline === 4 ? null : 4)}
                 style={{ cursor: 'pointer' }}
               >
@@ -1798,7 +1722,7 @@ function App() {
 
         {/* CALL TO ACTION & FOOTER SECTION */}
         <section id="contact" style={{ scrollMarginTop: '8rem', marginTop: '6rem' }}>
-          <div className="glass-panel" style={{
+          <div className="glass-panel terminal-panel" data-terminal="contact_node" style={{
             background: 'radial-gradient(circle at 50% 0%, rgba(0, 242, 254, 0.1), var(--bg-surface-glass) 80%)',
             borderColor: 'rgba(0, 242, 254, 0.3)',
             padding: '3rem',
