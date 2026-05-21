@@ -437,7 +437,7 @@ const PROJECTS = [
   {
     id: 11,
     title: "Neural Active Contours",
-    desc: "Personal project. Investigates unrolling classical active contour models (Snakes) directly into differentiable neural network backbones, allowing end-to-end backpropagation of geometric boundary forces (elasticity, stiffness, balloon forces).",
+    desc: "Investigates unrolling classical active contour models (Snakes) directly into differentiable neural network backbones, allowing end-to-end backpropagation of geometric boundary forces (elasticity, stiffness, balloon forces).",
     category: "Medical Imaging",
     tags: ["Active Contours", "Differentiable Snaking", "Geometric Priors", "PyTorch"],
     github: "https://github.com/tushar-nayak/neural-active-contours/",
@@ -453,7 +453,7 @@ const PROJECTS = [
   {
     id: 12,
     title: "LungVolSeg: 3D Lung CT Segmentation",
-    desc: "Personal project. High-reproducibility 3D full-volume lung CT segmentation and watertight surface export pipeline utilizing a 3D UNet backbone from MONAI, evaluated on the Zenodo chest CT benchmark. Exports watertight STL and VTK surface meshes.",
+    desc: "High-reproducibility 3D full-volume lung CT segmentation and watertight surface export pipeline utilizing a 3D UNet backbone from MONAI, evaluated on the Zenodo chest CT benchmark. Exports watertight STL and VTK surface meshes.",
     category: "Medical Imaging",
     tags: ["MONAI 3D UNet", "Zenodo Dataset", "STL Surface Export", "Volumetric Analysis"],
     github: "https://github.com/tushar-nayak/lungvolseg",
@@ -470,7 +470,7 @@ const PROJECTS = [
   {
     id: 13,
     title: "EndoSemantic-Splat",
-    desc: "Personal project. Real-time deformable 3D scene reconstruction pipeline tailored for endoscopic and laparoscopic environments. Fuses sparse point-cloud initialization from depth maps, fast 3D Gaussian Splatting, and CLIP/LSeg-guided open-vocabulary semantic querying.",
+    desc: "Real-time deformable 3D scene reconstruction pipeline tailored for endoscopic and laparoscopic environments. Fuses sparse point-cloud initialization from depth maps, fast 3D Gaussian Splatting, and CLIP/LSeg-guided open-vocabulary semantic querying.",
     category: "3D & Robotics",
     tags: ["Deformable 3DGS", "Open-Vocabulary VLM", "Surgical Vision", "Real-Time Rendering"],
     github: "https://github.com/tushar-nayak/endo-splat/",
@@ -487,7 +487,7 @@ const PROJECTS = [
   {
     id: 14,
     title: "Fungal-Neo: Fungal Morphological Analysis",
-    desc: "Personal project. Deploys a patch-based learning pipeline leveraging ResNet18-based classifiers to perform robust classification of 9 different fungal species from high-resolution microscopic image patches (3600x5760).",
+    desc: "Deploys a patch-based learning pipeline leveraging ResNet18-based classifiers to perform robust classification of 9 different fungal species from high-resolution microscopic image patches (3600x5760).",
     category: "Medical Imaging",
     tags: ["ResNet18", "Patch-Based Learning", "Fungal Classification", "Microscopy"],
     github: "https://github.com/tushar-nayak/fungal-neo/",
@@ -504,7 +504,7 @@ const PROJECTS = [
   {
     id: 15,
     title: "DermaSeg: ISIC 2018 Skin Lesion Segmentation",
-    desc: "Personal project. Medical image segmentation and comparative benchmarking framework evaluating classical CNN segmentation models, attention-based architectures (U-Net variants), and lightweight transformers on ISIC 2018 Task 1.",
+    desc: "Medical image segmentation and comparative benchmarking framework evaluating classical CNN segmentation models, attention-based architectures (U-Net variants), and lightweight transformers on ISIC 2018 Task 1.",
     category: "Cancer & Pathology",
     tags: ["ISIC 2018", "Skin Lesion Segmentation", "Transformer Backbones", "U-Net Variants"],
     github: "https://github.com/tushar-nayak/derma-seg",
@@ -520,7 +520,7 @@ const PROJECTS = [
   {
     id: 16,
     title: "SurgiPrompt: Open-Vocabulary Surgical Tool Detection & Tracking",
-    desc: "Personal project. Deploys open-vocabulary detection, segmentation, and tracking of surgical tools in clinical endoscopic and laparoscopic video feeds. Integrates Grounding DINO with Segment Anything 2 (SAM2) for zero-shot text-prompted instrument localized masking.",
+    desc: "Deploys open-vocabulary detection, segmentation, and tracking of surgical tools in clinical endoscopic and laparoscopic video feeds. Integrates Grounding DINO with Segment Anything 2 (SAM2) for zero-shot text-prompted instrument localized masking.",
     category: "3D & Robotics",
     tags: ["Grounding DINO", "SAM2", "Surgical Vision", "Open-Vocabulary tracking"],
     github: "https://github.com/tushar-nayak/surgi-prompt",
@@ -537,7 +537,7 @@ const PROJECTS = [
   {
     id: 17,
     title: "LobeRanger: Gigapixel Multi-Scale Pathology Foundation Network",
-    desc: "Personal project. A prototype Multi-Scale Ordinal Pathology Foundation Network (MOPFN) that pairs 20x and 40x whole-slide pathology images. Preserves both global architectural and local cytologic context using bidirectional cross-attention fusion layers for high-resolution biopsy analysis.",
+    desc: "A prototype Multi-Scale Ordinal Pathology Foundation Network (MOPFN) that pairs 20x and 40x whole-slide pathology images. Preserves both global architectural and local cytologic context using bidirectional cross-attention fusion layers for high-resolution biopsy analysis.",
     category: "Cancer & Pathology",
     tags: ["Foundation Models", "Gigapixel WSI", "Pathology Staging", "Cross-Attention"],
     github: "https://github.com/tushar-nayak/lobe-ranger",
@@ -553,7 +553,7 @@ const PROJECTS = [
   {
     id: 18,
     title: "CardiacReconstruction-Evolved: Gaussian Occupancy Cardiac Recovery",
-    desc: "Personal project. Implements sparse 3D cardiac volume recovery from sparse echocardiographic views. Employs stabilized 3D Gaussian occupancy fields, differentiable slice projection supervision, and high-fidelity mesh evaluation for clinical anatomical reconstruction.",
+    desc: "Implements sparse 3D cardiac volume recovery from sparse echocardiographic views. Employs stabilized 3D Gaussian occupancy fields, differentiable slice projection supervision, and high-fidelity mesh evaluation for clinical anatomical reconstruction.",
     category: "3D & Robotics",
     tags: ["3D Gaussian Occupancy", "Differentiable Projection", "Sparse Cardiac 3D", "Mesh Evaluation"],
     github: "https://github.com/tushar-nayak/cardiac-reconstruction-evolved",
@@ -570,7 +570,7 @@ const PROJECTS = [
   {
     id: 19,
     title: "VascularReconstruction: Sparse 3D Coronary Vessel Angiographic Recovery",
-    desc: "Personal project. Research prototype for sparse-view 3D coronary vessel reconstruction from sparse angiographic projections. Fuses explicit 3D Gaussian geometry, differentiable vascular raymarching, and PINN-based hemodynamic regularization to estimate arterial volumes.",
+    desc: "Research prototype for sparse-view 3D coronary vessel reconstruction from sparse angiographic projections. Fuses explicit 3D Gaussian geometry, differentiable vascular raymarching, and PINN-based hemodynamic regularization to estimate arterial volumes.",
     category: "3D & Robotics",
     tags: ["Gaussian Geometry", "Differentiable Rendering", "Hemodynamics PINN", "Angiography"],
     github: "https://github.com/tushar-nayak/vascular-reconstruction",
