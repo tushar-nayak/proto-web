@@ -1,14 +1,14 @@
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import {
   GraduationCap,
   BookOpen,
+  Cpu,
   FolderGit2,
   Calendar,
   Search,
   ExternalLink,
   ClipboardCopy,
   Check,
-  Cpu,
   ScanEye,
   MapPin,
   Stethoscope,
@@ -16,7 +16,8 @@ import {
   ChevronDown,
   Volume2,
   VolumeX,
-  Sparkles
+  Sun,
+  Moon
 } from 'lucide-react';
 import NeuralBackground from './components/NeuralBackground';
 import ProjectVisual from './components/ProjectVisual';
@@ -743,35 +744,13 @@ const TEACHING_COURSES = [
   }
 ];
 
-const THEME_OPTIONS = [
-  {
-    id: 'tron',
-    label: 'Tron Grid',
-    icon: Cpu
-  },
-  {
-    id: 'liquid-glass',
-    label: 'Liquid Glass',
-    icon: Sparkles
-  },
-  {
-    id: 'google-material',
-    label: 'Google Material',
-    icon: ScanEye
-  },
-  {
-    id: 'linux-terminal',
-    label: 'Linux Terminal',
-    icon: FolderGit2
-  }
-];
-
 function App() {
   const [siteTheme, setSiteTheme] = useState(() => {
-    if (typeof window === 'undefined') return 'tron';
-    return window.localStorage.getItem('site-theme') || 'tron';
+    if (typeof window === 'undefined') return 'google-material';
+    return window.localStorage.getItem('site-theme') === 'linux-terminal'
+      ? 'linux-terminal'
+      : 'google-material';
   });
-  const [showThemeSelector, setShowThemeSelector] = useState(true);
   const [activeTab, setActiveTab] = useState('about');
   const [projectFilter, setProjectFilter] = useState('All');
   const [pubSearch, setPubSearch] = useState('');
@@ -795,8 +774,7 @@ function App() {
   const [scanStatus, setScanStatus] = useState("SYSTEM READY");
   const [widgetClicks, setWidgetClicks] = useState(0);
   const [widgetSpinRate, setWidgetSpinRate] = useState(15);
-  const resolvedTheme = siteTheme || 'tron';
-  const isLiquidGlass = resolvedTheme === 'liquid-glass';
+  const resolvedTheme = siteTheme || 'google-material';
   const isGoogleMaterial = resolvedTheme === 'google-material';
   const isLinuxTerminal = resolvedTheme === 'linux-terminal';
 
@@ -834,14 +812,13 @@ function App() {
     };
   }, []);
 
-  useEffect(() => {
-    setShowThemeSelector(true);
-  }, []);
-
   const handleThemeSelect = (nextTheme) => {
     setSiteTheme(nextTheme);
-    setShowThemeSelector(false);
     window.localStorage.setItem('site-theme', nextTheme);
+  };
+
+  const toggleTheme = () => {
+    handleThemeSelect(isGoogleMaterial ? 'linux-terminal' : 'google-material');
   };
 
   useEffect(() => {
@@ -952,30 +929,22 @@ function App() {
       ? (project.highlight
         ? 'linear-gradient(180deg, rgba(14,14,14,0.99), rgba(7,7,7,0.99)), repeating-linear-gradient(180deg, rgba(255,255,255,0.02) 0 1px, transparent 1px 4px)'
         : 'linear-gradient(180deg, rgba(12,12,12,0.99), rgba(6,6,6,0.99))')
-      : isLiquidGlass
-      ? (project.highlight
-        ? 'linear-gradient(180deg, rgba(255,255,255,0.48), rgba(238,246,255,0.18)), linear-gradient(135deg, rgba(255,255,255,0.14), rgba(192,216,255,0.08) 52%, rgba(255,219,194,0.1) 100%)'
-        : 'linear-gradient(180deg, rgba(255,255,255,0.38), rgba(240,246,255,0.16)), rgba(255,255,255,0.16)')
-      : (project.highlight
-        ? 'radial-gradient(circle at 50% 0%, rgba(14, 165, 233, 0.02), rgba(14, 16, 21, 0.8) 75%)'
-        : 'var(--bg-surface-glass)');
+      : 'var(--bg-surface-glass)';
     const cardBorder = isSelected
-      ? (isGoogleMaterial ? 'rgba(57, 107, 189, 0.88)' : isLinuxTerminal ? 'rgba(255, 255, 255, 0.28)' : isLiquidGlass ? 'rgba(255, 255, 255, 0.92)' : 'rgba(94, 234, 212, 0.9)')
+      ? (isGoogleMaterial ? 'rgba(57, 107, 189, 0.88)' : 'rgba(255, 255, 255, 0.28)')
       : isHovered
-      ? (isGoogleMaterial ? 'rgba(57, 107, 189, 0.46)' : isLinuxTerminal ? 'rgba(255, 255, 255, 0.18)' : 'var(--accent-emerald)')
+      ? (isGoogleMaterial ? 'rgba(57, 107, 189, 0.46)' : 'rgba(255, 255, 255, 0.18)')
       : (project.highlight
-        ? (isGoogleMaterial ? 'rgba(188, 214, 242, 0.92)' : isLinuxTerminal ? 'rgba(255, 255, 255, 0.14)' : isLiquidGlass ? 'rgba(255,255,255,0.48)' : 'rgba(14, 165, 233, 0.12)')
+        ? (isGoogleMaterial ? 'rgba(188, 214, 242, 0.92)' : 'rgba(255, 255, 255, 0.14)')
         : 'var(--border-glow)');
     const cardShadow = isSelected
       ? (isGoogleMaterial
         ? '0 4px 12px rgba(60, 64, 89, 0.12), 0 20px 36px rgba(60, 64, 89, 0.18)'
         : isLinuxTerminal
         ? 'inset 0 0 0 1px rgba(255,255,255,0.06), 0 0 18px rgba(255,255,255,0.05), 0 20px 42px rgba(0,0,0,0.56)'
-        : isLiquidGlass
-        ? 'inset 0 1px 0 rgba(255,255,255,0.94), inset 16px 0 24px rgba(190,220,255,0.12), inset -16px 0 24px rgba(255,223,196,0.12), 0 24px 48px rgba(113,145,184,0.16)'
-        : 'inset 0 0 0 1px rgba(94, 234, 212, 0.24), 0 0 28px rgba(94, 234, 212, 0.28), 0 20px 52px rgba(0, 0, 0, 0.54)')
+        : 'none')
       : isHovered
-      ? (isGoogleMaterial ? '0 3px 8px rgba(60, 64, 89, 0.08), 0 14px 24px rgba(60, 64, 89, 0.12)' : isLinuxTerminal ? '0 0 12px rgba(255,255,255,0.04), 0 14px 28px rgba(0,0,0,0.42)' : isLiquidGlass ? '0 18px 34px rgba(120,150,190,0.12)' : '0 0 15px rgba(16, 185, 129, 0.05)')
+      ? (isGoogleMaterial ? '0 3px 8px rgba(60, 64, 89, 0.08), 0 14px 24px rgba(60, 64, 89, 0.12)' : '0 0 12px rgba(255,255,255,0.04), 0 14px 28px rgba(0,0,0,0.42)')
       : 'none';
     return (
       <div
@@ -1060,10 +1029,10 @@ function App() {
             <span key={idx} style={{
               fontSize: '0.75rem',
               color: 'var(--text-secondary)',
-              background: isGoogleMaterial ? 'rgba(234, 243, 255, 0.96)' : isLinuxTerminal ? 'rgba(18, 18, 18, 0.96)' : isLiquidGlass ? 'rgba(255, 255, 255, 0.34)' : 'rgba(255, 255, 255, 0.02)',
+              background: isGoogleMaterial ? 'rgba(234, 243, 255, 0.96)' : 'rgba(18, 18, 18, 0.96)',
               padding: '0.15rem 0.5rem',
               borderRadius: '4px',
-              border: isGoogleMaterial ? '1px solid rgba(201, 219, 240, 0.98)' : isLinuxTerminal ? '1px solid rgba(255, 255, 255, 0.1)' : isLiquidGlass ? '1px solid rgba(255, 255, 255, 0.58)' : '1px solid rgba(255, 255, 255, 0.05)'
+              border: isGoogleMaterial ? '1px solid rgba(201, 219, 240, 0.98)' : '1px solid rgba(255, 255, 255, 0.1)'
             }}>{tag}</span>
           ))}
         </div>
@@ -1073,12 +1042,8 @@ function App() {
           marginBottom: '1rem',
           background: isGoogleMaterial
             ? 'rgba(240, 246, 255, 0.98)'
-            : isLinuxTerminal
-            ? 'linear-gradient(180deg, rgba(5,5,5,0.98), rgba(14,14,14,0.98))'
-            : isLiquidGlass
-            ? 'linear-gradient(180deg, rgba(255,255,255,0.44), rgba(239,246,255,0.24))'
-            : 'rgba(0, 0, 0, 0.15)',
-          border: isGoogleMaterial ? '1px solid rgba(205, 220, 238, 0.96)' : isLinuxTerminal ? '1px solid rgba(255, 255, 255, 0.12)' : isLiquidGlass ? '1px solid rgba(255, 255, 255, 0.62)' : '1px solid rgba(255, 255, 255, 0.03)',
+            : 'linear-gradient(180deg, rgba(5,5,5,0.98), rgba(14,14,14,0.98))',
+          border: isGoogleMaterial ? '1px solid rgba(205, 220, 238, 0.96)' : '1px solid rgba(255, 255, 255, 0.12)',
           borderRadius: '8px',
           padding: '0.65rem 0.85rem'
         }}>
@@ -1133,50 +1098,6 @@ function App() {
     );
   };
 
-  if (showThemeSelector) {
-    return (
-      <div className={`page-container theme-${resolvedTheme}`}>
-        <NeuralBackground theme={resolvedTheme} />
-        <CursorTrail theme={resolvedTheme} />
-        <LiquidGlassPointer theme={resolvedTheme} />
-        <div className="glow-blur-1"></div>
-        <div className="glow-blur-2"></div>
-        <div className="theme-launcher-overlay">
-          <div className="theme-terminal">
-            <div className="theme-terminal-bar">
-              <div className="theme-terminal-lights" aria-hidden="true">
-                <span className="theme-terminal-light theme-terminal-light-close"></span>
-                <span className="theme-terminal-light theme-terminal-light-min"></span>
-                <span className="theme-terminal-light theme-terminal-light-max"></span>
-              </div>
-              <span className="theme-terminal-title">portfolio-launcher.sh</span>
-            </div>
-            <div className="theme-terminal-body">
-              <p className="theme-terminal-line">$ ./launch-portfolio --mode select</p>
-              <p className="theme-terminal-line theme-terminal-line-muted">Select an interface profile to continue.</p>
-              <div className="theme-mode-grid">
-                {THEME_OPTIONS.map((option) => (
-                  <button
-                    key={option.id}
-                    type="button"
-                    className="theme-mode-card"
-                    onClick={() => handleThemeSelect(option.id)}
-                    aria-label={option.label}
-                  >
-                    <span className="theme-mode-icon" aria-hidden="true">
-                      <option.icon size={24} />
-                    </span>
-                    <strong>{option.label}</strong>
-                  </button>
-                ))}
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    );
-  }
-
   return (
     <div className={`page-container theme-${resolvedTheme}`}>
       {/* Dynamic interactive Canvas Network */}
@@ -1201,17 +1122,12 @@ function App() {
         <div className="site-header-shell" style={{
           background: isGoogleMaterial
             ? 'linear-gradient(180deg, rgba(246,250,255,0.98), rgba(236,244,255,0.98))'
-            : isLinuxTerminal
-            ? 'linear-gradient(180deg, rgba(12,12,12,0.99), rgba(6,6,6,0.99))'
-            : isLiquidGlass
-            ? 'linear-gradient(180deg, rgba(255, 255, 255, 0.62), rgba(234, 243, 255, 0.34))'
-            : 'rgba(10, 11, 14, 0.75)',
-          backdropFilter: isLiquidGlass ? 'blur(24px) saturate(1.2)' : ((isGoogleMaterial || isLinuxTerminal) ? 'none' : 'blur(16px)'),
-          WebkitBackdropFilter: isLiquidGlass ? 'blur(24px) saturate(1.2)' : ((isGoogleMaterial || isLinuxTerminal) ? 'none' : 'blur(16px)'),
+            : 'linear-gradient(180deg, rgba(12,12,12,0.99), rgba(6,6,6,0.99))',
+          backdropFilter: 'none',
+          WebkitBackdropFilter: 'none',
           border: isGoogleMaterial
             ? '1px solid rgba(204, 220, 238, 0.96)'
-            : isLinuxTerminal ? '1px solid rgba(255, 255, 255, 0.12)'
-            : isLiquidGlass ? '1px solid rgba(255, 255, 255, 0.76)' : '1px solid rgba(0, 242, 254, 0.15)',
+            : '1px solid rgba(255, 255, 255, 0.12)',
           borderRadius: isLinuxTerminal ? '10px' : '24px',
           padding: '0.65rem 1.25rem',
           display: 'flex',
@@ -1220,10 +1136,7 @@ function App() {
           gap: '1rem',
           boxShadow: isGoogleMaterial
             ? '0 4px 12px rgba(60,64,89,0.08), 0 18px 28px rgba(60,64,89,0.14)'
-            : isLinuxTerminal ? 'inset 0 0 0 1px rgba(255,255,255,0.03), 0 18px 34px rgba(0,0,0,0.46)'
-            : isLiquidGlass
-            ? 'inset 0 1px 0 rgba(255,255,255,0.86), 0 22px 48px rgba(119, 145, 182, 0.22)'
-            : '0 8px 32px 0 rgba(0, 0, 0, 0.4)'
+            : 'inset 0 0 0 1px rgba(255,255,255,0.03), 0 18px 34px rgba(0,0,0,0.46)'
         }}>
           {/* Logo / Initials */}
           <div className="site-header-brand" style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
@@ -1237,13 +1150,10 @@ function App() {
               justifyContent: 'center',
               fontWeight: '700',
               fontSize: '0.85rem',
-              color: isGoogleMaterial ? '#fff' : isLinuxTerminal ? '#051006' : isLiquidGlass ? '#17304e' : '#000',
+              color: isGoogleMaterial ? '#fff' : '#051006',
               boxShadow: isGoogleMaterial
                 ? '0 8px 18px rgba(57,107,189,0.28)'
-                : isLinuxTerminal ? '0 0 10px rgba(255,255,255,0.08)'
-                : isLiquidGlass
-                ? 'inset 0 1px 0 rgba(255,255,255,0.82), 0 10px 24px rgba(146, 174, 214, 0.28)'
-                : '0 0 10px rgba(0, 242, 254, 0.4)'
+                : '0 0 10px rgba(255,255,255,0.08)'
             }} />
             <span className="site-header-wordmark" style={{
               fontFamily: 'var(--font-heading)',
@@ -1268,21 +1178,13 @@ function App() {
                 }}
                 style={{
                   background: activeTab === tab
-                    ? (isGoogleMaterial ? 'linear-gradient(135deg, #5a9be6 0%, #79b8ff 100%)' :
-                      isLinuxTerminal ? 'rgba(255, 255, 255, 0.08)' :
-                      isLiquidGlass ? 'rgba(255, 255, 255, 0.52)' : 'rgba(0, 242, 254, 0.08)')
-                    : (isGoogleMaterial ? '#eef2ff' :
-                      isLinuxTerminal ? 'rgba(10, 10, 10, 0.96)' :
-                      isLiquidGlass ? 'rgba(255, 255, 255, 0.16)' : 'transparent'),
+                    ? (isGoogleMaterial ? 'linear-gradient(135deg, #5a9be6 0%, #79b8ff 100%)' : 'rgba(255, 255, 255, 0.08)')
+                    : (isGoogleMaterial ? '#eef2ff' : 'rgba(10, 10, 10, 0.96)'),
                   border: activeTab === tab
-                    ? (isGoogleMaterial ? '1px solid rgba(90, 155, 230, 0.92)' :
-                      isLinuxTerminal ? '1px solid rgba(255, 255, 255, 0.2)' :
-                      isLiquidGlass ? '1px solid rgba(255, 255, 255, 0.8)' : '1px solid rgba(0, 242, 254, 0.25)')
-                    : (isGoogleMaterial ? '1px solid rgba(204, 220, 238, 0.96)' :
-                      isLinuxTerminal ? '1px solid rgba(255, 255, 255, 0.08)' :
-                      isLiquidGlass ? '1px solid rgba(255, 255, 255, 0.24)' : '1px solid transparent'),
+                    ? (isGoogleMaterial ? '1px solid rgba(90, 155, 230, 0.92)' : '1px solid rgba(255, 255, 255, 0.2)')
+                    : (isGoogleMaterial ? '1px solid rgba(204, 220, 238, 0.96)' : '1px solid rgba(255, 255, 255, 0.08)'),
                   color: activeTab === tab
-                    ? (isGoogleMaterial ? '#fff' : isLinuxTerminal ? 'var(--primary-cyan)' : 'var(--primary-cyan)')
+                    ? (isGoogleMaterial ? '#fff' : 'var(--primary-cyan)')
                     : 'var(--text-secondary)',
                   padding: '0.4rem 0.9rem',
                   borderRadius: '12px',
@@ -1309,8 +1211,8 @@ function App() {
                 style={{
                   padding: '0.48rem 0.72rem',
                   borderRadius: '999px',
-                  background: isGoogleMaterial ? '#edf6ff' : isLinuxTerminal ? 'rgba(10, 10, 10, 0.96)' : isLiquidGlass ? 'rgba(255, 255, 255, 0.34)' : 'rgba(255, 255, 255, 0.035)',
-                  border: isGoogleMaterial ? '1px solid rgba(204, 220, 238, 0.96)' : isLinuxTerminal ? '1px solid rgba(255, 255, 255, 0.08)' : isLiquidGlass ? '1px solid rgba(255, 255, 255, 0.72)' : '1px solid rgba(255, 255, 255, 0.08)',
+                  background: isGoogleMaterial ? '#edf6ff' : 'rgba(10, 10, 10, 0.96)',
+                  border: isGoogleMaterial ? '1px solid rgba(204, 220, 238, 0.96)' : '1px solid rgba(255, 255, 255, 0.08)',
                   color: 'var(--text-secondary)',
                   display: 'inline-flex',
                   alignItems: 'center',
@@ -1321,22 +1223,22 @@ function App() {
               </button>
               <button
                 type="button"
-                onClick={() => setShowThemeSelector(true)}
+                onClick={toggleTheme}
                 className="site-header-tab"
-                aria-label="Switch theme"
-                title="Switch theme"
+                aria-label={isGoogleMaterial ? 'Switch to dark mode' : 'Switch to light mode'}
+                title={isGoogleMaterial ? 'Switch to dark mode' : 'Switch to light mode'}
                 style={{
                   padding: '0.48rem 0.72rem',
                   borderRadius: '999px',
-                  background: isGoogleMaterial ? '#edf6ff' : isLinuxTerminal ? 'rgba(10, 10, 10, 0.96)' : isLiquidGlass ? 'rgba(255, 255, 255, 0.34)' : 'rgba(255, 255, 255, 0.035)',
-                  border: isGoogleMaterial ? '1px solid rgba(204, 220, 238, 0.96)' : isLinuxTerminal ? '1px solid rgba(255, 255, 255, 0.08)' : isLiquidGlass ? '1px solid rgba(255, 255, 255, 0.72)' : '1px solid rgba(255, 255, 255, 0.08)',
+                  background: isGoogleMaterial ? '#edf6ff' : 'rgba(10, 10, 10, 0.96)',
+                  border: isGoogleMaterial ? '1px solid rgba(204, 220, 238, 0.96)' : '1px solid rgba(255, 255, 255, 0.08)',
                   color: 'var(--text-secondary)',
                   display: 'inline-flex',
                   alignItems: 'center',
                   justifyContent: 'center'
                 }}
               >
-                <Sparkles size={16} />
+                {isGoogleMaterial ? <Moon size={16} /> : <Sun size={16} />}
               </button>
             </div>
           </div>

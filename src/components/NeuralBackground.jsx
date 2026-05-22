@@ -1,33 +1,21 @@
 import { useEffect, useRef } from 'react';
 
 const THEME_CONFIG = {
-  tron: {
-    particleFill: 'rgba(0, 242, 254, 0.4)',
-    particleShadow: '#00f2fe',
-    linkColor: (opacity) => `rgba(0, 242, 254, ${opacity})`,
-    mouseColor: (opacity) => `rgba(0, 245, 160, ${opacity})`
-  },
-  'liquid-glass': {
-    particleFill: 'rgba(244, 249, 255, 0.46)',
-    particleShadow: 'rgba(160, 208, 255, 0.92)',
-    linkColor: (opacity) => `rgba(182, 220, 255, ${opacity * 0.95})`,
-    mouseColor: (opacity) => `rgba(255, 255, 255, ${opacity * 0.82})`
-  },
   'google-material': {
-    particleFill: 'rgba(124, 168, 255, 0.34)',
-    particleShadow: 'rgba(110, 157, 255, 0.7)',
-    linkColor: (opacity) => `rgba(124, 168, 255, ${opacity * 0.78})`,
-    mouseColor: (opacity) => `rgba(90, 193, 167, ${opacity * 0.74})`
+    particleFill: 'rgba(124, 168, 255, 0.42)',
+    particleShadow: 'rgba(110, 157, 255, 0.8)',
+    linkColor: (opacity) => `rgba(124, 168, 255, ${opacity * 0.92})`,
+    mouseColor: (opacity) => `rgba(90, 193, 167, ${opacity * 0.86})`
   },
   'linux-terminal': {
-    particleFill: 'rgba(120, 255, 158, 0.18)',
-    particleShadow: 'rgba(120, 255, 158, 0.72)',
-    linkColor: (opacity) => `rgba(98, 255, 146, ${opacity * 0.68})`,
-    mouseColor: (opacity) => `rgba(214, 255, 169, ${opacity * 0.52})`
+    particleFill: 'rgba(238, 244, 239, 0.22)',
+    particleShadow: 'rgba(255, 255, 255, 0.52)',
+    linkColor: (opacity) => `rgba(196, 255, 210, ${opacity * 0.74})`,
+    mouseColor: (opacity) => `rgba(255, 255, 255, ${opacity * 0.42})`
   }
 };
 
-const NeuralBackground = ({ theme = 'tron' }) => {
+const NeuralBackground = ({ theme = 'google-material' }) => {
   const canvasRef = useRef(null);
 
   useEffect(() => {
@@ -35,7 +23,7 @@ const NeuralBackground = ({ theme = 'tron' }) => {
     if (!canvas) return;
 
     const ctx = canvas.getContext('2d');
-    const palette = THEME_CONFIG[theme] ?? THEME_CONFIG.tron;
+    const palette = THEME_CONFIG[theme] ?? THEME_CONFIG['google-material'];
     let animationFrameId;
     let viewportWidth = window.innerWidth;
     let viewportHeight = window.innerHeight;
@@ -55,7 +43,7 @@ const NeuralBackground = ({ theme = 'tron' }) => {
     handleResize();
 
     // Node particle system configuration
-    const particleCount = Math.min(Math.floor((window.innerWidth * window.innerHeight) / 8500), 110);
+    const particleCount = Math.min(Math.floor((window.innerWidth * window.innerHeight) / 5200), 180);
     const particles = [];
     const mouse = { x: null, y: null, radius: 180 };
 
@@ -63,9 +51,9 @@ const NeuralBackground = ({ theme = 'tron' }) => {
       constructor() {
         this.x = Math.random() * viewportWidth;
         this.y = Math.random() * viewportHeight;
-        this.vx = (Math.random() - 0.5) * 0.4;
-        this.vy = (Math.random() - 0.5) * 0.4;
-        this.size = Math.random() * 1.8 + 0.9;
+        this.vx = (Math.random() - 0.5) * 0.7;
+        this.vy = (Math.random() - 0.5) * 0.7;
+        this.size = Math.random() * 2.2 + 0.8;
       }
 
       update() {
@@ -84,8 +72,8 @@ const NeuralBackground = ({ theme = 'tron' }) => {
           if (distance < mouse.radius) {
             // Gently push away from mouse
             const force = (mouse.radius - distance) / mouse.radius;
-            this.x -= (dx / distance) * force * 0.8;
-            this.y -= (dy / distance) * force * 0.8;
+            this.x -= (dx / distance) * force * 1.2;
+            this.y -= (dy / distance) * force * 1.2;
           }
         }
       }
@@ -94,7 +82,7 @@ const NeuralBackground = ({ theme = 'tron' }) => {
         ctx.beginPath();
         ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
         ctx.fillStyle = palette.particleFill;
-        ctx.shadowBlur = 6;
+        ctx.shadowBlur = 10;
         ctx.shadowColor = palette.particleShadow;
         ctx.fill();
         ctx.shadowBlur = 0; // Reset shadow for line drawing
@@ -134,14 +122,14 @@ const NeuralBackground = ({ theme = 'tron' }) => {
           const dy = particles[i].y - particles[j].y;
           const distance = Math.sqrt(dx * dx + dy * dy);
 
-          if (distance < 120) {
+          if (distance < 160) {
             // Calculate line opacity based on distance
-            const opacity = (120 - distance) / 120 * 0.15;
+            const opacity = (160 - distance) / 160 * 0.2;
             ctx.beginPath();
             ctx.moveTo(particles[i].x, particles[i].y);
             ctx.lineTo(particles[j].x, particles[j].y);
             ctx.strokeStyle = palette.linkColor(opacity);
-            ctx.lineWidth = 0.9;
+            ctx.lineWidth = 1;
             ctx.stroke();
           }
         }
