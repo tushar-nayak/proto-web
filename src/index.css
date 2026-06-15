@@ -1361,10 +1361,27 @@ html[data-theme='google-material'] .project-link-page {
 
 .teaching-spotlight {
   min-height: 100%;
+  transition: transform 0.22s ease, box-shadow 0.22s ease, border-color 0.22s ease;
 }
 
 .teaching-courses {
   padding: 2rem;
+}
+
+.teaching-spotlight:hover {
+  transform: translateY(-3px);
+}
+
+html[data-theme='google-material'] .teaching-spotlight,
+html[data-theme='google-material'] .teaching-courses {
+  background:
+    linear-gradient(180deg, rgba(255,255,255,0.98), rgba(246,251,255,0.96)),
+    rgba(255,255,255,0.98);
+  border-color: rgba(214, 226, 238, 0.94);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.84),
+    0 2px 6px rgba(82, 66, 106, 0.08),
+    0 14px 28px rgba(82, 66, 106, 0.12);
 }
 
 html[data-theme='liquid-glass'] .teaching-spotlight,
@@ -1385,7 +1402,21 @@ html[data-theme='liquid-glass'] .teaching-courses {
   border: 1px solid rgba(0, 228, 255, 0.12);
   border-radius: 6px;
   overflow: hidden;
-  transition: var(--transition-fast);
+  transition: transform 0.18s ease, border-color 0.18s ease, box-shadow 0.18s ease, background 0.18s ease;
+}
+
+.teaching-course:hover {
+  transform: translateY(-2px);
+}
+
+html[data-theme='google-material'] .teaching-course {
+  background:
+    linear-gradient(180deg, rgba(247, 251, 255, 0.98), rgba(238, 246, 255, 0.96)),
+    rgba(255,255,255,0.98);
+  border: 1px solid rgba(204, 220, 238, 0.96);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.82),
+    0 8px 18px rgba(82, 66, 106, 0.08);
 }
 
 html[data-theme='liquid-glass'] .teaching-course {
@@ -1401,6 +1432,13 @@ html[data-theme='liquid-glass'] .teaching-course {
 .teaching-course.is-open {
   border-color: rgba(0, 228, 255, 0.34);
   box-shadow: inset 0 0 24px rgba(0, 228, 255, 0.045);
+}
+
+html[data-theme='google-material'] .teaching-course.is-open {
+  border-color: rgba(90, 155, 230, 0.32);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.9),
+    0 12px 24px rgba(82, 66, 106, 0.1);
 }
 
 html[data-theme='liquid-glass'] .teaching-course.is-open {
@@ -1423,6 +1461,11 @@ html[data-theme='liquid-glass'] .teaching-course.is-open {
   background: transparent;
   color: var(--text-primary);
   text-align: left;
+  transition: background 0.18s ease;
+}
+
+.teaching-course:hover .teaching-course-toggle {
+  background: rgba(255, 255, 255, 0.015);
 }
 
 .teaching-course-term,
@@ -1448,14 +1491,35 @@ html[data-theme='liquid-glass'] .teaching-course.is-open {
   font-size: 0.82rem;
 }
 
+.teaching-course-preview {
+  display: block;
+  margin-top: 0.45rem;
+  color: var(--primary-cyan);
+  font: 500 0.72rem/1.4 ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  letter-spacing: 0.02em;
+  opacity: 0.86;
+}
+
+html[data-theme='google-material'] .teaching-course-term {
+  color: #5f8fba;
+}
+
+html[data-theme='google-material'] .teaching-course-note {
+  color: #7f90a4;
+}
+
 .teaching-course-chevron {
   flex-shrink: 0;
   color: var(--primary-cyan);
-  transition: transform 0.2s ease;
+  transition: transform 0.2s ease, color 0.2s ease;
 }
 
 .teaching-course.is-open .teaching-course-chevron {
   transform: rotate(180deg);
+}
+
+.teaching-course:hover .teaching-course-chevron {
+  color: var(--accent-emerald);
 }
 
 .teaching-course-details {
@@ -1465,10 +1529,763 @@ html[data-theme='liquid-glass'] .teaching-course.is-open {
   padding: 0 1rem 1rem;
   color: var(--text-secondary);
   font-size: 0.9rem;
+  animation: panelRise 0.28s ease-out both;
+}
+
+html[data-theme='google-material'] .teaching-course-details {
+  color: #617384;
+}
+
+.teaching-meta-row {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  margin-top: 1rem;
+}
+
+.teaching-meta-pill {
+  display: inline-flex;
+  align-items: center;
+  min-height: 1.7rem;
+  padding: 0.2rem 0.6rem;
+  border-radius: 999px;
+  font: 500 0.74rem/1 var(--font-heading);
+  color: var(--text-secondary);
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+html[data-theme='google-material'] .teaching-meta-pill {
+  color: #617384;
+  background: #edf6ff;
+  border-color: rgba(204, 220, 238, 0.9);
 }
 
 html[data-theme='liquid-glass'] .teaching-course-details {
   color: var(--text-secondary);
+}
+
+html[data-theme='google-material'],
+html[data-theme='linux-terminal'] {
+  --font-heading: Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-body: Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+html[data-theme='google-material'] body {
+  background:
+    linear-gradient(180deg, #fbfbfa 0%, #f5f4ef 100%);
+  color: #222;
+}
+
+html[data-theme='linux-terminal'] body {
+  background:
+    linear-gradient(180deg, #151515 0%, #0b0b0b 100%);
+  color: #e7e7e7;
+}
+
+html[data-theme='google-material'] .page-container::before,
+html[data-theme='google-material'] .page-container::after,
+html[data-theme='linux-terminal'] .page-container::before,
+html[data-theme='linux-terminal'] .page-container::after,
+html[data-theme='google-material'] .glow-blur-1,
+html[data-theme='google-material'] .glow-blur-2,
+html[data-theme='linux-terminal'] .glow-blur-1,
+html[data-theme='linux-terminal'] .glow-blur-2 {
+  display: none;
+}
+
+html[data-theme='google-material'] .hf-header,
+html[data-theme='linux-terminal'] .hf-header {
+  position: sticky;
+  top: 1rem;
+  z-index: 50;
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+html[data-theme='google-material'] .hf-header-inner,
+html[data-theme='linux-terminal'] .hf-header-inner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.85rem 1rem;
+  border-radius: 14px;
+  border: 1px solid;
+  backdrop-filter: none;
+}
+
+html[data-theme='google-material'] .hf-header-inner {
+  background: rgba(255, 255, 255, 0.92);
+  border-color: rgba(219, 223, 229, 0.95);
+  box-shadow: 0 8px 20px rgba(23, 24, 28, 0.08);
+}
+
+html[data-theme='linux-terminal'] .hf-header-inner {
+  background: rgba(16, 16, 16, 0.95);
+  border-color: rgba(255, 255, 255, 0.08);
+  box-shadow: 0 10px 26px rgba(0, 0, 0, 0.42);
+}
+
+.hf-brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  color: inherit;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.hf-brand-mark {
+  font: 500 0.92rem/1.2 ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  letter-spacing: -0.01em;
+}
+
+.hf-brand-cursor {
+  display: inline-block;
+  width: 0.55rem;
+  height: 1rem;
+  border-radius: 1px;
+  background: currentColor;
+  opacity: 0.82;
+  animation: cursor 1.05s steps(2, end) infinite;
+}
+
+.hf-nav {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+
+.hf-nav-link,
+.hf-theme-toggle {
+  border: 1px solid transparent;
+  background: transparent;
+  color: inherit;
+  border-radius: 999px;
+  padding: 0.45rem 0.75rem;
+  font: 500 0.86rem/1 Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+html[data-theme='google-material'] .hf-nav-link,
+html[data-theme='google-material'] .hf-theme-toggle {
+  color: #475569;
+}
+
+html[data-theme='linux-terminal'] .hf-nav-link,
+html[data-theme='linux-terminal'] .hf-theme-toggle {
+  color: #d4d4d4;
+}
+
+.hf-nav-link.is-active {
+  border-color: currentColor;
+}
+
+html[data-theme='google-material'] .hf-nav-link.is-active {
+  background: #f4f7fb;
+}
+
+html[data-theme='linux-terminal'] .hf-nav-link.is-active {
+  background: #1c1c1c;
+}
+
+.hf-theme-toggle {
+  width: 2.2rem;
+  height: 2.2rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 auto;
+}
+
+.hf-page {
+  max-width: 1120px;
+  margin: 0 auto;
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+.hf-hero-shell {
+  display: grid;
+  grid-template-columns: minmax(220px, 260px) minmax(0, 1fr);
+  gap: 1.75rem;
+  align-items: start;
+  padding: 1.25rem;
+  border: 1px solid;
+  border-radius: 18px;
+}
+
+html[data-theme='google-material'] .hf-hero-shell {
+  background: rgba(255, 255, 255, 0.9);
+  border-color: rgba(221, 225, 231, 0.98);
+  box-shadow: 0 12px 32px rgba(15, 23, 42, 0.06);
+}
+
+html[data-theme='linux-terminal'] .hf-hero-shell {
+  background: rgba(13, 13, 13, 0.92);
+  border-color: rgba(255, 255, 255, 0.08);
+  box-shadow: 0 14px 34px rgba(0, 0, 0, 0.38);
+}
+
+.hf-profile {
+  display: grid;
+  grid-template-columns: minmax(220px, 280px) minmax(0, 1fr);
+  gap: 1.4rem;
+  align-items: center;
+  margin: 0;
+  padding: 1.25rem;
+  border: 1px solid;
+  border-radius: 18px;
+}
+
+html[data-theme='google-material'] .hf-profile {
+  background: rgba(255, 255, 255, 0.92);
+  border-color: rgba(221, 225, 231, 0.98);
+  box-shadow: 0 12px 32px rgba(15, 23, 42, 0.06);
+}
+
+html[data-theme='linux-terminal'] .hf-profile {
+  background: rgba(13, 13, 13, 0.92);
+  border-color: rgba(255, 255, 255, 0.08);
+  box-shadow: 0 14px 34px rgba(0, 0, 0, 0.38);
+}
+
+.hf-profile-image {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 10px;
+}
+
+html[data-theme='google-material'] .hf-profile-image {
+  border: 1px solid rgba(222, 225, 233, 0.98);
+}
+
+html[data-theme='linux-terminal'] .hf-profile-image {
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  filter: saturate(0.9) contrast(0.96);
+}
+
+.hf-profile-caption {
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+}
+
+.hf-profile-caption h1 {
+  font: 600 clamp(2rem, 4vw, 3rem)/1.1 Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  letter-spacing: -0.04em;
+  color: var(--text-primary);
+  margin: 0;
+}
+
+.hf-profile-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem 1rem;
+  color: var(--text-secondary);
+  font-size: 0.94rem;
+}
+
+.hf-profile-links a {
+  color: inherit;
+  text-decoration: none;
+  border-bottom: 1px solid currentColor;
+}
+
+.hf-section-heading {
+  margin-bottom: 1rem;
+}
+
+.hf-section-heading h2 {
+  font: 600 1.55rem/1.25 Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  letter-spacing: -0.03em;
+  margin: 0;
+  color: var(--text-primary);
+}
+
+.hf-section-heading p {
+  margin-top: 0.35rem;
+  color: var(--text-secondary);
+  font-size: 0.95rem;
+}
+
+.hf-news-box {
+  max-height: 18rem;
+  overflow-y: auto;
+  border: 1px solid;
+  border-radius: 14px;
+  padding: 0.35rem 0.75rem;
+}
+
+html[data-theme='google-material'] .hf-news-box {
+  background: rgba(255, 255, 255, 0.9);
+  border-color: rgba(221, 225, 231, 0.98);
+}
+
+html[data-theme='linux-terminal'] .hf-news-box {
+  background: rgba(13, 13, 13, 0.92);
+  border-color: rgba(255, 255, 255, 0.08);
+}
+
+.hf-news-item {
+  display: grid;
+  grid-template-columns: 120px minmax(0, 1fr);
+  gap: 1rem;
+  padding: 0.9rem 0.4rem;
+  border-bottom: 1px solid rgba(125, 125, 125, 0.14);
+  font-size: 0.94rem;
+  line-height: 1.55;
+}
+
+.hf-news-item:last-child {
+  border-bottom: 0;
+}
+
+.hf-news-item strong {
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.hf-news-item span {
+  color: var(--text-secondary);
+}
+
+html[data-theme='linux-terminal'] .hf-news-item {
+  border-bottom-color: rgba(255, 255, 255, 0.08);
+}
+
+.hf-toolbar {
+  display: flex;
+  gap: 0.75rem;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  margin-bottom: 1rem;
+}
+
+.hf-search {
+  flex: 1 1 320px;
+  min-width: 220px;
+  padding: 0.7rem 0.9rem;
+  border-radius: 12px;
+  border: 1px solid;
+  font: 500 0.95rem/1.4 Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  color: var(--text-primary);
+  outline: none;
+}
+
+html[data-theme='google-material'] .hf-search {
+  background: #ffffff;
+  border-color: #d9e1ea;
+}
+
+html[data-theme='linux-terminal'] .hf-search {
+  background: #121212;
+  border-color: rgba(255, 255, 255, 0.12);
+}
+
+.hf-switches {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+.hf-switches button,
+.hf-item-links button,
+.hf-item-links a {
+  border-radius: 999px;
+  border: 1px solid;
+  background: transparent;
+  color: var(--text-secondary);
+  padding: 0.42rem 0.7rem;
+  font: 500 0.82rem/1 Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  text-decoration: none;
+}
+
+html[data-theme='google-material'] .hf-switches button,
+html[data-theme='google-material'] .hf-item-links button,
+html[data-theme='google-material'] .hf-item-links a {
+  background: #ffffff;
+  border-color: #d9e1ea;
+}
+
+html[data-theme='linux-terminal'] .hf-switches button,
+html[data-theme='linux-terminal'] .hf-item-links button,
+html[data-theme='linux-terminal'] .hf-item-links a {
+  background: #121212;
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+.hf-switches button.is-active {
+  color: var(--text-primary);
+  border-color: currentColor;
+}
+
+.hf-listing {
+  display: flex;
+  flex-direction: column;
+  border-top: 1px solid;
+}
+
+html[data-theme='google-material'] .hf-listing {
+  border-color: #dde4ed;
+}
+
+html[data-theme='linux-terminal'] .hf-listing {
+  border-color: rgba(255, 255, 255, 0.08);
+}
+
+.hf-item-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 1rem;
+  padding: 1rem 0;
+  border-bottom: 1px solid;
+}
+
+html[data-theme='google-material'] .hf-item-row {
+  border-bottom-color: #e7edf3;
+}
+
+html[data-theme='linux-terminal'] .hf-item-row {
+  border-bottom-color: rgba(255, 255, 255, 0.08);
+}
+
+.hf-item-main {
+  min-width: 0;
+}
+
+.hf-item-titleline {
+  display: flex;
+  gap: 0.75rem;
+  align-items: baseline;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.hf-item-titleline h3 {
+  font: 600 1.05rem/1.35 Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  color: var(--text-primary);
+  margin: 0;
+}
+
+.hf-item-year {
+  color: var(--text-muted);
+  font: 500 0.78rem/1 ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.hf-item-main p {
+  margin-top: 0.45rem;
+  color: var(--text-secondary);
+  line-height: 1.65;
+}
+
+.hf-item-detail {
+  color: var(--text-muted);
+  font-size: 0.93rem;
+}
+
+.hf-item-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin-top: 0.8rem;
+}
+
+.hf-item-tags span {
+  border: 1px solid;
+  border-radius: 999px;
+  padding: 0.25rem 0.55rem;
+  font-size: 0.74rem;
+  color: var(--text-secondary);
+}
+
+html[data-theme='google-material'] .hf-item-tags span {
+  background: #f7fafc;
+  border-color: #d9e1ea;
+}
+
+html[data-theme='linux-terminal'] .hf-item-tags span {
+  background: #141414;
+  border-color: rgba(255, 255, 255, 0.08);
+}
+
+.hf-item-links {
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+  align-items: flex-end;
+}
+
+.hf-item-links button {
+  cursor: pointer;
+}
+
+.hf-item-links a,
+.hf-item-links button {
+  color: var(--text-primary);
+}
+
+.hf-empty {
+  padding: 1rem 0;
+  color: var(--text-muted);
+}
+
+.hf-contact {
+  border-top: 1px solid;
+  padding-top: 1rem;
+  color: var(--text-secondary);
+  line-height: 1.7;
+}
+
+.hf-contact a {
+  color: var(--text-primary);
+  text-decoration: none;
+  border-bottom: 1px solid currentColor;
+}
+
+html[data-theme='google-material'] .hf-contact {
+  border-top-color: #dde4ed;
+}
+
+html[data-theme='linux-terminal'] .hf-contact {
+  border-top-color: rgba(255, 255, 255, 0.08);
+}
+
+.hf-hero-aside {
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+}
+
+.hf-portrait {
+  margin: 0;
+}
+
+.hf-portrait img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 12px;
+}
+
+html[data-theme='google-material'] .hf-portrait img {
+  border: 1px solid rgba(222, 225, 233, 0.98);
+}
+
+html[data-theme='linux-terminal'] .hf-portrait img {
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  filter: saturate(0.88) contrast(0.95);
+}
+
+.hf-meta {
+  font-size: 0.92rem;
+  line-height: 1.65;
+  color: var(--text-secondary);
+}
+
+.hf-meta p + p {
+  margin-top: 0.35rem;
+}
+
+.hf-hero-copy {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.hf-eyebrow {
+  font: 500 0.82rem/1 ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.hf-hero-copy h1 {
+  font: 600 clamp(2.2rem, 5vw, 4rem)/1.1 Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  letter-spacing: -0.04em;
+  color: var(--text-primary);
+  margin: 0;
+}
+
+.hf-lead {
+  max-width: 68ch;
+  color: var(--text-secondary);
+  line-height: 1.7;
+}
+
+.hf-links {
+  display: flex;
+  gap: 0.6rem;
+  flex-wrap: wrap;
+  margin-top: 0.35rem;
+}
+
+.hf-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.45rem 0.7rem;
+  border-radius: 999px;
+  text-decoration: none;
+  font: 500 0.84rem/1 Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+html[data-theme='google-material'] .hf-link {
+  color: #334155;
+  background: #f7fafc;
+  border: 1px solid #dde4ed;
+}
+
+html[data-theme='linux-terminal'] .hf-link {
+  color: #e7e7e7;
+  background: #171717;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+html[data-theme='google-material'] .glass-panel,
+html[data-theme='google-material'] .project-card,
+html[data-theme='google-material'] .pub-row,
+html[data-theme='google-material'] .teaching-spotlight,
+html[data-theme='google-material'] .teaching-courses,
+html[data-theme='google-material'] .teaching-course,
+html[data-theme='google-material'] .timeline .glass-panel {
+  background: rgba(255, 255, 255, 0.94) !important;
+  border-color: rgba(222, 226, 233, 0.98) !important;
+  box-shadow: 0 8px 24px rgba(15, 23, 42, 0.05) !important;
+}
+
+html[data-theme='linux-terminal'] .glass-panel,
+html[data-theme='linux-terminal'] .project-card,
+html[data-theme='linux-terminal'] .pub-row,
+html[data-theme='linux-terminal'] .teaching-spotlight,
+html[data-theme='linux-terminal'] .teaching-courses,
+html[data-theme='linux-terminal'] .teaching-course,
+html[data-theme='linux-terminal'] .timeline .glass-panel {
+  background: rgba(14, 14, 14, 0.95) !important;
+  border-color: rgba(255, 255, 255, 0.08) !important;
+  box-shadow: 0 10px 26px rgba(0, 0, 0, 0.38) !important;
+}
+
+html[data-theme='google-material'] .badge,
+html[data-theme='google-material'] .badge-teal,
+html[data-theme='google-material'] .badge-emerald {
+  background: #f3f6fa;
+  color: #475569;
+  border: 1px solid #dde4ed;
+}
+
+html[data-theme='linux-terminal'] .badge,
+html[data-theme='linux-terminal'] .badge-teal,
+html[data-theme='linux-terminal'] .badge-emerald {
+  background: #161616;
+  color: #d6d6d6;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+html[data-theme='google-material'] .btn-primary,
+html[data-theme='google-material'] .btn-secondary,
+html[data-theme='linux-terminal'] .btn-primary,
+html[data-theme='linux-terminal'] .btn-secondary {
+  border-radius: 999px;
+}
+
+html[data-theme='google-material'] .project-card-title,
+html[data-theme='google-material'] .pub-title,
+html[data-theme='google-material'] .teaching-course-title,
+html[data-theme='google-material'] .timeline-item h3 {
+  color: #1f2937;
+}
+
+html[data-theme='linux-terminal'] .project-card-title,
+html[data-theme='linux-terminal'] .pub-title,
+html[data-theme='linux-terminal'] .teaching-course-title,
+html[data-theme='linux-terminal'] .timeline-item h3 {
+  color: #f3f3f3;
+}
+
+html[data-theme='google-material'] .project-tags span,
+html[data-theme='google-material'] .project-console,
+html[data-theme='google-material'] .teaching-course-preview,
+html[data-theme='google-material'] .pub-authors,
+html[data-theme='google-material'] .pub-venue {
+  color: #5b6677 !important;
+}
+
+html[data-theme='linux-terminal'] .project-tags span,
+html[data-theme='linux-terminal'] .project-console,
+html[data-theme='linux-terminal'] .teaching-course-preview,
+html[data-theme='linux-terminal'] .pub-authors,
+html[data-theme='linux-terminal'] .pub-venue {
+  color: #b9b9b9 !important;
+}
+
+html[data-theme='google-material'] .project-link,
+html[data-theme='google-material'] .teaching-course-toggle,
+html[data-theme='google-material'] .pub-row button,
+html[data-theme='google-material'] .pub-row a {
+  border-color: #d9e1ea !important;
+}
+
+html[data-theme='linux-terminal'] .project-link,
+html[data-theme='linux-terminal'] .teaching-course-toggle,
+html[data-theme='linux-terminal'] .pub-row button,
+html[data-theme='linux-terminal'] .pub-row a {
+  border-color: rgba(255, 255, 255, 0.12) !important;
+}
+
+html[data-theme='google-material'] .project-links,
+html[data-theme='linux-terminal'] .project-links {
+  margin-top: 1rem;
+}
+
+html[data-theme='google-material'] .project-detail-panel,
+html[data-theme='google-material'] .teaching-course-details {
+  border-top-color: #e1e7ef;
+}
+
+html[data-theme='linux-terminal'] .project-detail-panel,
+html[data-theme='linux-terminal'] .teaching-course-details {
+  border-top-color: rgba(255, 255, 255, 0.08);
+}
+
+@media (max-width: 900px) {
+  .hf-header-inner,
+  .hf-hero-shell {
+    grid-template-columns: 1fr;
+  }
+
+  .hf-profile,
+  .hf-news-item {
+    grid-template-columns: 1fr;
+  }
+
+  .hf-header-inner {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .hf-nav {
+    justify-content: flex-start;
+  }
+}
+
+@media (max-width: 640px) {
+  .hf-page {
+    padding-left: 0.75rem;
+    padding-right: 0.75rem;
+  }
+
+  .hf-header {
+    top: 0.5rem;
+  }
 }
 
 /* Publication Row Styling */

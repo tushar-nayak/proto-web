@@ -1,59 +1,11 @@
 import { useEffect, useMemo, useState } from 'react';
 import {
-  GraduationCap,
-  BookOpen,
-  Cpu,
-  FolderGit2,
-  Calendar,
   Search,
-  ExternalLink,
-  ClipboardCopy,
   Check,
-  ScanEye,
-  MapPin,
-  Stethoscope,
-  Presentation,
-  ChevronDown,
-  Volume2,
-  VolumeX,
   Sun,
   Moon
 } from 'lucide-react';
-import NeuralBackground from './components/NeuralBackground';
-import ProjectVisual from './components/ProjectVisual';
-import ProfileSplat from './components/ProfileSplat';
-import CursorTrail from './components/CursorTrail';
-import LiquidGlassPointer from './components/LiquidGlassPointer';
-import BackgroundAudio from './components/BackgroundAudio';
-
-// Custom inline SVG replacements for brand/common icons to prevent build resolution errors
-const Mail = ({ size = 18 }) => (
-  <svg viewBox="0 0 24 24" width={size} height={size} stroke="currentColor" strokeWidth="2" fill="none" strokeLinecap="round" strokeLinejoin="round" style={{ flexShrink: 0, display: 'inline-block', verticalAlign: 'middle' }}>
-    <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
-    <polyline points="22,6 12,13 2,6" />
-  </svg>
-);
-
-const Github = ({ size = 18 }) => (
-  <svg viewBox="0 0 24 24" width={size} height={size} stroke="currentColor" strokeWidth="2" fill="none" strokeLinecap="round" strokeLinejoin="round" style={{ flexShrink: 0, display: 'inline-block', verticalAlign: 'middle' }}>
-    <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22" />
-  </svg>
-);
-
-const Linkedin = ({ size = 18 }) => (
-  <svg viewBox="0 0 24 24" width={size} height={size} stroke="currentColor" strokeWidth="2" fill="none" strokeLinecap="round" strokeLinejoin="round" style={{ flexShrink: 0, display: 'inline-block', verticalAlign: 'middle' }}>
-    <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" />
-    <rect x="2" y="9" width="4" height="12" />
-    <circle cx="4" cy="4" r="2" />
-  </svg>
-);
-
-const ScholarIcon = ({ size = 18 }) => (
-  <svg viewBox="0 0 24 24" width={size} height={size} stroke="currentColor" strokeWidth="2" fill="none" strokeLinecap="round" strokeLinejoin="round" style={{ flexShrink: 0, display: 'inline-block', verticalAlign: 'middle' }}>
-    <path d="M22 10v6M2 10l10-5 10 5-10 5z" />
-    <path d="M6 12v5c0 2 2 3 6 3s6-1 6-3v-5" />
-  </svg>
-);
+import profilePic from './assets/prof_pic_color.jpg';
 
 // Full publications dataset
 const PUBLICATIONS = [
@@ -744,6 +696,25 @@ const TEACHING_COURSES = [
   }
 ];
 
+const NEWS_ITEMS = [
+  {
+    date: 'June 2026',
+    text: 'Visiting the Massachusetts Institute of Technology & Worcester Polytechnic Institute this week! At WPI, I\'ll be delivering a seminar session based on my master\'s thesis and recent projects, focusing on the real-time registration and 3D reconstruction of medical imaging data from 2D space.'
+  },
+  {
+    date: 'Spring 2026',
+    text: 'Serving as a TA for Machine Learning in Experimental Biomedical Engineering Research at CMU.'
+  },
+  {
+    date: 'Fall 2025',
+    text: 'TA for Computer Vision for Engineers and Fundamentals of Computational Biomedical Engineering.'
+  },
+  {
+    date: 'In progress',
+    text: 'Building Open Horizon Robotics, a computer vision course that moves from classical vision into robotics.'
+  }
+];
+
 function App() {
   const [siteTheme, setSiteTheme] = useState(() => {
     if (typeof window === 'undefined') return 'google-material';
@@ -752,7 +723,6 @@ function App() {
       : 'google-material';
   });
   const [activeTab, setActiveTab] = useState('about');
-  const [projectFilter, setProjectFilter] = useState('All');
   const [pubSearch, setPubSearch] = useState('');
   const [pubFilter, setPubFilter] = useState('All'); // 'All' or 'Selected'
   const [pubSort, setPubSort] = useState('year'); // 'year' or 'title'
@@ -761,22 +731,8 @@ function App() {
   // Interactive BibTeX viewer modal state
   const [activeBibPub, setActiveBibPub] = useState(null);
   const [copiedBib, setCopiedBib] = useState(false);
-
-  // Expanded timeline accordion state
-  const [expandedTimeline, setExpandedTimeline] = useState(null);
-  const [expandedTeachingCourse, setExpandedTeachingCourse] = useState('ml-bme');
-  const [hoveredProjectId, setHoveredProjectId] = useState(null);
-  const [selectedProjectId, setSelectedProjectId] = useState(null);
-  const [isAudioMuted, setIsAudioMuted] = useState(false);
-
-  // 3D Scanner widget interactive state
-  const [scanCoords, setScanCoords] = useState({ x: 124.52, y: 84.18, z: 9.31 });
-  const [scanStatus, setScanStatus] = useState("SYSTEM READY");
-  const [widgetClicks, setWidgetClicks] = useState(0);
-  const [widgetSpinRate, setWidgetSpinRate] = useState(15);
   const resolvedTheme = siteTheme || 'google-material';
   const isGoogleMaterial = resolvedTheme === 'google-material';
-  const isLinuxTerminal = resolvedTheme === 'linux-terminal';
 
   useEffect(() => {
     document.documentElement.dataset.theme = resolvedTheme;
@@ -821,70 +777,6 @@ function App() {
     handleThemeSelect(isGoogleMaterial ? 'linux-terminal' : 'google-material');
   };
 
-  useEffect(() => {
-    const handleMuteChange = (event) => {
-      setIsAudioMuted(Boolean(event.detail));
-    };
-
-    window.addEventListener('audio:mute-change', handleMuteChange);
-
-    return () => {
-      window.removeEventListener('audio:mute-change', handleMuteChange);
-    };
-  }, []);
-
-  useEffect(() => {
-    if (selectedProjectId === null) return undefined;
-
-    const handlePointerDown = (event) => {
-      if (!(event.target instanceof Element)) {
-        setSelectedProjectId(null);
-        return;
-      }
-
-      if (!event.target.closest('.project-card.is-selected')) {
-        setSelectedProjectId(null);
-      }
-    };
-
-    const handleEscape = (event) => {
-      if (event.key === 'Escape') {
-        setSelectedProjectId(null);
-      }
-    };
-
-    document.addEventListener('pointerdown', handlePointerDown);
-    window.addEventListener('keydown', handleEscape);
-
-    return () => {
-      document.removeEventListener('pointerdown', handlePointerDown);
-      window.removeEventListener('keydown', handleEscape);
-    };
-  }, [selectedProjectId]);
-
-  const handleProjectClick = (projectId) => {
-    setSelectedProjectId((current) => (current === projectId ? null : projectId));
-  };
-
-  // Filter projects
-  const filteredProjects = useMemo(() => {
-    if (projectFilter === 'All') return PROJECTS;
-    return PROJECTS.filter(p => p.category === projectFilter);
-  }, [projectFilter]);
-
-  // Separate graduate research, undergraduate research, and technical projects
-  const graduateProjects = useMemo(() => {
-    return filteredProjects.filter(p => p.id === 1 || p.id === 2);
-  }, [filteredProjects]);
-
-  const undergraduateResearchProjects = useMemo(() => {
-    return filteredProjects.filter(p => p.id === 5 || p.id === 6 || p.id === 7);
-  }, [filteredProjects]);
-
-  const projectProjects = useMemo(() => {
-    return filteredProjects.filter(p => p.id !== 1 && p.id !== 2 && p.id !== 5 && p.id !== 6 && p.id !== 7);
-  }, [filteredProjects]);
-
   // Filter, sort, and process publications
   const filteredPublications = useMemo(() => {
     let result = PUBLICATIONS.filter(pub => {
@@ -916,182 +808,29 @@ function App() {
   };
 
   // Reusable Project Card Renderer
-  const renderProjectCard = (project) => {
-    const isHovered = hoveredProjectId === project.id;
-    const isSelected = selectedProjectId === project.id;
-    const isDimmed = selectedProjectId !== null && !isSelected;
+  const renderProjectRow = (project) => {
     const detail = PROJECT_PAGE_DETAILS[project.id];
-    const cardBackground = isGoogleMaterial
-      ? (project.highlight
-        ? 'linear-gradient(180deg, rgba(236,244,255,0.98), rgba(247,250,255,0.98)), rgba(255,255,255,0.98)'
-        : 'linear-gradient(180deg, rgba(248,251,255,0.98), rgba(255,255,255,0.98))')
-      : isLinuxTerminal
-      ? (project.highlight
-        ? 'linear-gradient(180deg, rgba(14,14,14,0.99), rgba(7,7,7,0.99)), repeating-linear-gradient(180deg, rgba(255,255,255,0.02) 0 1px, transparent 1px 4px)'
-        : 'linear-gradient(180deg, rgba(12,12,12,0.99), rgba(6,6,6,0.99))')
-      : 'var(--bg-surface-glass)';
-    const cardBorder = isSelected
-      ? (isGoogleMaterial ? 'rgba(57, 107, 189, 0.88)' : 'rgba(255, 255, 255, 0.28)')
-      : isHovered
-      ? (isGoogleMaterial ? 'rgba(57, 107, 189, 0.46)' : 'rgba(255, 255, 255, 0.18)')
-      : (project.highlight
-        ? (isGoogleMaterial ? 'rgba(188, 214, 242, 0.92)' : 'rgba(255, 255, 255, 0.14)')
-        : 'var(--border-glow)');
-    const cardShadow = isSelected
-      ? (isGoogleMaterial
-        ? '0 4px 12px rgba(60, 64, 89, 0.12), 0 20px 36px rgba(60, 64, 89, 0.18)'
-        : isLinuxTerminal
-        ? 'inset 0 0 0 1px rgba(255,255,255,0.06), 0 0 18px rgba(255,255,255,0.05), 0 20px 42px rgba(0,0,0,0.56)'
-        : 'none')
-      : isHovered
-      ? (isGoogleMaterial ? '0 3px 8px rgba(60, 64, 89, 0.08), 0 14px 24px rgba(60, 64, 89, 0.12)' : '0 0 12px rgba(255,255,255,0.04), 0 14px 28px rgba(0,0,0,0.42)')
-      : 'none';
     return (
-      <div
-        key={project.id}
-        className={`glass-panel project-card ${isHovered ? 'is-hovered' : ''} ${isSelected ? 'is-selected' : ''} ${isDimmed ? 'is-dimmed' : ''}`}
-        onClick={() => handleProjectClick(project.id)}
-        onMouseEnter={() => setHoveredProjectId(project.id)}
-        onMouseLeave={() => setHoveredProjectId((current) => (current === project.id ? null : current))}
-        style={{
-          cursor: 'pointer',
-          background: cardBackground,
-          borderColor: cardBorder,
-          boxShadow: cardShadow
-        }}
-      >
-        <ProjectVisual 
-          project={project}
-          category={project.category} 
-          active={isHovered} 
-          id={project.id} 
-          style={{ 
-            margin: '-2rem -2rem 1.5rem -2rem', 
-            borderTopLeftRadius: '15px', 
-            borderTopRightRadius: '15px' 
-          }} 
-        />
-        <div className="project-card-header">
-          <span className="badge badge-teal" style={{ fontSize: '0.7rem' }}>
-            {project.category}
-          </span>
-          <div style={{ display: 'flex', gap: '0.35rem' }}>
-            {project.highlight && (
-              <span className="badge badge-emerald" style={{ fontSize: '0.7rem' }}>
-                Featured
-              </span>
-            )}
+      <div key={project.id} className="hf-item-row">
+        <div className="hf-item-main">
+          <div className="hf-item-titleline">
+            <h3>{project.title}</h3>
+            <span className="hf-item-year">{project.category}</span>
+          </div>
+          <p>{project.desc}</p>
+          <p className="hf-item-detail">
+            {detail ? detail.headline : project.simLogs[0]}
+          </p>
+          <div className="hf-item-tags">
+            {project.tags.map((tag) => (
+              <span key={`${project.id}-${tag}`}>{tag}</span>
+            ))}
           </div>
         </div>
-
-        <h3 className="project-card-title">{project.title}</h3>
-        <p className="project-card-desc">{project.desc}</p>
-
-        {isSelected && (
-          <div className="project-detail-panel">
-            <div className="project-detail-header">
-              <span className="project-detail-label">{detail ? detail.label : 'Selected Project'}</span>
-              <span className="project-detail-state">OPEN</span>
-            </div>
-            <p className="project-detail-headline">
-              {detail ? detail.headline : 'This project is currently selected. Use the repository and project page links below to inspect artifacts, reports, and demos.'}
-            </p>
-            <p className="project-detail-summary">
-              {detail ? detail.summary : 'No dedicated GitHub Pages site is linked for this entry, so the card falls back to the in-app summary and repository links.'}
-            </p>
-
-            <div className="project-detail-stats">
-              {(detail ? detail.stats : project.tags.slice(0, 4).map((tag) => ({ value: tag, label: 'project focus' }))).map((item) => (
-                <div key={`${project.id}-${item.value}-${item.label}`} className="project-detail-stat">
-                  <strong>{item.value}</strong>
-                  <span>{item.label}</span>
-                </div>
-              ))}
-            </div>
-
-            <div className="project-detail-notes">
-              <h4>Highlights</h4>
-              <ul>
-                {(detail ? detail.bullets : [
-                  project.simLogs[0],
-                  project.simLogs[Math.min(1, project.simLogs.length - 1)],
-                  project.demo ? 'A project page or report is linked for deeper inspection.' : 'This entry currently points primarily to repository material.'
-                ]).map((item) => (
-                  <li key={`${project.id}-${item}`}>{item}</li>
-                ))}
-              </ul>
-            </div>
-          </div>
-        )}
-
-        <div className="project-tags">
-          {project.tags.map((tag, idx) => (
-            <span key={idx} style={{
-              fontSize: '0.75rem',
-              color: 'var(--text-secondary)',
-              background: isGoogleMaterial ? 'rgba(234, 243, 255, 0.96)' : 'rgba(18, 18, 18, 0.96)',
-              padding: '0.15rem 0.5rem',
-              borderRadius: '4px',
-              border: isGoogleMaterial ? '1px solid rgba(201, 219, 240, 0.98)' : '1px solid rgba(255, 255, 255, 0.1)'
-            }}>{tag}</span>
-          ))}
-        </div>
-
-        <div className="project-console" style={{
-          marginTop: 'auto',
-          marginBottom: '1rem',
-          background: isGoogleMaterial
-            ? 'rgba(240, 246, 255, 0.98)'
-            : 'linear-gradient(180deg, rgba(5,5,5,0.98), rgba(14,14,14,0.98))',
-          border: isGoogleMaterial ? '1px solid rgba(205, 220, 238, 0.96)' : '1px solid rgba(255, 255, 255, 0.12)',
-          borderRadius: '8px',
-          padding: '0.65rem 0.85rem'
-        }}>
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-            <span style={{ fontSize: '0.75rem', color: isHovered ? 'var(--accent-emerald)' : 'var(--text-secondary)', display: 'inline-flex', alignItems: 'center', gap: '0.35rem', fontFamily: 'monospace' }}>
-              <span style={{
-                width: '6px',
-                height: '6px',
-                borderRadius: '50%',
-                background: isHovered ? 'var(--accent-emerald)' : 'var(--primary-cyan)',
-                display: 'inline-block',
-                boxShadow: isHovered ? '0 0 6px var(--accent-emerald)' : 'none'
-              }}></span>
-              {isHovered ? 'PIPELINE_FOCUS' : 'PROJECT_READY'}
-            </span>
-            <span style={{ fontSize: '0.65rem', color: 'var(--primary-cyan)', fontFamily: 'monospace', letterSpacing: '0.06em' }}>
-              {project.category.toUpperCase()}
-            </span>
-          </div>
-          <div style={{
-            marginTop: '0.65rem',
-            paddingTop: '0.5rem',
-            borderTop: '1px solid rgba(255, 255, 255, 0.03)',
-            fontFamily: 'monospace',
-            fontSize: '0.65rem',
-            display: 'flex',
-            flexDirection: 'column',
-            gap: '0.24rem'
-          }}>
-            <div style={{ color: 'var(--text-secondary)', whiteSpace: 'pre-wrap', lineHeight: '1.3' }}>
-              {project.simLogs[0]}
-            </div>
-            <div style={{ color: isHovered ? 'var(--accent-emerald)' : 'var(--primary-cyan)', whiteSpace: 'pre-wrap', lineHeight: '1.3' }}>
-              {project.simLogs[project.simLogs.length - 1]}
-            </div>
-          </div>
-        </div>
-
-        <div className="project-links" onClick={(event) => event.stopPropagation()}>
-          <a href={project.github} target="_blank" rel="noopener noreferrer" className="project-link project-link-github">
-            <Github size={14} />
-            Repository
-          </a>
+        <div className="hf-item-links">
+          <a href={project.github} target="_blank" rel="noopener noreferrer">Repository</a>
           {project.demo && (
-            <a href={project.demo} target="_blank" rel="noopener noreferrer" className="project-link project-link-page">
-              <ScanEye size={14} />
-              Project Page
-            </a>
+            <a href={project.demo} target="_blank" rel="noopener noreferrer">Project Page</a>
           )}
         </div>
       </div>
@@ -1100,1010 +839,259 @@ function App() {
 
   return (
     <div className={`page-container theme-${resolvedTheme}`}>
-      {/* Dynamic interactive Canvas Network */}
-      <NeuralBackground theme={resolvedTheme} />
-      <CursorTrail theme={resolvedTheme} />
-      <LiquidGlassPointer theme={resolvedTheme} />
-      <BackgroundAudio theme={resolvedTheme} />
+      <header className="hf-header">
+        <div className="hf-header-inner">
+          <a href="#about" className="hf-brand" aria-label="Home">
+            <span className="hf-brand-mark">$ cd /home/tushar/web</span>
+            <span className="hf-brand-cursor" aria-hidden="true" />
+          </a>
 
-      {/* Decorative blurred backgrounds */}
-      <div className="glow-blur-1"></div>
-      <div className="glow-blur-2"></div>
-
-      {/* FLOATING GLASS NAVIGATION HEADER */}
-      <header className="site-header" style={{
-        position: 'sticky',
-        top: '1.5rem',
-        zIndex: 50,
-        margin: '0 auto',
-        maxWidth: '900px',
-        padding: '0 1rem',
-      }}>
-        <div className="site-header-shell" style={{
-          background: isGoogleMaterial
-            ? 'linear-gradient(180deg, rgba(246,250,255,0.98), rgba(236,244,255,0.98))'
-            : 'linear-gradient(180deg, rgba(12,12,12,0.99), rgba(6,6,6,0.99))',
-          backdropFilter: 'none',
-          WebkitBackdropFilter: 'none',
-          border: isGoogleMaterial
-            ? '1px solid rgba(204, 220, 238, 0.96)'
-            : '1px solid rgba(255, 255, 255, 0.12)',
-          borderRadius: isLinuxTerminal ? '10px' : '24px',
-          padding: '0.65rem 1.25rem',
-          display: 'flex',
-          justifyContent: 'space-between',
-          alignItems: 'flex-start',
-          gap: '1rem',
-          boxShadow: isGoogleMaterial
-            ? '0 4px 12px rgba(60,64,89,0.08), 0 18px 28px rgba(60,64,89,0.14)'
-            : 'inset 0 0 0 1px rgba(255,255,255,0.03), 0 18px 34px rgba(0,0,0,0.46)'
-        }}>
-          {/* Logo / Initials */}
-          <div className="site-header-brand" style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-            <div className="site-header-mark" style={{
-              width: '32px',
-              height: '32px',
-              borderRadius: '50%',
-              background: 'var(--grad-primary)',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              fontWeight: '700',
-              fontSize: '0.85rem',
-              color: isGoogleMaterial ? '#fff' : '#051006',
-              boxShadow: isGoogleMaterial
-                ? '0 8px 18px rgba(57,107,189,0.28)'
-                : '0 0 10px rgba(255,255,255,0.08)'
-            }} />
-            <span className="site-header-wordmark" style={{
-              fontFamily: 'var(--font-heading)',
-              fontWeight: '600',
-              fontSize: '0.95rem',
-              letterSpacing: '-0.01em',
-              color: 'var(--text-primary)'
-            }}>
-              tushar-nayak <span className="site-header-wordmark-sep" style={{ color: 'var(--primary-cyan)', fontWeight: '500' }}>&&</span> <span className="site-header-wordmark-tail">technologyfoundhere</span>
-            </span>
-          </div>
-
-          {/* Navigation Items */}
-          <div className="site-header-controls" style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: '0.55rem', flex: 1 }}>
-            <nav className="site-header-nav" style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap', justifyContent: 'flex-end' }}>
-              {['about', 'projects', 'research', 'teaching', 'timeline'].map((tab) => (
-                <button
-                  key={tab}
-                  onClick={() => {
+          <nav className="hf-nav" aria-label="Primary">
+            {['about', 'projects', 'research', 'teaching', 'timeline'].map((tab) => (
+              <button
+                key={tab}
+                type="button"
+                className={`hf-nav-link ${activeTab === tab ? 'is-active' : ''}`}
+                onClick={() => {
                   setActiveTab(tab);
                   document.getElementById(tab)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
                 }}
-                style={{
-                  background: activeTab === tab
-                    ? (isGoogleMaterial ? 'linear-gradient(135deg, #5a9be6 0%, #79b8ff 100%)' : 'rgba(255, 255, 255, 0.08)')
-                    : (isGoogleMaterial ? '#eef2ff' : 'rgba(10, 10, 10, 0.96)'),
-                  border: activeTab === tab
-                    ? (isGoogleMaterial ? '1px solid rgba(90, 155, 230, 0.92)' : '1px solid rgba(255, 255, 255, 0.2)')
-                    : (isGoogleMaterial ? '1px solid rgba(204, 220, 238, 0.96)' : '1px solid rgba(255, 255, 255, 0.08)'),
-                  color: activeTab === tab
-                    ? (isGoogleMaterial ? '#fff' : 'var(--primary-cyan)')
-                    : 'var(--text-secondary)',
-                  padding: '0.4rem 0.9rem',
-                  borderRadius: '12px',
-                  fontSize: '0.85rem',
-                    fontWeight: '500',
-                    textTransform: 'capitalize',
-                    cursor: 'pointer',
-                    transition: 'var(--transition-fast)',
-                    fontFamily: 'var(--font-heading)'
-                  }}
-                  className={`site-header-tab ${activeTab === tab ? 'pulse-glow' : ''}`}
-                >
-                  {tab}
-                </button>
-              ))}
-            </nav>
-            <div className="site-header-tools" style={{ display: 'flex', gap: '0.55rem', flexWrap: 'wrap', justifyContent: 'flex-end' }}>
-              <button
-                type="button"
-                onClick={() => window.dispatchEvent(new CustomEvent('audio:toggle-mute'))}
-                className="site-header-tab"
-                aria-label={isAudioMuted ? 'Unmute audio' : 'Mute audio'}
-                title={isAudioMuted ? 'Unmute audio' : 'Mute audio'}
-                style={{
-                  padding: '0.48rem 0.72rem',
-                  borderRadius: '999px',
-                  background: isGoogleMaterial ? '#edf6ff' : 'rgba(10, 10, 10, 0.96)',
-                  border: isGoogleMaterial ? '1px solid rgba(204, 220, 238, 0.96)' : '1px solid rgba(255, 255, 255, 0.08)',
-                  color: 'var(--text-secondary)',
-                  display: 'inline-flex',
-                  alignItems: 'center',
-                  justifyContent: 'center'
-                }}
               >
-                {isAudioMuted ? <VolumeX size={16} /> : <Volume2 size={16} />}
+                {tab}
               </button>
-              <button
-                type="button"
-                onClick={toggleTheme}
-                className="site-header-tab"
-                aria-label={isGoogleMaterial ? 'Switch to dark mode' : 'Switch to light mode'}
-                title={isGoogleMaterial ? 'Switch to dark mode' : 'Switch to light mode'}
-                style={{
-                  padding: '0.48rem 0.72rem',
-                  borderRadius: '999px',
-                  background: isGoogleMaterial ? '#edf6ff' : 'rgba(10, 10, 10, 0.96)',
-                  border: isGoogleMaterial ? '1px solid rgba(204, 220, 238, 0.96)' : '1px solid rgba(255, 255, 255, 0.08)',
-                  color: 'var(--text-secondary)',
-                  display: 'inline-flex',
-                  alignItems: 'center',
-                  justifyContent: 'center'
-                }}
-              >
-                {isGoogleMaterial ? <Moon size={16} /> : <Sun size={16} />}
-              </button>
-            </div>
-          </div>
+            ))}
+            <button
+              type="button"
+              onClick={toggleTheme}
+              className="hf-theme-toggle"
+              aria-label={isGoogleMaterial ? 'Switch to dark mode' : 'Switch to light mode'}
+              title={isGoogleMaterial ? 'Switch to dark mode' : 'Switch to light mode'}
+            >
+              {isGoogleMaterial ? <Moon size={14} /> : <Sun size={14} />}
+            </button>
+          </nav>
         </div>
       </header>
 
-      <main className="content-wrapper" style={{ position: 'relative', zIndex: 1, paddingTop: '4rem', paddingBottom: '6rem' }}>
-        
-        {/* HERO / BIO SECTION */}
-        <section id="about" style={{ scrollMarginTop: '8rem', marginBottom: '6rem' }}>
-          <div style={{
-            display: 'grid',
-            gridTemplateColumns: '1.25fr 0.75fr',
-            gap: '3rem',
-            alignItems: 'center'
-          }} className="responsive-hero-grid">
-            
-            {/* Left Column: Brief details */}
-            <div>
-              <div style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', flexWrap: 'wrap', marginBottom: '1.25rem' }}>
-                <span className="badge badge-teal">
-                  <Stethoscope size={12} style={{ marginRight: '0.25rem' }} />
-                  Surgical Robotics
-                </span>
-                <span className="badge badge-emerald">
-                  <Cpu size={12} style={{ marginRight: '0.25rem' }} />
-                  Physics-informed AI
-                </span>
-                <span className="badge">
-                  <ScanEye size={12} style={{ marginRight: '0.25rem' }} />
-                  3D Vision
-                </span>
-              </div>
-              
-              <h1 style={{ fontSize: '3.75rem', lineHeight: '1.1', fontWeight: '800', marginBottom: '1rem', fontFamily: 'var(--font-heading)' }}>
-                Tushar <span className="gradient-text">Nayak</span>
-              </h1>
-              
-              <p style={{
-                fontSize: '1.35rem',
-                color: 'var(--text-primary)',
-                fontFamily: 'var(--font-heading)',
-                fontWeight: '400',
-                marginBottom: '1.5rem',
-                lineHeight: '1.4'
-              }}>
-                Graduate researcher at <span style={{ color: 'var(--primary-cyan)', fontWeight: '500' }}>Carnegie Mellon University</span>
+      <main className="content-wrapper hf-page" style={{ position: 'relative', zIndex: 1, paddingTop: '5.25rem', paddingBottom: '6rem' }}>
+        <section id="about" className="hf-hero" style={{ scrollMarginTop: '7rem', marginBottom: '4rem' }}>
+          <figure className="hf-profile">
+            <img src={profilePic} alt="Tushar Nayak portrait" className="hf-profile-image" />
+            <figcaption className="hf-profile-caption">
+              <p className="hf-eyebrow">Tushar Nayak</p>
+              <h1>Graduate researcher in biomedical engineering and computer vision.</h1>
+              <p className="hf-lead">
+                I am a graduate researcher at Carnegie Mellon University, advised by Prof. Kenji Shimada in the Computational Engineering &amp; Robotics Lab. My work spans medical imaging, differentiable rendering, and physics-based learning for surgical robotics.
               </p>
-              
-              <p style={{ color: 'var(--text-secondary)', fontSize: '1.05rem', marginBottom: '2.5rem', maxWidth: '650px', lineHeight: '1.7' }}>
-                I'm pursuing a master's in the <span style={{ color: 'var(--text-primary)' }}>Biomedical Engineering</span> department at CMU, advised by <span style={{ color: 'var(--text-primary)', fontWeight: '500' }}>Prof. Kenji Shimada</span> in the <span style={{ color: 'var(--text-primary)' }}>Computational Engineering &amp; Robotics Lab</span>. My work sits at the intersection of computer vision, differentiable rendering, and physics-based learning for surgical robotics and medical imaging.
+              <p className="hf-lead">
+                I am interested in clinical computer vision systems that stay reproducible, inspectable, and usable by people outside a narrow research loop.
               </p>
+              <p className="hf-profile-links">
+                <a href="mailto:tusharn@andrew.cmu.edu">Email</a>
+                <a href="https://github.com/tushar-nayak" target="_blank" rel="noopener noreferrer">GitHub</a>
+                <a href="https://www.linkedin.com/in/nayaktushar/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+                <a href="https://scholar.google.com/citations?user=9xUX7NoAAAAJ&hl=en" target="_blank" rel="noopener noreferrer">Scholar</a>
+              </p>
+            </figcaption>
+          </figure>
+        </section>
 
-              <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap' }}>
-                <a href="mailto:tusharn@andrew.cmu.edu" className="btn btn-primary">
-                  <Mail size={18} />
-                  Email
-                </a>
-                <a href="https://github.com/tushar-nayak" target="_blank" rel="noopener noreferrer" className="btn btn-secondary">
-                  <Github size={18} />
-                  GitHub
-                </a>
-                <a href="https://www.linkedin.com/in/nayaktushar/" target="_blank" rel="noopener noreferrer" className="btn btn-secondary">
-                  <Linkedin size={18} />
-                  LinkedIn
-                </a>
-                <a href="https://scholar.google.com/citations?user=9xUX7NoAAAAJ&hl=en" target="_blank" rel="noopener noreferrer" className="btn btn-secondary">
-                  <ScholarIcon size={18} />
-                  Google Scholar
-                </a>
+        <section id="news" className="hf-news" style={{ scrollMarginTop: '7rem', marginBottom: '4.5rem' }}>
+          <div className="hf-section-heading">
+            <h2>News</h2>
+            <p>Short updates, similar to a compact academic homepage.</p>
+          </div>
+          <div className="hf-news-box">
+            {NEWS_ITEMS.map((item) => (
+              <div key={`${item.date}-${item.text}`} className="hf-news-item">
+                <strong>{item.date}</strong>
+                <span>{item.text}</span>
               </div>
-            </div>
-
-            {/* Right Column: Sleek Interactive 3D Spatial Grid (Focal Projection Viewport) */}
-            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-              <div 
-                className="glass-panel"
-                style={{
-                  position: 'relative',
-                  width: '280px',
-                  height: '280px',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  background: 'rgba(10, 11, 14, 0.25)',
-                  borderColor: 'rgba(255, 255, 255, 0.08)',
-                  cursor: 'crosshair',
-                  boxShadow: 'none',
-                  borderRadius: '20px',
-                  overflow: 'hidden',
-                  padding: '0'
-                }}
-              >
-                <ProfileSplat
-                  scanCoords={scanCoords}
-                  setScanCoords={setScanCoords}
-                  scanStatus={scanStatus}
-                  setScanStatus={setScanStatus}
-                  widgetSpinRate={widgetSpinRate}
-                  setWidgetSpinRate={setWidgetSpinRate}
-                  widgetClicks={widgetClicks}
-                  setWidgetClicks={setWidgetClicks}
-                />
-              </div>
-
-              {/* Real-time Tracking Info Dashboard Widget */}
-              <div className="glass-panel" style={{
-                marginTop: '1rem',
-                width: '280px',
-                padding: '0.85rem 1.25rem',
-                borderColor: 'var(--border-glow)',
-                background: 'rgba(14, 16, 21, 0.5)',
-                borderRadius: '14px'
-              }}>
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.5rem' }}>
-                  <span style={{ fontSize: '0.65rem', color: 'var(--text-secondary)', fontWeight: '600', letterSpacing: '0.08em', fontFamily: 'monospace' }}>SPATIAL_RESOLVER_V1</span>
-                  <div style={{ width: '6px', height: '6px', borderRadius: '50%', background: scanStatus.startsWith("RE-") ? 'var(--primary-cyan)' : 'var(--accent-emerald)', transition: 'background-color 0.3s' }}></div>
-                </div>
-                <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '0.35rem' }}>
-                  <span style={{ fontSize: '0.75rem', color: 'var(--text-secondary)' }}>Status:</span>
-                  <span style={{ fontSize: '0.75rem', color: 'var(--primary-cyan)', fontWeight: '600', fontFamily: 'monospace' }}>{scanStatus}</span>
-                </div>
-                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '0.5rem', borderTop: '1px solid rgba(255, 255, 255, 0.04)', paddingTop: '0.5rem' }}>
-                  <div style={{ display: 'flex', flexDirection: 'column' }}>
-                    <span style={{ fontSize: '0.65rem', color: 'var(--text-muted)' }}>FOCAL_X</span>
-                    <span style={{ fontSize: '0.75rem', color: 'var(--text-primary)', fontFamily: 'monospace' }}>{scanCoords.x}mm</span>
-                  </div>
-                  <div style={{ display: 'flex', flexDirection: 'column' }}>
-                    <span style={{ fontSize: '0.65rem', color: 'var(--text-muted)' }}>FOCAL_Y</span>
-                    <span style={{ fontSize: '0.75rem', color: 'var(--text-primary)', fontFamily: 'monospace' }}>{scanCoords.y}mm</span>
-                  </div>
-                  <div style={{ display: 'flex', flexDirection: 'column' }}>
-                    <span style={{ fontSize: '0.65rem', color: 'var(--text-muted)' }}>DEPTH_Z</span>
-                    <span style={{ fontSize: '0.75rem', color: 'var(--text-primary)', fontFamily: 'monospace' }}>{scanCoords.z}mm</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-
+            ))}
           </div>
         </section>
 
-        {/* PROJECTS SHOWCASE SECTION */}
-        <section
-          id="projects"
-          className={`project-showcase ${selectedProjectId !== null ? 'is-project-active' : ''}`}
-          style={{ scrollMarginTop: '8rem', marginBottom: '6rem' }}
-        >
-          <div style={{ marginBottom: '2.5rem' }}>
-            <h2 style={{ fontSize: '2.25rem', fontFamily: 'var(--font-heading)', display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
-              <FolderGit2 className="gradient-text" />
-              Projects & Demos
-            </h2>
-            <p style={{ color: 'var(--text-secondary)', fontSize: '1rem', marginTop: '0.25rem' }}>
-              Explore research code, demos, and interactive pipelines.
-            </p>
+        <section id="projects" style={{ scrollMarginTop: '8rem', marginBottom: '4.5rem' }}>
+          <div className="hf-section-heading">
+            <h2>Selected Projects</h2>
+            <p>Representative research and course projects. Titles are listed with one-line descriptions and source links.</p>
           </div>
 
-          {/* Project Categories */}
-          <div style={{
-            display: 'flex',
-            gap: '0.5rem',
-            overflowX: 'auto',
-            paddingBottom: '0.5rem',
-            marginBottom: '2rem',
-            borderBottom: '1px solid rgba(255, 255, 255, 0.05)'
-          }}>
-            {['All', '3D & Robotics', 'Medical Imaging', 'Cancer & Pathology'].map((cat) => (
-              <button
-                key={cat}
-                onClick={() => setProjectFilter(cat)}
-                style={{
-                  background: projectFilter === cat ? 'var(--grad-primary)' : 'rgba(255, 255, 255, 0.02)',
-                  border: projectFilter === cat ? 'none' : '1px solid rgba(255, 255, 255, 0.05)',
-                  color: projectFilter === cat ? '#000' : 'var(--text-secondary)',
-                  padding: '0.5rem 1.2rem',
-                  borderRadius: '12px',
-                  fontSize: '0.85rem',
-                  fontWeight: projectFilter === cat ? '600' : '500',
-                  cursor: 'pointer',
-                  transition: 'var(--transition-fast)',
-                  whiteSpace: 'nowrap',
-                  fontFamily: 'var(--font-heading)'
-                }}
-              >
-                {cat}
-              </button>
-            ))}
+          <div className="hf-listing">
+            {PROJECTS.map(renderProjectRow)}
           </div>
-
-          {/* Graduate Research Section */}
-          {graduateProjects.length > 0 && (
-            <div style={{ marginBottom: '3.5rem' }}>
-              <div style={{
-                display: 'flex',
-                flexDirection: 'column',
-                gap: '0.35rem',
-                marginBottom: '1.5rem',
-                borderLeft: '3px solid var(--primary-cyan)',
-                paddingLeft: '0.75rem'
-              }}>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '0.65rem' }}>
-                  <h3 style={{
-                    fontSize: '1.25rem',
-                    fontFamily: 'var(--font-heading)',
-                    color: 'var(--text-primary)',
-                    fontWeight: '600',
-                    letterSpacing: '-0.01em',
-                    margin: 0
-                  }}>Graduate Research</h3>
-                  <span className="badge badge-teal" style={{ fontSize: '0.65rem', textTransform: 'uppercase', padding: '0.15rem 0.4rem' }}>
-                    Graduate Work
-                  </span>
-                </div>
-                <p style={{ color: 'var(--text-secondary)', fontSize: '0.88rem', margin: 0, opacity: 0.85, maxWidth: '800px', lineHeight: '1.4' }}>
-                  Research projects developed with Carnegie Mellon University (CMU CERLAB &amp; Grover Lab) and University of Pittsburgh Medical Center (UPMC) collaborators.
-                </p>
-              </div>
-              
-              <div className="project-grid">
-                {graduateProjects.map((project) => renderProjectCard(project))}
-              </div>
-            </div>
-          )}
-
-          {/* Section Divider */}
-          {graduateProjects.length > 0 && projectProjects.length > 0 && (
-            <div style={{
-              height: '1px',
-              background: 'linear-gradient(to right, rgba(0, 242, 254, 0.12), rgba(255, 255, 255, 0.01) 90%)',
-              marginBottom: '3rem',
-              marginTop: '1.5rem'
-            }}></div>
-          )}
-
-          {/* Projects Section */}
-          {projectProjects.length > 0 && (
-            <div>
-              {graduateProjects.length > 0 && (
-                <div style={{
-                  display: 'flex',
-                  flexDirection: 'column',
-                  gap: '0.35rem',
-                  marginBottom: '1.5rem',
-                  borderLeft: '3px solid rgba(255, 255, 255, 0.15)',
-                  paddingLeft: '0.75rem'
-                }}>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.65rem' }}>
-                    <h3 style={{
-                    fontSize: '1.25rem',
-                    fontFamily: 'var(--font-heading)',
-                    color: 'var(--text-primary)',
-                    fontWeight: '600',
-                    letterSpacing: '-0.01em',
-                    margin: 0
-                    }}>Projects</h3>
-                    <span className="badge" style={{ 
-                      fontSize: '0.65rem', 
-                      background: 'rgba(255, 255, 255, 0.03)', 
-                      color: 'var(--text-secondary)', 
-                      border: '1px solid rgba(255, 255, 255, 0.05)',
-                      textTransform: 'uppercase',
-                      padding: '0.15rem 0.4rem'
-                    }}>
-                      Selected Work
-                    </span>
-                  </div>
-                  <p style={{ color: 'var(--text-secondary)', fontSize: '0.88rem', margin: 0, opacity: 0.85, maxWidth: '800px', lineHeight: '1.4' }}>
-                    Interactive 3D computer vision models, medical imaging systems, and surgical tooling.
-                  </p>
-                </div>
-              )}
-              
-              <div className="project-grid">
-                {projectProjects.map((project) => renderProjectCard(project))}
-              </div>
-            </div>
-          )}
-
-          {/* Undergraduate Research Projects Section */}
-          {undergraduateResearchProjects.length > 0 && (
-            <div style={{ marginTop: '3.5rem' }}>
-              <div style={{
-                display: 'flex',
-                flexDirection: 'column',
-                gap: '0.35rem',
-                marginBottom: '1.5rem',
-                borderLeft: '3px solid var(--accent-emerald)',
-                paddingLeft: '0.75rem'
-              }}>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '0.65rem' }}>
-                  <h3 style={{
-                    fontSize: '1.25rem',
-                    fontFamily: 'var(--font-heading)',
-                    color: 'var(--text-primary)',
-                    fontWeight: '600',
-                    letterSpacing: '-0.01em',
-                    margin: 0
-                  }}>Undergraduate Research Projects</h3>
-                  <span className="badge badge-emerald" style={{ fontSize: '0.65rem', textTransform: 'uppercase', padding: '0.15rem 0.4rem' }}>
-                    Undergraduate
-                  </span>
-                </div>
-                <p style={{ color: 'var(--text-secondary)', fontSize: '0.88rem', margin: 0, opacity: 0.85, maxWidth: '800px', lineHeight: '1.4' }}>
-                  Early research work in histopathology, skin lesion analysis, and clinical classification.
-                </p>
-              </div>
-
-              <div className="project-grid">
-                {undergraduateResearchProjects.map((project) => renderProjectCard(project))}
-              </div>
-            </div>
-          )}
         </section>
 
         {/* RESEARCH & PUBLICATIONS SECTION */}
-        <section id="research" style={{ scrollMarginTop: '8rem', marginBottom: '6rem' }}>
-          <div className="glass-panel" style={{ padding: '2.5rem' }}>
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap', gap: '1.5rem', marginBottom: '2.5rem' }}>
-              <div>
-                <h2 style={{ fontSize: '2rem', fontFamily: 'var(--font-heading)', display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
-                  <BookOpen className="gradient-text" />
-                  Research & Publications
-                </h2>
-                <p style={{ color: 'var(--text-secondary)', fontSize: '0.95rem', marginTop: '0.25rem' }}>
-                  Selected papers and related work in medical computer vision.
-                </p>
-              </div>
+        <section id="research" style={{ scrollMarginTop: '8rem', marginBottom: '4.5rem' }}>
+          <div className="hf-section-heading">
+            <h2>Research and Publications</h2>
+            <p>Selected papers with title, venue, and links. Search and filters are kept minimal for readability.</p>
+          </div>
 
-              {/* Toggles, Searches and Sort Criteria */}
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem', width: '100%', maxWidth: '650px' }}>
-                
-                {/* Search Input */}
-                <div style={{ position: 'relative', width: '100%' }}>
-                  <Search size={16} style={{ position: 'absolute', left: '1rem', top: '50%', transform: 'translateY(-50%)', color: 'var(--text-muted)' }} />
-                  <input
-                    type="text"
-                    placeholder="Search publications by title, venue, or keywords..."
-                    value={pubSearch}
-                    onChange={(e) => setPubSearch(e.target.value)}
-                    style={{
-                      width: '100%',
-                      background: 'rgba(10, 11, 14, 0.6)',
-                      border: '1px solid var(--border-glow)',
-                      borderRadius: '12px',
-                      padding: '0.65rem 1rem 0.65rem 2.5rem',
-                      color: 'var(--text-primary)',
-                      fontSize: '0.9rem',
-                      fontFamily: 'var(--font-body)',
-                      outline: 'none',
-                      transition: 'var(--transition-fast)'
-                    }}
-                    onFocus={(e) => e.target.style.borderColor = 'var(--primary-cyan)'}
-                    onBlur={(e) => e.target.style.borderColor = 'var(--border-glow)'}
-                  />
-                </div>
-
-                {/* Filters, Types and Sort Toggles Grid */}
-                <div style={{ display: 'flex', gap: '0.5rem', justifyContent: 'space-between', flexWrap: 'wrap' }}>
-                  
-                  {/* Category Toggle: All vs Selected */}
-                  <div style={{ display: 'flex', gap: '0.25rem', background: '#0a0b0e', padding: '0.25rem', borderRadius: '10px', border: '1px solid rgba(255, 255, 255, 0.05)' }}>
-                    {['All', 'Selected'].map(f => (
-                      <button
-                        key={f}
-                        onClick={() => setPubFilter(f)}
-                        style={{
-                          background: pubFilter === f ? 'rgba(0, 242, 254, 0.08)' : 'transparent',
-                          border: 'none',
-                          color: pubFilter === f ? 'var(--primary-cyan)' : 'var(--text-secondary)',
-                          padding: '0.35rem 0.75rem',
-                          borderRadius: '8px',
-                          fontSize: '0.75rem',
-                          cursor: 'pointer',
-                          fontWeight: '500',
-                          transition: 'var(--transition-fast)'
-                        }}
-                      >
-                        {f === 'All' ? 'All Papers' : 'Selected'}
-                      </button>
-                    ))}
-                  </div>
-
-                  {/* Type Filter: All vs Journal vs Conference */}
-                  <div style={{ display: 'flex', gap: '0.25rem', background: '#0a0b0e', padding: '0.25rem', borderRadius: '10px', border: '1px solid rgba(255, 255, 255, 0.05)' }}>
-                    {['All', 'Journal', 'Conference'].map(t => (
-                      <button
-                        key={t}
-                        onClick={() => setPubType(t)}
-                        style={{
-                          background: pubType === t ? 'rgba(0, 245, 160, 0.08)' : 'transparent',
-                          border: 'none',
-                          color: pubType === t ? 'var(--accent-emerald)' : 'var(--text-secondary)',
-                          padding: '0.35rem 0.75rem',
-                          borderRadius: '8px',
-                          fontSize: '0.75rem',
-                          cursor: 'pointer',
-                          fontWeight: '500',
-                          transition: 'var(--transition-fast)'
-                        }}
-                      >
-                        {t}
-                      </button>
-                    ))}
-                  </div>
-
-                  {/* Sort By Toggle: Year vs Title */}
-                  <div style={{ display: 'flex', gap: '0.25rem', background: '#0a0b0e', padding: '0.25rem', borderRadius: '10px', border: '1px solid rgba(255, 255, 255, 0.05)' }}>
-                    {['year', 'title'].map(s => (
-                      <button
-                        key={s}
-                        onClick={() => setPubSort(s)}
-                        style={{
-                          background: pubSort === s ? 'rgba(79, 172, 254, 0.08)' : 'transparent',
-                          border: 'none',
-                          color: pubSort === s ? 'var(--primary-teal)' : 'var(--text-secondary)',
-                          padding: '0.35rem 0.75rem',
-                          borderRadius: '8px',
-                          fontSize: '0.75rem',
-                          cursor: 'pointer',
-                          fontWeight: '500',
-                          transition: 'var(--transition-fast)',
-                          textTransform: 'capitalize'
-                        }}
-                      >
-                        Sort: {s}
-                      </button>
-                    ))}
-                  </div>
-
-                </div>
-
-              </div>
+          <div className="hf-toolbar">
+            <input
+              type="text"
+              placeholder="Search title, venue, or keyword"
+              value={pubSearch}
+              onChange={(e) => setPubSearch(e.target.value)}
+              className="hf-search"
+            />
+            <div className="hf-switches">
+              <button type="button" className={pubFilter === 'All' ? 'is-active' : ''} onClick={() => setPubFilter('All')}>All</button>
+              <button type="button" className={pubFilter === 'Selected' ? 'is-active' : ''} onClick={() => setPubFilter('Selected')}>Selected</button>
+              <button type="button" className={pubType === 'Journal' ? 'is-active' : ''} onClick={() => setPubType(pubType === 'Journal' ? 'All' : 'Journal')}>Journal</button>
+              <button type="button" className={pubType === 'Conference' ? 'is-active' : ''} onClick={() => setPubType(pubType === 'Conference' ? 'All' : 'Conference')}>Conference</button>
+              <button type="button" className={pubSort === 'year' ? 'is-active' : ''} onClick={() => setPubSort(pubSort === 'year' ? 'title' : 'year')}>Sort</button>
             </div>
+          </div>
 
-            {/* Publications Rows */}
-            <div style={{ display: 'flex', flexDirection: 'column' }}>
-              {filteredPublications.length > 0 ? (
-                filteredPublications.map((pub) => (
-                  <div key={pub.id} className="pub-row" style={{ display: 'grid', gridTemplateColumns: '1fr auto', gap: '2rem', alignItems: 'center' }}>
-                    <div>
-                      <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap', marginBottom: '0.5rem' }}>
-                        {pub.selected && <span className="badge badge-emerald">Selected Publication</span>}
-                        <span className="badge badge-teal">{pub.type}</span>
-                        <span style={{ fontSize: '0.8rem', color: 'var(--text-muted)', display: 'inline-flex', alignItems: 'center', gap: '0.25rem' }}>
-                          <Calendar size={12} /> {pub.year}
-                        </span>
-                      </div>
-                      <h3 className="pub-title">{pub.title}</h3>
-                      <p className="pub-authors">{pub.authors}</p>
-                      <p className="pub-venue">{pub.venue}</p>
-                      <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap', marginTop: '0.5rem' }}>
-                        {pub.tags.map((tag, idx) => (
-                          <span key={idx} style={{
-                            fontSize: '0.75rem',
-                            color: 'var(--text-secondary)',
-                            background: 'rgba(255, 255, 255, 0.03)',
-                            padding: '0.15rem 0.5rem',
-                            borderRadius: '4px',
-                            border: '1px solid rgba(255, 255, 255, 0.05)'
-                          }}>{tag}</span>
-                        ))}
-                      </div>
+          <div className="hf-listing">
+            {filteredPublications.length > 0 ? (
+              filteredPublications.map((pub) => (
+                <div key={pub.id} className="hf-item-row">
+                  <div className="hf-item-main">
+                    <div className="hf-item-titleline">
+                      <h3>{pub.title}</h3>
+                      <span className="hf-item-year">{pub.year}</span>
                     </div>
-
-                    <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', alignItems: 'flex-end' }}>
-                      <button
-                        onClick={() => setActiveBibPub(pub)}
-                        style={{
-                          background: 'rgba(255, 255, 255, 0.03)',
-                          border: '1px solid rgba(255, 255, 255, 0.08)',
-                          color: 'var(--text-secondary)',
-                          padding: '0.45rem 0.75rem',
-                          borderRadius: '8px',
-                          fontSize: '0.8rem',
-                          display: 'inline-flex',
-                          alignItems: 'center',
-                          gap: '0.35rem',
-                          cursor: 'pointer',
-                          transition: 'var(--transition-fast)'
-                        }}
-                      >
-                        <ClipboardCopy size={14} />
-                        Get BibTeX
-                      </button>
-                      {pub.scholar && (
-                        <a
-                          href={pub.scholar}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          style={{
-                            background: 'rgba(0, 242, 254, 0.05)',
-                            border: '1px solid rgba(0, 242, 254, 0.15)',
-                            color: 'var(--primary-cyan)',
-                            padding: '0.45rem 0.75rem',
-                            borderRadius: '8px',
-                            fontSize: '0.8rem',
-                            display: 'inline-flex',
-                            alignItems: 'center',
-                            gap: '0.35rem',
-                            textDecoration: 'none',
-                            transition: 'var(--transition-fast)'
-                          }}
-                        >
-                          <ScholarIcon size={14} />
-                          Scholar
-                        </a>
-                      )}
-                      <a
-                        href={pub.link}
-                        style={{
-                          background: 'transparent',
-                          border: '1px solid var(--border-glow)',
-                          color: 'var(--primary-cyan)',
-                          padding: '0.45rem 0.75rem',
-                          borderRadius: '8px',
-                          fontSize: '0.8rem',
-                          display: 'inline-flex',
-                          alignItems: 'center',
-                          gap: '0.35rem',
-                          textDecoration: 'none',
-                          transition: 'var(--transition-fast)'
-                        }}
-                      >
-                        <ExternalLink size={14} />
-                        View
-                      </a>
+                    <p>{pub.authors}</p>
+                    <p className="hf-item-detail">{pub.venue}</p>
+                    <div className="hf-item-tags">
+                      {pub.tags.map((tag) => (
+                        <span key={`${pub.id}-${tag}`}>{tag}</span>
+                      ))}
                     </div>
                   </div>
-                ))
-              ) : (
-                <div style={{ padding: '3rem 0', textAlign: 'center', color: 'var(--text-muted)' }}>
-                  No publications matched your search terms or filters.
+                  <div className="hf-item-links">
+                    <button type="button" onClick={() => setActiveBibPub(pub)}>BibTeX</button>
+                    {pub.scholar && <a href={pub.scholar} target="_blank" rel="noopener noreferrer">Scholar</a>}
+                    <a href={pub.link} target="_blank" rel="noopener noreferrer">Link</a>
+                  </div>
                 </div>
-              )}
-            </div>
+              ))
+            ) : (
+              <div className="hf-empty">No publications matched your search terms.</div>
+            )}
           </div>
         </section>
 
-        {/* TEACHING SECTION */}
-        <section id="teaching" style={{ scrollMarginTop: '8rem', marginBottom: '6rem' }}>
-          <div style={{ marginBottom: '2.5rem' }}>
-            <h2 style={{ fontSize: '2.25rem', fontFamily: 'var(--font-heading)', display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
-              <Presentation className="gradient-text" />
-              Teaching
-            </h2>
-            <p style={{ color: 'var(--text-secondary)', fontSize: '1rem', marginTop: '0.25rem', maxWidth: '720px' }}>
-              I have mostly been on the TA side of the classroom so far, plus a few workshops and an open computer vision course in progress.
-            </p>
+        <section id="teaching" style={{ scrollMarginTop: '8rem', marginBottom: '4.5rem' }}>
+          <div className="hf-section-heading">
+            <h2>Teaching</h2>
+            <p>Recent teaching and course authoring, summarized in a lightweight list.</p>
           </div>
 
-          <div className="teaching-layout">
-            <div className="glass-panel teaching-spotlight">
-              <div style={{ display: 'flex', justifyContent: 'space-between', gap: '1rem', alignItems: 'flex-start', flexWrap: 'wrap' }}>
-                <div>
-                  <span className="badge badge-emerald">Course Authoring</span>
-                  <h3 style={{ fontSize: '1.5rem', marginTop: '1rem' }}>Open Horizon Robotics</h3>
+          <div className="hf-listing">
+            <div className="hf-item-row">
+              <div className="hf-item-main">
+                <div className="hf-item-titleline">
+                  <h3>Open Horizon Robotics</h3>
+                  <span className="hf-item-year">Course authoring</span>
                 </div>
-                <span className="badge">Open Source</span>
-              </div>
-              <p style={{ color: 'var(--text-secondary)', marginTop: '1rem', maxWidth: '640px' }}>
-                Building a computer vision course that moves from classical 2D vision into deep learning, 3D vision, geometry, localization and mapping, synthesis, and perception physics.
-              </p>
-              <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap', marginTop: '1.25rem' }}>
-                {['Classical Vision', '3D Vision', 'Vision Geometry', 'Localization & Mapping', 'Perception Physics'].map((topic) => (
-                  <span key={topic} className="badge badge-teal">{topic}</span>
-                ))}
+                <p>Building a computer vision course that moves from classical 2D vision into deep learning, 3D vision, geometry, localization and mapping, synthesis, and perception physics.</p>
               </div>
             </div>
 
-            <div className="glass-panel teaching-spotlight">
-              <span className="badge badge-teal">Workshops</span>
-              <h3 style={{ fontSize: '1.5rem', marginTop: '1rem' }}>Manipal Institute of Technology</h3>
-              <p style={{ color: 'var(--primary-cyan)', fontSize: '0.9rem', marginTop: '0.35rem' }}>
-                BioInnovate Technical Workshop Series, IEEE EMBS Student Chapter Manipal
-              </p>
-              <p style={{ color: 'var(--text-secondary)', marginTop: '1rem' }}>
-                Led beginner-friendly sessions on signal and image processing, deep learning, microcontrollers, Linux, electronics, programming, and applied research habits.
-              </p>
-              <p style={{ color: 'var(--text-secondary)', marginTop: '0.75rem' }}>
-                The longer learning track also helped junior members move from workshops into lab shadowing and a university symposium study.
-              </p>
-            </div>
-          </div>
-
-          <div className="glass-panel teaching-courses">
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', gap: '1rem', flexWrap: 'wrap', marginBottom: '1.25rem' }}>
-              <div>
-                <span className="badge badge-teal">Teaching Assistant</span>
-                <h3 style={{ fontSize: '1.5rem', marginTop: '0.85rem' }}>Carnegie Mellon University</h3>
+            <div className="hf-item-row">
+              <div className="hf-item-main">
+                <div className="hf-item-titleline">
+                  <h3>Manipal Institute of Technology</h3>
+                  <span className="hf-item-year">Workshop series</span>
+                </div>
+                <p>Led beginner-friendly sessions on signal and image processing, deep learning, microcontrollers, Linux, electronics, programming, and applied research habits.</p>
               </div>
-              <span style={{ color: 'var(--text-muted)', fontSize: '0.85rem' }}>
-                Click a course for the short version.
-              </span>
             </div>
 
-            <div className="teaching-course-list">
-              {TEACHING_COURSES.map((course) => {
-                const isExpanded = expandedTeachingCourse === course.id;
-
-                return (
-                  <div key={course.id} className={`teaching-course ${isExpanded ? 'is-open' : ''}`}>
-                    <button
-                      type="button"
-                      className="teaching-course-toggle"
-                      onClick={() => setExpandedTeachingCourse(isExpanded ? null : course.id)}
-                      aria-expanded={isExpanded}
-                    >
-                      <span>
-                        <span className="teaching-course-term">{course.term}</span>
-                        <span className="teaching-course-title">{course.title}</span>
-                        {course.note && <span className="teaching-course-note">{course.note}</span>}
-                      </span>
-                      <ChevronDown size={18} className="teaching-course-chevron" />
-                    </button>
-
-                    {isExpanded && (
-                      <div className="teaching-course-details">
-                        <p>{course.level} with {course.instructor}. {course.department}.</p>
-                        <p>{course.summary}</p>
-                        <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap' }}>
-                          {course.topics.map((topic) => (
-                            <span key={topic} className="badge">{topic}</span>
-                          ))}
-                        </div>
-                      </div>
-                    )}
+            {TEACHING_COURSES.map((course) => (
+              <div key={course.id} className="hf-item-row">
+                <div className="hf-item-main">
+                  <div className="hf-item-titleline">
+                    <h3>{course.title}</h3>
+                    <span className="hf-item-year">{course.term}</span>
                   </div>
-                );
-              })}
-            </div>
+                  <p>{course.level} with {course.instructor}. {course.department}.</p>
+                  <p className="hf-item-detail">{course.summary}</p>
+                  <div className="hf-item-tags">
+                    {course.topics.map((topic) => (
+                      <span key={`${course.id}-${topic}`}>{topic}</span>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            ))}
           </div>
         </section>
 
         {/* TIMELINE SECTION */}
-        <section id="timeline" style={{ scrollMarginTop: '8rem', marginBottom: '6rem' }}>
-          <div style={{ marginBottom: '2.5rem' }}>
-            <h2 style={{ fontSize: '2.25rem', fontFamily: 'var(--font-heading)', display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
-              <GraduationCap className="gradient-text" />
-              Academic Timeline
-            </h2>
-            <p style={{ color: 'var(--text-secondary)', fontSize: '1rem', marginTop: '0.25rem' }}>
-              A quick look at my research and academic path. Click items to expand the details.
-            </p>
+        <section id="timeline" style={{ scrollMarginTop: '8rem', marginBottom: '4.5rem' }}>
+          <div className="hf-section-heading">
+            <h2>Academic Timeline</h2>
+            <p>Education and research appointments summarized in reverse chronological order.</p>
           </div>
 
-          <div className="timeline">
-            
-            {/* Timeline Item 1 */}
-            <div className="timeline-item">
-              <div className="timeline-dot"></div>
-              <div
-                className="glass-panel"
-                onClick={() => setExpandedTimeline(expandedTimeline === 1 ? null : 1)}
-                style={{ cursor: 'pointer' }}
-              >
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap', gap: '0.5rem' }}>
-                  <div>
-                    <h3 style={{ fontSize: '1.25rem', color: 'var(--text-primary)', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                      Carnegie Mellon University
-                      <span className="badge badge-teal">Graduate Research</span>
-                    </h3>
-                    <p style={{ color: 'var(--primary-cyan)', fontSize: '0.95rem', fontWeight: '500', marginTop: '0.25rem' }}>
-                      Master's in Biomedical Engineering (Advised by Prof. Kenji Shimada)
-                    </p>
-                  </div>
-                  <span style={{ fontSize: '0.85rem', color: 'var(--text-muted)', display: 'inline-flex', alignItems: 'center', gap: '0.25rem' }}>
-                    <Calendar size={14} /> 2024 - Present
-                  </span>
+          <div className="hf-listing">
+            <div className="hf-item-row">
+              <div className="hf-item-main">
+                <div className="hf-item-titleline">
+                  <h3>Carnegie Mellon University</h3>
+                  <span className="hf-item-year">2024 - Present</span>
                 </div>
-                
-                <p style={{ color: 'var(--text-secondary)', fontSize: '0.95rem', marginTop: '1rem' }}>
-                  Focusing on 2D angiography to 3D CT vascular registration for haptically-assisted endovascular catheters using physics-informed neural solvers and Neural ODE flows.
-                </p>
-
-                {(expandedTimeline === 1 || expandedTimeline === null) && (
-                  <div style={{ borderTop: '1px solid rgba(255, 255, 255, 0.05)', marginTop: '1rem', paddingTop: '1rem' }}>
-                    <p style={{ fontSize: '0.88rem', color: 'var(--text-secondary)', lineHeight: '1.6' }}>
-                      <strong>Key Contributions:</strong> Developed differentiable volumetric slice projection systems to guide neural deformable registrations. Built specular reflection removal overlays using real surgical laparoscopic datasets inside Steffey Lab Scaife Hall.
-                    </p>
-                    <div style={{ display: 'flex', gap: '0.5rem', marginTop: '0.75rem', flexWrap: 'wrap' }}>
-                      <span className="badge badge-emerald">PyTorch</span>
-                      <span className="badge badge-emerald">Differentiable Rendering</span>
-                      <span className="badge badge-emerald">MONAI Core</span>
-                    </div>
-                  </div>
-                )}
+                <p>Master's in Biomedical Engineering. Advised by Prof. Kenji Shimada.</p>
+                <p className="hf-item-detail">Research focus: 2D angiography to 3D CT vascular registration, physics-informed neural solvers, and surgical computer vision.</p>
               </div>
             </div>
 
-            {/* Timeline Item 2 */}
-            <div className="timeline-item">
-              <div className="timeline-dot"></div>
-              <div
-                className="glass-panel"
-                onClick={() => setExpandedTimeline(expandedTimeline === 2 ? null : 2)}
-                style={{ cursor: 'pointer' }}
-              >
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap', gap: '0.5rem' }}>
-                  <div>
-                    <h3 style={{ fontSize: '1.25rem', color: 'var(--text-primary)', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                      IIT Hyderabad
-                      <span className="badge badge-teal">Research Fellowship</span>
-                    </h3>
-                    <p style={{ color: 'var(--primary-cyan)', fontSize: '0.95rem', fontWeight: '500', marginTop: '0.25rem' }}>
-                      Motion Capture & Electromyography Computing Specialist
-                    </p>
-                  </div>
-                  <span style={{ fontSize: '0.85rem', color: 'var(--text-muted)', display: 'inline-flex', alignItems: 'center', gap: '0.25rem' }}>
-                    <Calendar size={14} /> 2023 - 2024
-                  </span>
+            <div className="hf-item-row">
+              <div className="hf-item-main">
+                <div className="hf-item-titleline">
+                  <h3>IIT Hyderabad</h3>
+                  <span className="hf-item-year">2023 - 2024</span>
                 </div>
-                
-                <p style={{ color: 'var(--text-secondary)', fontSize: '0.95rem', marginTop: '1rem' }}>
-                  Designed algorithmic solvers mapping musculoskeletal loading constraints and multi-channel EMG microvolts to verify exercise postures.
-                </p>
-
-                {expandedTimeline === 2 && (
-                  <div style={{ borderTop: '1px solid rgba(255, 255, 255, 0.05)', marginTop: '1rem', paddingTop: '1rem' }}>
-                    <p style={{ fontSize: '0.88rem', color: 'var(--text-secondary)', lineHeight: '1.6' }}>
-                      <strong>Key Contributions:</strong> Deployed real-time pipelines processing Vicon skeletal tracks to evaluate muscle activation anomalies and predict skeletal strain profiles.
-                    </p>
-                    <div style={{ display: 'flex', gap: '0.5rem', marginTop: '0.75rem', flexWrap: 'wrap' }}>
-                      <span className="badge badge-emerald">EMG Signal Computing</span>
-                      <span className="badge badge-emerald">Kinematics</span>
-                      <span className="badge badge-emerald">SciPy Stack</span>
-                    </div>
-                  </div>
-                )}
+                <p>Research fellowship in motion capture and electromyography computing.</p>
+                <p className="hf-item-detail">Built algorithmic solvers for musculoskeletal loading constraints and real-time skeletal analysis.</p>
               </div>
             </div>
 
-            {/* Timeline Item 3 */}
-            <div className="timeline-item">
-              <div className="timeline-dot"></div>
-              <div
-                className="glass-panel"
-                onClick={() => setExpandedTimeline(expandedTimeline === 3 ? null : 3)}
-                style={{ cursor: 'pointer' }}
-              >
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap', gap: '0.5rem' }}>
-                  <div>
-                    <h3 style={{ fontSize: '1.25rem', color: 'var(--text-primary)', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                      Indian Council of Medical Research
-                      <span className="badge badge-teal">Project Associate</span>
-                    </h3>
-                    <p style={{ color: 'var(--primary-cyan)', fontSize: '0.95rem', fontWeight: '500', marginTop: '0.25rem' }}>
-                      Fetal Ultrasound Anomaly Diagnostics Researcher
-                    </p>
-                  </div>
-                  <span style={{ fontSize: '0.85rem', color: 'var(--text-muted)', display: 'inline-flex', alignItems: 'center', gap: '0.25rem' }}>
-                    <Calendar size={14} /> 2022 - 2023
-                  </span>
+            <div className="hf-item-row">
+              <div className="hf-item-main">
+                <div className="hf-item-titleline">
+                  <h3>Indian Council of Medical Research</h3>
+                  <span className="hf-item-year">2022 - 2023</span>
                 </div>
-                
-                <p style={{ color: 'var(--text-secondary)', fontSize: '0.95rem', marginTop: '1rem' }}>
-                  Trained deep segmentation networks to map fetal anatomical features and automate standard diagnostic measurements on 2D ultrasound scans.
-                </p>
-
-                {expandedTimeline === 3 && (
-                  <div style={{ borderTop: '1px solid rgba(255, 255, 255, 0.05)', marginTop: '1rem', paddingTop: '1rem' }}>
-                    <p style={{ fontSize: '0.88rem', color: 'var(--text-secondary)', lineHeight: '1.6' }}>
-                      <strong>Key Contributions:</strong> Developed automated morphometric estimation overlays running under 150ms per scan, aiding clinicians in standard diagnostics protocols.
-                    </p>
-                    <div style={{ display: 'flex', gap: '0.5rem', marginTop: '0.75rem', flexWrap: 'wrap' }}>
-                      <span className="badge badge-emerald">Medical Ultrasound</span>
-                      <span className="badge badge-emerald">Segmentation</span>
-                      <span className="badge badge-emerald">XAI</span>
-                    </div>
-                  </div>
-                )}
+                <p>Project associate in fetal ultrasound anomaly diagnostics.</p>
+                <p className="hf-item-detail">Trained deep segmentation networks to automate standard diagnostic measurements on 2D ultrasound scans.</p>
               </div>
             </div>
 
-            {/* Timeline Item 4 */}
-            <div className="timeline-item">
-              <div className="timeline-dot"></div>
-              <div
-                className="glass-panel"
-                onClick={() => setExpandedTimeline(expandedTimeline === 4 ? null : 4)}
-                style={{ cursor: 'pointer' }}
-              >
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap', gap: '0.5rem' }}>
-                  <div>
-                    <h3 style={{ fontSize: '1.25rem', color: 'var(--text-primary)', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                      Manipal Institute of Technology
-                      <span className="badge badge-teal">Undergraduate Major</span>
-                    </h3>
-                    <p style={{ color: 'var(--primary-cyan)', fontSize: '0.95rem', fontWeight: '500', marginTop: '0.25rem' }}>
-                      B.Tech in Biomedical Engineering, Minor in Data Science (BML Lab researcher)
-                    </p>
-                  </div>
-                  <span style={{ fontSize: '0.85rem', color: 'var(--text-muted)', display: 'inline-flex', alignItems: 'center', gap: '0.25rem' }}>
-                    <Calendar size={14} /> 2019 - 2023
-                  </span>
+            <div className="hf-item-row">
+              <div className="hf-item-main">
+                <div className="hf-item-titleline">
+                  <h3>Manipal Institute of Technology</h3>
+                  <span className="hf-item-year">2019 - 2023</span>
                 </div>
-                
-                <p style={{ color: 'var(--text-secondary)', fontSize: '0.95rem', marginTop: '1rem' }}>
-                  Published deep diagnostic models mapping skin anomalies (monkeypox), oral malignancies, and blood leukemia indices.
-                </p>
-
-                {expandedTimeline === 4 && (
-                  <div style={{ borderTop: '1px solid rgba(255, 255, 255, 0.05)', marginTop: '1rem', paddingTop: '1rem' }}>
-                    <p style={{ fontSize: '0.88rem', color: 'var(--text-secondary)', lineHeight: '1.6' }}>
-                      <strong>Key Contributions:</strong> Advised by Prof. Niranjana S and Dr. Krishnaraj Chadaga at Biomedical Computing Lab. Published 5 clinical computer vision papers inside IEEE/Springer journals.
-                    </p>
-                    <div style={{ display: 'flex', gap: '0.5rem', marginTop: '0.75rem', flexWrap: 'wrap' }}>
-                      <span className="badge badge-emerald">Biomedical Engineering</span>
-                      <span className="badge badge-emerald">Pattern Recognition</span>
-                      <span className="badge badge-emerald">Data Science Minor</span>
-                    </div>
-                  </div>
-                )}
+                <p>B.Tech in Biomedical Engineering, minor in Data Science.</p>
+                <p className="hf-item-detail">Published work in skin anomaly analysis, oral malignancies, and blood leukemia classification.</p>
               </div>
             </div>
-
           </div>
         </section>
 
         {/* CALL TO ACTION & FOOTER SECTION */}
-        <section id="contact" style={{ scrollMarginTop: '8rem', marginTop: '6rem' }}>
-          <div className="glass-panel" style={{
-            background: 'radial-gradient(circle at 50% 0%, rgba(0, 242, 254, 0.1), var(--bg-surface-glass) 80%)',
-            borderColor: 'rgba(0, 242, 254, 0.3)',
-            padding: '3rem',
-            textAlign: 'center',
-            borderRadius: '24px'
-          }}>
-            <h2 style={{ fontSize: '2.5rem', fontWeight: '800', marginBottom: '1rem', fontFamily: 'var(--font-heading)' }}>
-              Get in <span className="gradient-text">Touch</span>
-            </h2>
-            <p style={{ color: 'var(--text-secondary)', fontSize: '1.1rem', maxWidth: '600px', margin: '0 auto 2.5rem auto', lineHeight: '1.7' }}>
-              I'm open to research collaborations, computer vision ideas, and image-guided robotics projects. Reach out by email or on the platforms below.
-            </p>
-            
-            <div style={{ display: 'flex', gap: '1.5rem', justifyValue: 'center', justifyContent: 'center', flexWrap: 'wrap', marginBottom: '3rem' }}>
-              <a href="mailto:tusharn@andrew.cmu.edu" className="btn btn-primary" style={{ padding: '0.9rem 2rem' }}>
-                <Mail size={18} />
-                Email
-              </a>
-              <a href="https://github.com/tushar-nayak" target="_blank" rel="noopener noreferrer" className="btn btn-secondary" style={{ padding: '0.9rem 2rem' }}>
-                <Github size={18} />
-                GitHub
-              </a>
-              <a href="https://www.linkedin.com/in/nayaktushar/" target="_blank" rel="noopener noreferrer" className="btn btn-secondary" style={{ padding: '0.9rem 2rem' }}>
-                <Linkedin size={18} />
-                LinkedIn
-              </a>
-              <a href="https://scholar.google.com/citations?user=9xUX7NoAAAAJ&hl=en" target="_blank" rel="noopener noreferrer" className="btn btn-secondary" style={{ padding: '0.9rem 2rem' }}>
-                <ScholarIcon size={18} />
-                Scholar
-              </a>
-            </div>
+        <section id="contact" style={{ scrollMarginTop: '8rem', marginTop: '5rem' }}>
+          <div className="hf-section-heading">
+            <h2>Contact</h2>
+            <p>Research collaboration and teaching inquiries.</p>
+          </div>
 
-            <div style={{ borderTop: '1px solid rgba(255, 255, 255, 0.05)', paddingTop: '2rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '1.5rem' }}>
-              <div style={{ textAlign: 'left' }}>
-                <p style={{ color: 'var(--text-primary)', fontSize: '0.95rem', fontWeight: '500', fontFamily: 'var(--font-heading)' }}>Tushar Nayak</p>
-                <p style={{ color: 'var(--text-muted)', fontSize: '0.8rem', display: 'inline-flex', alignItems: 'center', gap: '0.25rem' }}>
-                  <MapPin size={12} /> Pittsburgh, PA
-                </p>
-              </div>
-              <p style={{ color: 'var(--text-muted)', fontSize: '0.85rem' }}>
-                &copy; 2026 Tushar Nayak. Powered by React + Vite.
-              </p>
-            </div>
+          <div className="hf-contact">
+            <p>
+              Email: <a href="mailto:tusharn@andrew.cmu.edu">tusharn@andrew.cmu.edu</a>
+            </p>
+            <p>
+              Links: <a href="https://github.com/tushar-nayak" target="_blank" rel="noopener noreferrer">GitHub</a>, <a href="https://www.linkedin.com/in/nayaktushar/" target="_blank" rel="noopener noreferrer">LinkedIn</a>, <a href="https://scholar.google.com/citations?user=9xUX7NoAAAAJ&hl=en" target="_blank" rel="noopener noreferrer">Scholar</a>
+            </p>
+            <p>Pittsburgh, PA</p>
           </div>
         </section>
 
